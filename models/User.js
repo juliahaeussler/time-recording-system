@@ -15,18 +15,18 @@ const userSchema = new Schema({
       type: String,
       required: true,
   },
-  isAdmin: {
-    type: boolean,
-    default: false,
+  rate: {
+    type: Number,
     required: true,
   },
-  rate: {
-    type: number,
+  isAdmin: {
+    type: Boolean,
+    //default: false,
     required: true,
   },
   isActive: {
-    type: boolean,
-    default: true,
+    type: Boolean,
+    //default: true,
     required: true,
   },
 });
