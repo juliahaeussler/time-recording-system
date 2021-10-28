@@ -22,17 +22,20 @@ class Login extends React.Component {
   // class property syntax
   submitHandler = () => {
 
-    axios.post('/login', { username: this.state.username, password: this.state.password }).then((resp) => {
+    axios
+      .post("/login", {
+        username: this.state.username,
+        password: this.state.password,
+      })
+      .then((resp) => {
+        let data = resp.data;
 
-      let data = resp.data
+        let user = data.user;
 
-      let message = data.message
-      let user = data.user
+        this.props.logInTheUser(user);
 
-      this.props.logInTheUser(user)
-
-      //alert('Benutzer angemeldet')
-    })
+        this.props.history.push("/zeiten");
+      });
 
   }
 

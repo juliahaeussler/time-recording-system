@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import './SignUp.css'
 
+
 class SignUp extends React.Component {
 
   state = {
@@ -9,25 +10,32 @@ class SignUp extends React.Component {
     password: '',
     name: '',
     rate: '',
-    isAdmin: true,
-    isActive: true,
+    isAdmin: false,
+    isActive: false,
   }
 
   // generic change handler for text input fields
   changeHandler = (e) => {
     let currentName = e.target.name
-
     let newState = {}
-    newState[currentName] = e.target.value // newState['title'] / newState['description']
-
+    newState[currentName] = e.target.value 
     this.setState(newState)
   }
 
+  // generic change handler for checkbox fields
+  checkboxChangeHandler = (e) => {
+    let currentName = e.target.name 
+    let newState = {}
+    newState[currentName] = e.target.checked
+    this.setState(newState)
+  }
+
+
   // class property syntax
   submitHandler = () => {
-
-    axios.post('/signup', { username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive }).then(() => {
-      alert('Benutzer hinzugefügt')
+    console.log({ username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive })
+    axios.post('/signup', { username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive }).then((res) => {
+      alert(res.data.message)
     })
 
   }
@@ -46,12 +54,15 @@ class SignUp extends React.Component {
         <input type="number" name="rate" value={this.state.rate} onChange={this.changeHandler} placeholder="Stundensatz" />
 
         <label htmlFor="isAdmin">Administrator</label>
-        <input type="checkbox" name="isAdmin" id="isAdmin" value={this.state.isAdmin} onChange={this.changeHandler} />
+        <input type="checkbox" name="isAdmin" id="isAdmin" checked={this.state.isAdmin} onChange={this.checkboxChangeHandler} />
 
         <label htmlFor="isActive">Aktiv</label>
-        <input type="checkbox" name="isActive" id="isActive" value={this.state.isActive} onChange={this.changeHandler} />
+        <input type="checkbox" name="isActive" id="isActive" checked={this.state.isActive} onChange={this.checkboxChangeHandler} />
 
         <button onClick={this.submitHandler}>Benutzer anlegen</button>
+
+     
+
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import './App.css';
+import Start from './components/start/Start'
 import SignUp from './components/signUp/SignUp';
 import LogIn from './components/logIn/LogIn';
 import Times from './components/times/Times';
@@ -25,13 +26,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {/* <SignUp />
-        <LogIn logInTheUser={this.loginHandler}></LogIn> */}
-
-        <Times />
-
+        <Route exact path="/" component={Start} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={LogIn} />
+        <Route exact path="/login" component={({ history }) => <LogIn history={history} logInTheUser={this.loginHandler}></LogIn>} />
         <Route exact path="/zeiten" component={Times} />
         <Route exact path="/projekte" component={Projects} />
         <Route exact path="/auswertung" component={Analysis} />

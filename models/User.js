@@ -21,12 +21,10 @@ const userSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
-    //default: false,
     required: true,
   },
   isActive: {
     type: Boolean,
-    //default: true,
     required: true,
   },
 });

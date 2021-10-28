@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 const User = require('../models/User')
 
 const bcrypt = require('bcryptjs')
@@ -17,7 +18,8 @@ router.post('/signup', (req, res, next) => {
   
     User.findOne({ username: username }).then((foundUser) => {
       if (foundUser) {
-        res.json({ message: 'Benutzername bereits vergeben.' })
+        res.json({ message: 'Benutzername bereits vergeben.' });
+           
       } else {
   
         const salt = bcrypt.genSaltSync(10);
@@ -34,6 +36,7 @@ router.post('/signup', (req, res, next) => {
   
         aNewUser.save().then(() => {
           res.json({ message: 'Benutzer hinzugefügt.' })
+          
         })
   
       }
@@ -57,7 +60,7 @@ router.post('/login', (req, res, next) => {
           req.session.currentUser = foundUser;
 
           res.json({ message: 'Benutzer angemeldet', user: foundUser })
-          res.render('times')
+          
         } else {
           res.json({ message: 'Passwort falsch' })
         }
