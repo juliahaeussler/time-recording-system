@@ -14,7 +14,7 @@ class SignUp extends React.Component {
     isActive: false,
   }
 
-  // generic change handler for text input fields
+ 
   changeHandler = (e) => {
     let currentName = e.target.name
     let newState = {}
@@ -22,7 +22,6 @@ class SignUp extends React.Component {
     this.setState(newState)
   }
 
-  // generic change handler for checkbox fields
   checkboxChangeHandler = (e) => {
     let currentName = e.target.name 
     let newState = {}
@@ -30,8 +29,6 @@ class SignUp extends React.Component {
     this.setState(newState)
   }
 
-
-  // class property syntax
   submitHandler = () => {
     console.log({ username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive })
     axios.post('/signup', { username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive }).then((res) => {
@@ -40,12 +37,9 @@ class SignUp extends React.Component {
 
   }
 
-
   render() {
-
     return (
       <div className="signup-form" >
-        
         <h3>Benutzer anlegen</h3> 
 
         <input type="text" name="username" value={this.state.username} onChange={this.changeHandler} placeholder="Benutzername" />
@@ -53,16 +47,17 @@ class SignUp extends React.Component {
         <input type="text" name="name" value={this.state.name} onChange={this.changeHandler} placeholder="Nachname, Vorname" />
         <input type="number" name="rate" value={this.state.rate} onChange={this.changeHandler} placeholder="Stundensatz" />
 
-        <label htmlFor="isAdmin">Administrator</label>
+        <div>
         <input type="checkbox" name="isAdmin" id="isAdmin" checked={this.state.isAdmin} onChange={this.checkboxChangeHandler} />
+        <label htmlFor="isAdmin">Administrator</label>
+        </div>
 
-        <label htmlFor="isActive">Aktiv</label>
+        <div>
         <input type="checkbox" name="isActive" id="isActive" checked={this.state.isActive} onChange={this.checkboxChangeHandler} />
+        <label htmlFor="isActive">Aktiv</label>
+        </div>
 
-        <button onClick={this.submitHandler}>Benutzer anlegen</button>
-
-     
-
+        <button className="signup-button" onClick={this.submitHandler}>Benutzer anlegen</button>
       </div>
     );
   }

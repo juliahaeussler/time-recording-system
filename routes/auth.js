@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 const User = require('../models/User')
 
 const bcrypt = require('bcryptjs')
@@ -66,9 +65,33 @@ router.post('/login', (req, res, next) => {
         }
       }
     })
+}); 
+
+// CHECK USER
+router.get('/checkuser', (req, res, next) => {
+  if (req.session.currentUser) {
+    res.json({ userDoc: req.session.currentUser });
+  } else {
+    res.json({ userDoc: null });
+  }
 });
 
-// EDIT 
+// GET USERS
+router.get('/benutzer', (req, res, next) => {
+  User.find()
+    .then(allUsers => {
+      res.json(allUsers);
+    })
+});
+
+// EDIT USER
+
+
+//LOG OUT
+router.post('/logout', (req, res, next) => {
+  req.session.destroy();
+  
+})
 
 
 module.exports = router;

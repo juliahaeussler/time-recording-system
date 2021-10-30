@@ -1,0 +1,10 @@
+.projects{
+    display: flex;
+    justify-content: space-around;
+}
+
+.project-box{
+    width: 400px;
+    padding: 10px;
+    background-color: #DDDDDD;
+}

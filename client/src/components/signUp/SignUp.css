@@ -1,9 +1,12 @@
 .signup-form {
+    height: 500px;
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    padding: 10px;
-    margin: 0px;
+    background-color: #DDDDDD;
+}
+
+.signup-button{
+    width: 150px;
 }

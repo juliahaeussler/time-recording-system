@@ -1,0 +1,11 @@
+.user{
+    display: flex;
+    justify-content: space-around;
+}
+
+.user-box{
+    width: 400px;
+    padding: 10px;
+    background-color: #DDDDDD;
+}
+
