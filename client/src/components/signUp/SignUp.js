@@ -1,6 +1,8 @@
 import React from 'react'
+//import {Redirect} from 'react-router-dom';
 import axios from 'axios'
 import './SignUp.css'
+
 
 
 class SignUp extends React.Component {
@@ -32,9 +34,12 @@ class SignUp extends React.Component {
   submitHandler = () => {
     console.log({ username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive })
     axios.post('/signup', { username: this.state.username, password: this.state.password, name: this.state.name, rate: this.state.rate, isAdmin: this.state.isAdmin, isActive: this.state.isActive }).then((res) => {
-      alert(res.data.message)
+      alert(res.data.message);
+      
+   
+    
     })
-
+    
   }
 
   render() {

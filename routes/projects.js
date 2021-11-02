@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
@@ -12,6 +13,13 @@ router.get('/projekte', (req, res, next) => {
     })
 });
 
+//SHOW ONE PROJECT
+router.get('/projekte/:id', (req, res, next) => {
+  Project.findById(req.params.id)
+    .then(response => {
+      res.json(response);
+  })
+});
 
 //ADD PROJECT
 router.post('/projekte', (req, res, next) => {
@@ -29,5 +37,11 @@ router.post('/projekte', (req, res, next) => {
 //EDIT PROJECT
 
 //DELETE PROJECT
+router.delete('/projekte/:id', (req, res, next) => {
+  Project.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({ message: `Project with ${req.params.id} is removed successfully.` });
+    })
+})
 
 module.exports = router;

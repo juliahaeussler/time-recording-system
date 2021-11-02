@@ -1,7 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
 import "./Projects.css";
+import Pen from "./pen.png";
+import Bin from "./bin.png";
 
 class Projects extends React.Component {
   state = {
@@ -35,12 +38,21 @@ class Projects extends React.Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     axios.post("/projekte", this.state).then((resp) => {
-      console.log(resp.data);     
+      console.log(resp.data);
       this.setState({
         projects: this.state.projects.concat([resp.data]),
       });
     });
   };
+
+  handleOnClick = (projectId) => {
+    axios.delete("/projekte/" + projectId).then((resp) => {
+      console.log(resp.data);
+      this.setState({
+        projects: this.state.projects.filter((p) => p._id !== projectId),
+      });
+    });
+  }
 
   render() {
     return (
@@ -85,20 +97,50 @@ class Projects extends React.Component {
               {/* <label htmlFor="isActive">aktiv</label>
             <input type="checkbox" name="isActive" id="isActive" checked={this.state.isActive} onChange={this.checkboxHandleChange} /> */}
 
-              <button type="submit">Projekt anlegen</button>
+              <button className="project-btn" type="submit">
+                Projekt anlegen
+              </button>
             </form>
           </div>
 
           {/* Dropdown menu? */}
           <div className="all-projects project-box">
             <h2>Alle Projekte:</h2>
-            {this.state.projects.map((project) => {
-              return (
-                <h4 key={project._id} className="one-project">
-                  {project.name}
-                </h4>
-              );
-            })}
+
+            <table className="project-table">
+              <thead>
+                <tr>
+                  <th>Titel</th>
+                  <th>Projektnummer</th>
+                  {/* <th>Beginn</th> */}
+                  <th>Kommentar</th>
+                  <th>Bearbeiten/Löschen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.projects.map((project) => {
+                  return (
+                    <tr key={project._id} className="one-project">
+                      <td>{project.name}</td>
+                      <td>{project.projectCode}</td>
+                      {/* <th>{project.startDate}</th> */}
+                      <td>{project.comment}</td>
+                      <td>
+                        <Link to={`/projekte/${project._id}`}>
+                          <img className="project-img" src={Pen} alt="Pen" />
+                        </Link>
+                        <img
+                          onClick={() => this.handleOnClick(project._id)}
+                          className="project-img"
+                          src={Bin}
+                          alt="Bin"
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

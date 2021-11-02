@@ -9,3 +9,16 @@
     background-color: #DDDDDD;
 }
 
+.user-head{
+    display: flex;
+    justify-content: space-between;
+}
+ 
+
+.pen:hover {
+    border: 2px solid #1d9dd9;
+}
+
+.pen {
+    width: 20px;
+}
