@@ -1,20 +1,15 @@
-import React from 'react'
-import axios from 'axios'
+import React from "react";
 
+import "./LogOut.css";
 
 class LogOut extends React.Component {
-
-
-
   render() {
-
     return (
       <div>
-        <h1>LOGOUT</h1>
+        <h1>Benutzer abgemeldet.</h1>
       </div>
     );
   }
-
 }
 
 export default LogOut;
