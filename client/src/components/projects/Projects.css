@@ -1,13 +1,12 @@
 .projects{
     display: flex;
     justify-content: space-around;
-   
 }
 
 .project-box{
     width: 600px;
     padding: 20px;
-    background-color: #DDDDDD;
+    background-color: #D0D8DE;
 }
 
 .project-btn{

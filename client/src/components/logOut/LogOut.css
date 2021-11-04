@@ -1,4 +1,30 @@
-h1 {
+.logout-container {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.logout-div{
     text-align: center;
-    margin: 20px;
+    border: 2px solid #1d9dd9;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #D0D8DE;
+}
+
+.logout-div > h1 {
+    margin-bottom: 20px;
+}
+
+.logout-btn{
+    width: 200px;
+    margin-top: 30px !important;
+    padding: 8px;
+    background-color: #1d9dd9;
+    border: 2px solid #1d9dd9;
+}
+
+.logout-btn:hover{
+    color: #D0D8DE !important;
+    border: 2px solid white;
 }

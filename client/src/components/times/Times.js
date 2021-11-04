@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+import './Times.css'
 import Navbar from '../navbar/Navbar';
 
 
@@ -13,7 +13,7 @@ class Times extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="new-entry"></div>
+        <div className="new-entry">ZEITERFASSUNG</div>
         <div className="today-entries"></div>
       </div>
     );
