@@ -1,8 +1,10 @@
 .App {
-  
+  background-image: url('./concrete.jpg');
+  background-size: cover;
   font-family: 'Dosis', sans-serif;
   margin: 0px;
   padding: 0px;
+  height: 100vh;
 }
 
 .App input {
