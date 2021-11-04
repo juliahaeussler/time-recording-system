@@ -24,6 +24,8 @@ class ProjectDetails extends React.Component {
     return startD;
   }
 
+  
+
   render() {
     return (
       <div>
@@ -43,7 +45,7 @@ class ProjectDetails extends React.Component {
               {this.state.project.comment ? this.state.project.comment : "/"}
             </h4>
             <div className="btn-container">
-              <button className="edit" onClick={this.editHandler}>Bearbeiten</button>
+              <Link to={`/projekte/${this.state.project._id}/bearbeiten`} className="edit">Bearbeiten</Link>
               <Link to={`/projekte/${this.state.project._id}/loeschen`} className="delete">Löschen</Link>
             </div>
           </div>

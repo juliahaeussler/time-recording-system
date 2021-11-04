@@ -33,8 +33,13 @@ router.post('/projekte', (req, res, next) => {
   });
 });
 
-
 //EDIT PROJECT
+router.put('/projekte/:id/bearbeiten', (req, res, next) => {
+  Project.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((project) => {
+      res.json(project);
+    })
+})
 
 //DELETE PROJECT
 router.delete('/projekte/:id/loeschen', (req, res, next) => {
