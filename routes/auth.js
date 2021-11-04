@@ -84,6 +84,14 @@ router.get('/benutzer', (req, res, next) => {
     })
 });
 
+// GET ONE USER
+router.get('/benutzer/:id', (req, res, next) => {
+  Project.findById(req.params.id)
+    .then(response => {
+      res.json(response);
+  })
+});
+
 // EDIT USER
 
 

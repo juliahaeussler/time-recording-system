@@ -4,7 +4,7 @@ import axios from "axios";
 import Navbar from "../navbar/Navbar";
 import "./Projects.css";
 import Pen from "./pen.png";
-import Bin from "./bin.png";
+
 
 class Projects extends React.Component {
   state = {
@@ -30,7 +30,7 @@ class Projects extends React.Component {
     let currentName = e.target.name;
 
     let newState = {};
-    newState[currentName] = e.target.value; // newState['title'] / newState['description']
+    newState[currentName] = e.target.value; 
 
     this.setState(newState);
   };
@@ -45,14 +45,14 @@ class Projects extends React.Component {
     });
   };
 
-  handleOnClick = (projectId) => {
-    axios.delete("/projekte/" + projectId).then((resp) => {
-      console.log(resp.data);
-      this.setState({
-        projects: this.state.projects.filter((p) => p._id !== projectId),
-      });
-    });
-  }
+  // handleOnClick = (projectId) => {
+  //   axios.delete("/projekte/" + projectId).then((resp) => {
+  //     console.log(resp.data);
+  //     this.setState({
+  //       projects: this.state.projects.filter((p) => p._id !== projectId),
+  //     });
+  //   });
+  // }
 
   render() {
     return (
@@ -103,7 +103,7 @@ class Projects extends React.Component {
             </form>
           </div>
 
-          {/* Dropdown menu? */}
+          
           <div className="all-projects project-box">
             <h2>Alle Projekte:</h2>
 
@@ -114,7 +114,7 @@ class Projects extends React.Component {
                   <th>Projektnummer</th>
                   {/* <th>Beginn</th> */}
                   <th>Kommentar</th>
-                  <th>Bearbeiten/Löschen</th>
+                  <th>Details/Bearbeiten</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,12 +129,6 @@ class Projects extends React.Component {
                         <Link to={`/projekte/${project._id}`}>
                           <img className="project-img" src={Pen} alt="Pen" />
                         </Link>
-                        <img
-                          onClick={() => this.handleOnClick(project._id)}
-                          className="project-img"
-                          src={Bin}
-                          alt="Bin"
-                        />
                       </td>
                     </tr>
                   );
