@@ -7,6 +7,9 @@
     "dev": "DEBUG=project-management-server:* nodemon ./bin/www",
     "dev-windows": "nodemon ./bin/www"
   },
+  "devServer": {
+    "disableHostCheck": true
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",

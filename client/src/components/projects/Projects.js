@@ -10,6 +10,7 @@ class Projects extends React.Component {
   state = {
     currentUser: this.props.user,
     projects: [],
+    filteredProjects: [],
 
     name: "",
     startDate: "",
@@ -17,21 +18,50 @@ class Projects extends React.Component {
     projectCode: "",
   };
 
-  componentDidMount() {
-    axios.get("/projekte").then((resp) => {
-      console.log(resp.data);
-      this.setState({
-        projects: resp.data,
-      });
+  updateProjects = (data) => {
+    this.setState({
+      projects: data,
+      filteredProjects: data,
     });
   }
 
-  handleChange = (e) => {
-    let currentName = e.target.name;
+  clearForm = () => {
+    this.setState({
+      name: "",
+      startDate: "",
+      comment: "",
+      projectCode: "",
+    })
+  }
 
+  componentDidMount() {
+    axios.get("/projekte").then((resp) => {
+      console.log(resp.data);
+      this.updateProjects(resp.data)
+    });
+  }
+
+  searchProjects = (name) => {
+    const filteredProjects = this.state.projects.filter((project) => {
+      const lowerCaseProject = project.name.toLowerCase()
+      const lowerCaseNameInput = name.toLowerCase()
+      return lowerCaseProject.includes(lowerCaseNameInput)
+    })
+    this.setState({ filteredProjects: filteredProjects })
+  }
+
+  handleNameChange = (e) => {
+    this.searchProjects(e.target.value)
+    let currentName = e.target.name;
     let newState = {};
     newState[currentName] = e.target.value; 
+    this.setState(newState);
+  };
 
+  handleChange = (e) => {
+    let currentName = e.target.name;
+    let newState = {};
+    newState[currentName] = e.target.value; 
     this.setState(newState);
   };
 
@@ -39,20 +69,12 @@ class Projects extends React.Component {
     event.preventDefault();
     axios.post("/projekte", this.state).then((resp) => {
       console.log(resp.data);
-      this.setState({
-        projects: this.state.projects.concat([resp.data]),
-      });
+      this.updateProjects(this.state.projects.concat([resp.data]))
+      this.clearForm()
     });
   };
 
-  // handleOnClick = (projectId) => {
-  //   axios.delete("/projekte/" + projectId).then((resp) => {
-  //     console.log(resp.data);
-  //     this.setState({
-  //       projects: this.state.projects.filter((p) => p._id !== projectId),
-  //     });
-  //   });
-  // }
+
 
   render() {
     return (
@@ -67,7 +89,7 @@ class Projects extends React.Component {
                 type="text"
                 name="name"
                 value={this.state.name}
-                onChange={this.handleChange}
+                onChange={this.handleNameChange}
               />
               <br></br>
               <label htmlFor="startDate">Beginn</label>
@@ -111,20 +133,20 @@ class Projects extends React.Component {
               <thead>
                 <tr>
                   <th>Titel</th>
-                  <th>Projektnummer</th>
-                  {/* <th>Beginn</th> */}
-                  <th>Kommentar</th>
+                  {/* <th>Projektnummer</th>
+                  <th>Beginn</th>
+                  <th>Kommentar</th> */}
                   <th>Details/Bearbeiten</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.projects.map((project) => {
+                {this.state.filteredProjects.map((project) => {
                   return (
                     <tr key={project._id} className="one-project">
                       <td>{project.name}</td>
-                      <td>{project.projectCode}</td>
-                      {/* <th>{project.startDate}</th> */}
-                      <td>{project.comment}</td>
+                      {/* <td>{project.projectCode}</td>
+                      <th>{project.startDate}</th>
+                      <td>{project.comment}</td> */}
                       <td>
                         <Link to={`/projekte/${project._id}`}>
                           <img className="project-img" src={Pen} alt="Pen" />

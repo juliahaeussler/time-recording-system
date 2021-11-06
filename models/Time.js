@@ -13,6 +13,7 @@ const timeSchema = new Schema({
   date: {
     type: Date,
     required: true,
+    default: Date.now,
   },
   timespan: {
     type: Number,
@@ -25,8 +26,11 @@ const timeSchema = new Schema({
   comment: {
       type: String,
   },
+  rate: {
+    type: Number,
+  }
 });
 
-const time = mongoose.model('Time', timeSchema);
+const Time = mongoose.model('Time', timeSchema);
 
 module.exports = Time;
