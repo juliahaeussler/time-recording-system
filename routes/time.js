@@ -15,9 +15,14 @@ router.post("/zeiten", (req, res, next) => {
     servicePhase: req.body.servicePhase,
     comment: req.body.comment,
     rate: req.session.currentUser.rate,
-  }).then((response) => {
-    res.json(response);
-  });
+    })
+    .then((newEntry) => {
+        Time.findById(newEntry._id)
+            .populate("project")
+            .then((timeWithProject) => {
+                res.json(timeWithProject);
+            })      
+    });
 });
 
 //SHOW TIME ENTRIES

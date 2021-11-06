@@ -12,10 +12,10 @@ class Times extends React.Component {
     currentUser: this.props.user,
     entries: [],
     projects: [],
-
-    name: "",
+    
+    projectName: "",
     //set default input value to current date: (in format yyyy-mm-dd)
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
     timespan: "",
     servicePhase: "",
     comment: "",
@@ -35,7 +35,7 @@ class Times extends React.Component {
 
   clearForm = () => {
     this.setState({
-      name: "",
+      projectName: "",
       date: "",
       timespan: "",
       servicePhase: "",
@@ -63,21 +63,33 @@ class Times extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    let project = this.state.projects.find(project => project.name === this.state.project)
-    if (!project) { return }
-    axios.post("/zeiten", {
-      // author: this.state.currentUser._id,
-      project: project._id,
-      date: this.state.date,
-      timespan: this.state.timespan,
-      servicePhase: this.state.servicePhase,
-      comment: this.state.comment,
-    }).then((resp) => {
-      console.log(resp.data);
-      this.updateEntries(this.state.entries.concat([resp.data]));
-      this.clearForm();
-    });
+    let project = this.state.projects.find(
+      (project) => project.name === this.state.projectName
+    );
+    if (!project) {
+      return;
+    }
+    axios
+      .post("/zeiten", {
+        // author: this.state.currentUser._id,
+        project: project._id,
+        date: this.state.date,
+        timespan: this.state.timespan,
+        servicePhase: this.state.servicePhase,
+        comment: this.state.comment,
+      })
+      .then((resp) => {
+        console.log(resp.data);
+        this.updateEntries(this.state.entries.concat([resp.data]));
+        this.clearForm();
+      });
   };
+
+  showDate(entry) {
+    let d = new Date(entry.date);
+    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    return d.toLocaleDateString();
+  }
 
   render() {
     return (
@@ -87,12 +99,12 @@ class Times extends React.Component {
           <div className="time-entry time-box">
             <h2>Neue Zeit erfassen:</h2>
             <form onSubmit={this.handleFormSubmit}>
-              <label htmlFor="project">Projektname</label>
+              <label htmlFor="projectName">Projektname</label>
               <input
                 list="projects"
                 type="text"
-                name="project"
-                value={this.state.project}
+                name="projectName"
+                value={this.state.projectName}
                 onChange={this.handleChange}
               />
               <datalist id="projects">
@@ -156,19 +168,21 @@ class Times extends React.Component {
             <table className="project-table">
               <thead>
                 <tr>
-                <th>Datum</th>
+                  <th>Datum</th>
                   <th>Projekt</th>
-                  
+                  <th>Dauer</th>
                   <th>Kommentar</th>
-                  <th>Details/Bearbeiten</th>
+                  <th>Bearbeiten</th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.entries.map((entry) => {
                   return (
                     <tr key={entry._id} className="one-project">
-                      <td>{entry.name}</td>
-                      
+                      <td>{this.showDate(entry)}</td>
+                      <td>{entry.project.name}</td>
+                      <td>{entry.timespan}</td>
+                      <td>{entry.comment ? entry.comment : "/"}</td>
                       <td>
                         <Link to={`/zeiten/${entry._id}`}>
                           <img className="project-img" src={Pen} alt="Pen" />
