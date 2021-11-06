@@ -20,8 +20,8 @@ class ProjectDetails extends React.Component {
 
   showDate() {
     let d = new Date(this.state.project.startDate);
-    let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
-    return startD;
+    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    return d.toLocaleDateString();
   }
 
   

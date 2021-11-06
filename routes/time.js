@@ -9,10 +9,10 @@ const Project = require("../models/Project");
 router.post("/zeiten", (req, res, next) => {
   Time.create({
     author: req.session.currentUser._id,
-    project: req.body.project._id,
+    project: req.body.project,
     date: req.body.date,
     timespan: req.body.timespan,
-    servicePhase: req.body.servicephase,
+    servicePhase: req.body.servicePhase,
     comment: req.body.comment,
     rate: req.session.currentUser.rate,
   }).then((response) => {

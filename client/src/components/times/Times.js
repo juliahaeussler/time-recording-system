@@ -1,21 +1,21 @@
 import React from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
 import "./Times.css";
-//import Pen from "./pen.png";
-import Config from '../../configs'
+import Pen from "./pen.png";
+import Config from "../../configs";
 
 class Times extends React.Component {
   state = {
     currentUser: this.props.user,
     entries: [],
     projects: [],
-    // filteredProjects: [],
 
     name: "",
-    date: "",
+    //set default input value to current date: (in format yyyy-mm-dd)
+    date: new Date().toISOString().split('T')[0],
     timespan: "",
     servicePhase: "",
     comment: "",
@@ -24,7 +24,6 @@ class Times extends React.Component {
   updateEntries = (data) => {
     this.setState({
       entries: data,
-      //   filteredProjects: data,
     });
   };
 
@@ -55,23 +54,6 @@ class Times extends React.Component {
     });
   }
 
-  //   searchProjects = (name) => {
-  //     const filteredProjects = this.state.projects.filter((project) => {
-  //       const lowerCaseProject = project.name.toLowerCase()
-  //       const lowerCaseNameInput = name.toLowerCase()
-  //       return lowerCaseProject.includes(lowerCaseNameInput)
-  //     })
-  //     this.setState({ filteredProjects: filteredProjects })
-  //   }
-
-  //   handleNameChange = (e) => {
-  //     this.searchProjects(e.target.value)
-  //     let currentName = e.target.name;
-  //     let newState = {};
-  //     newState[currentName] = e.target.value;
-  //     this.setState(newState);
-  //   };
-
   handleChange = (e) => {
     let currentName = e.target.name;
     let newState = {};
@@ -81,7 +63,16 @@ class Times extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    axios.post("/zeiten", this.state).then((resp) => {
+    let project = this.state.projects.find(project => project.name === this.state.project)
+    if (!project) { return }
+    axios.post("/zeiten", {
+      // author: this.state.currentUser._id,
+      project: project._id,
+      date: this.state.date,
+      timespan: this.state.timespan,
+      servicePhase: this.state.servicePhase,
+      comment: this.state.comment,
+    }).then((resp) => {
       console.log(resp.data);
       this.updateEntries(this.state.entries.concat([resp.data]));
       this.clearForm();
@@ -96,20 +87,18 @@ class Times extends React.Component {
           <div className="time-entry time-box">
             <h2>Neue Zeit erfassen:</h2>
             <form onSubmit={this.handleFormSubmit}>
-              <label htmlFor="name">Projekt</label>
+              <label htmlFor="project">Projektname</label>
               <input
                 list="projects"
                 type="text"
-                name="name"
-                value={this.state.name}
+                name="project"
+                value={this.state.project}
                 onChange={this.handleChange}
               />
               <datalist id="projects">
                 {this.state.projects.map((project) => {
                   return (
-                    <option key={project._id} value={project.name}>
-                      
-                    </option>
+                    <option key={project._id} value={project.name}></option>
                   );
                 })}
               </datalist>
@@ -125,7 +114,7 @@ class Times extends React.Component {
               <br></br>
               <label htmlFor="timespan">Dauer</label>
               <input
-                type="text"
+                type="number"
                 name="timespan"
                 value={this.state.timespan}
                 onChange={this.handleChange}
@@ -133,7 +122,7 @@ class Times extends React.Component {
               <br></br>
               <label htmlFor="servicePhase">Leistungsphase</label>
               <input
-              list="servicePhases"
+                list="servicePhases"
                 type="text"
                 name="servicePhase"
                 value={this.state.servicePhase}
@@ -141,16 +130,9 @@ class Times extends React.Component {
               />
               <datalist id="servicePhases">
                 {Config.servicePhases.map((phase) => {
-                  return (
-                    <option key={phase} value={phase}>
-                      
-                    </option>
-                  );
+                  return <option key={phase} value={phase}></option>;
                 })}
               </datalist>
-
-              
-              
 
               <br></br>
               <label htmlFor="comment">Kommentar</label>
@@ -168,25 +150,27 @@ class Times extends React.Component {
             </form>
           </div>
 
-          {/* <div className="all-projects project-box">
-            <h2>Alle Projekte:</h2>
+          <div className="all-projects project-box">
+            <h2>Erfasste Zeiten:</h2>
 
             <table className="project-table">
               <thead>
                 <tr>
-                  <th>Titel</th>
+                <th>Datum</th>
+                  <th>Projekt</th>
                   
+                  <th>Kommentar</th>
                   <th>Details/Bearbeiten</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.filteredProjects.map((project) => {
+                {this.state.entries.map((entry) => {
                   return (
-                    <tr key={project._id} className="one-project">
-                      <td>{project.name}</td>
+                    <tr key={entry._id} className="one-project">
+                      <td>{entry.name}</td>
                       
                       <td>
-                        <Link to={`/projekte/${project._id}`}>
+                        <Link to={`/zeiten/${entry._id}`}>
                           <img className="project-img" src={Pen} alt="Pen" />
                         </Link>
                       </td>
@@ -195,7 +179,7 @@ class Times extends React.Component {
                 })}
               </tbody>
             </table>
-          </div> */}
+          </div>
         </div>
       </div>
     );

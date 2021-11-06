@@ -35,7 +35,7 @@ class App extends React.Component {
 
         <Route exact path="/" component={({ history }) => (<LogIn history={history} logInTheUser={this.loginHandler}></LogIn>)} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/zeiten" component={Times} />
+        <Route exact path="/zeiten" component={() => <Times user={this.state.currentUser}></Times>} />
         <Route exact path="/projekte" component={Projects} />
         <Route exact path="/projekte/:id" component={ProjectDetails} />
         <Route exact path="/projekte/:id/bearbeiten" component={ProjectEdit} />
