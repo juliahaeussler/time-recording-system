@@ -12,6 +12,7 @@ class Times extends React.Component {
     currentUser: this.props.user,
     entries: [],
     projects: [],
+    error: false,
     
     projectName: "",
     //set default input value to current date: (in format yyyy-mm-dd)
@@ -82,6 +83,12 @@ class Times extends React.Component {
         console.log(resp.data);
         this.updateEntries(this.state.entries.concat([resp.data]));
         this.clearForm();
+      })
+      .catch((error) => {
+        console.log("adding time entry failed");
+        this.setState({
+          error: true,
+        });
       });
   };
 
@@ -159,6 +166,11 @@ class Times extends React.Component {
               <button className="project-btn" type="submit">
                 Projekt anlegen
               </button>
+              {this.state.error && (
+              <div className="alert alert-danger" role="alert">
+                edit button didnt work please try again later
+              </div>
+            )}
             </form>
           </div>
 

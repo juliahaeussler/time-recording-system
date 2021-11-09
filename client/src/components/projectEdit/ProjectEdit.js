@@ -7,6 +7,10 @@ class ProjectEdit extends React.Component {
   state = {
     project: {},
     error: false,
+
+    name: "",
+    projectCode: "",
+    comment: "",
   };
 
   componentDidMount() {
@@ -68,7 +72,7 @@ class ProjectEdit extends React.Component {
                 value={this.state.project.projectCode}
                 onChange={this.handleChange}
               />
-              <label htmlFor="comment">Titel</label>
+              <label htmlFor="comment">Kommentar</label>
               <input
                 type="text"
                 name="comment"
