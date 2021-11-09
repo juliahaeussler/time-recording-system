@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import Navbar from '../navbar/Navbar'
+import "./ProjectDetail.css";
+import Navbar from "../navbar/Navbar";
 
 class ProjectDetails extends React.Component {
   state = {
@@ -16,14 +18,37 @@ class ProjectDetails extends React.Component {
     });
   }
 
+  showDate() {
+    let d = new Date(this.state.project.startDate);
+    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    return d.toLocaleDateString();
+  }
+
+  
+
   render() {
     return (
       <div>
         <Navbar />
-        <div>
-          <h2>Titel: {this.state.project.name}</h2>
-          <h4>Projektnummer: {this.state.project.projectCode}</h4>
-          <h4>Kommentar: {this.state.project.comment}</h4>
+        <div className="project-container">
+          <div className="project-details">
+            <h2>Titel: {this.state.project.name}</h2>
+            <h4>
+              Projektnummer:{" "}
+              {this.state.project.projectCode
+                ? this.state.project.projectCode
+                : "/"}
+            </h4>
+            <h4>Startdatum: {this.showDate()} </h4>
+            <h4>
+              Kommentar:
+              {this.state.project.comment ? this.state.project.comment : "/"}
+            </h4>
+            <div className="btn-container">
+              <Link to={`/projekte/${this.state.project._id}/bearbeiten`} className="edit">Bearbeiten</Link>
+              <Link to={`/projekte/${this.state.project._id}/loeschen`} className="delete">Löschen</Link>
+            </div>
+          </div>
         </div>
       </div>
     );

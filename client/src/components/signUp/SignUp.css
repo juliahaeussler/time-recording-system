@@ -4,7 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #DDDDDD;
+    background-color: #D0D8DE;
+    border-bottom: 3px solid #1d9dd9;
 }
 
 .signup-button{

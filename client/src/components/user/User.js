@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import Navbar from '../navbar/Navbar'
 import './User.css'
@@ -54,7 +55,7 @@ class User extends React.Component {
                 ? this.state.currentUser.username
                 : "unknown user"}
             </h2>
-            <a href="#"><img className="pen" src={Pen} alt="Pen" /></a>
+            <Link to={`/benutzer/${this.state.currentUser._id}`}><img className="pen" src={Pen} alt="Pen" /></Link>
           </div>
 
             <h4>Name: {this.state.currentUser.name}</h4>
@@ -80,7 +81,7 @@ class User extends React.Component {
                 <h4 key={user._id} className="one-user">
                   {user.name}
                   
-                  <a href="#"><img className="pen" src={Pen} alt="Pen" /></a>
+                  <Link to={`/benutzer/${user._id}`}><img className="pen" src={Pen} alt="Pen" /></Link>
                   
                 </h4>
               );
@@ -93,3 +94,4 @@ class User extends React.Component {
 }
 
 export default User;
+

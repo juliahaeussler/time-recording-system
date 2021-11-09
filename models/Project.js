@@ -19,6 +19,10 @@ const projectSchema = new Schema({
     unique: true,
     required: true,
   },
+  isArchived: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Project = mongoose.model('Project', projectSchema);

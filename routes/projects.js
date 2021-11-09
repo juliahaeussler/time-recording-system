@@ -16,8 +16,8 @@ router.get('/projekte', (req, res, next) => {
 //SHOW ONE PROJECT
 router.get('/projekte/:id', (req, res, next) => {
   Project.findById(req.params.id)
-    .then(response => {
-      res.json(response);
+    .then(project => {
+      res.json(project);
   })
 });
 
@@ -33,11 +33,16 @@ router.post('/projekte', (req, res, next) => {
   });
 });
 
-
 //EDIT PROJECT
+router.put('/projekte/:id/bearbeiten', (req, res, next) => {
+  Project.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((project) => {
+      res.json(project);
+    })
+})
 
 //DELETE PROJECT
-router.delete('/projekte/:id', (req, res, next) => {
+router.delete('/projekte/:id/loeschen', (req, res, next) => {
   Project.findByIdAndRemove(req.params.id)
     .then(() => {
       res.json({ message: `Project with ${req.params.id} is removed successfully.` });
