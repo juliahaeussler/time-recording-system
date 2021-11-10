@@ -56,18 +56,7 @@ class Analysis extends React.Component {
     this.setState(newState)
   }
 
-  searchProjects = (name) => {
-    const filteredProjects = this.state.projects.filter((project) => {
-      const lowerCaseProject = project.name.toLowerCase();
-      const lowerCaseNameInput = name.toLowerCase();
-      return lowerCaseProject.includes(lowerCaseNameInput);
-    });
-    this.setState({ filteredProjects: filteredProjects });
-  };
-
   handleNameChange = (e) => {
-  
-    //this.searchProjects(e.target.value);
     let currentName = e.target.name;
     let newState = {};
     newState[currentName] = e.target.value;
@@ -84,10 +73,18 @@ class Analysis extends React.Component {
     let currentName = e.target.name;
     let newState = {};
     newState[currentName] = e.target.value;
-
-  
     this.setState(newState);
   };
+
+  //show entries of certain project:
+  // 1. chronologically
+  // 2. by employees
+  //show entries of a certain employee: 
+  //(default: all projects, option: select 1 or more project)
+  //(option: sort by servicePhase)
+  // 1. of one week (past week? clarify)
+  // 2. of one month
+  
 
   render() {
     console.log(this.state)

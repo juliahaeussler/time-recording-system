@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
@@ -13,7 +14,7 @@ class Times extends React.Component {
     entries: [],
     projects: [],
     error: false,
-    
+
     projectName: "",
     //set default input value to current date: (in format yyyy-mm-dd)
     date: new Date().toISOString().split("T")[0],
@@ -102,111 +103,117 @@ class Times extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="times">
-          <div className="time-entry time-box">
-            <h2>Neue Zeit erfassen:</h2>
-            <form onSubmit={this.handleFormSubmit}>
-              <label htmlFor="projectName">Projektname</label>
-              <input
-                list="projects"
-                type="text"
-                name="projectName"
-                value={this.state.projectName}
-                onChange={this.handleChange}
-              />
-              <datalist id="projects">
-                {this.state.projects.map((project) => {
-                  return (
-                    <option key={project._id} value={project.name}></option>
-                  );
-                })}
-              </datalist>
+        <Container>
+          <Row>
+            <Col>
+              <div className="card">
+                <h3>Neue Zeit erfassen:</h3>
+                <form onSubmit={this.handleFormSubmit} className="form-card">
+                  <label htmlFor="projectName">Projektname</label>
+                  <input
+                    list="projects"
+                    type="text"
+                    name="projectName"
+                    value={this.state.projectName}
+                    onChange={this.handleChange}
+                  />
+                  <datalist id="projects">
+                    {this.state.projects.map((project) => {
+                      return (
+                        <option key={project._id} value={project.name}></option>
+                      );
+                    })}
+                  </datalist>
 
-              <br></br>
-              <label htmlFor="date">Datum</label>
-              <input
-                type="date"
-                name="date"
-                value={this.state.date}
-                onChange={this.handleChange}
-              />
-              <br></br>
-              <label htmlFor="timespan">Dauer</label>
-              <input
-                type="number"
-                name="timespan"
-                value={this.state.timespan}
-                onChange={this.handleChange}
-              />
-              <br></br>
-              <label htmlFor="servicePhase">Leistungsphase</label>
-              <input
-                list="servicePhases"
-                type="text"
-                name="servicePhase"
-                value={this.state.servicePhase}
-                onChange={this.handleChange}
-              />
-              <datalist id="servicePhases">
-                {Config.servicePhases.map((phase) => {
-                  return <option key={phase} value={phase}></option>;
-                })}
-              </datalist>
+                  <label htmlFor="date">Datum</label>
+                  <input
+                    type="date"
+                    name="date"
+                    value={this.state.date}
+                    onChange={this.handleChange}
+                  />
 
-              <br></br>
-              <label htmlFor="comment">Kommentar</label>
-              <input
-                type="text"
-                name="comment"
-                value={this.state.comment}
-                onChange={this.handleChange}
-              />
-              <br></br>
+                  <label htmlFor="timespan">Dauer</label>
+                  <input
+                    type="number"
+                    name="timespan"
+                    max="24"
+                    value={this.state.timespan}
+                    onChange={this.handleChange}
+                  />
 
-              <button className="project-btn" type="submit">
-                Projekt anlegen
-              </button>
-              {this.state.error && (
-              <div className="alert alert-danger" role="alert">
-                edit button didnt work please try again later
+                  <label htmlFor="servicePhase">Leistungsphase</label>
+                  <input
+                    list="servicePhases"
+                    type="text"
+                    name="servicePhase"
+                    value={this.state.servicePhase}
+                    onChange={this.handleChange}
+                  />
+                  <datalist id="servicePhases">
+                    {Config.servicePhases.map((phase) => {
+                      return <option key={phase} value={phase}></option>;
+                    })}
+                  </datalist>
+
+                  <label htmlFor="comment">Kommentar</label>
+                  <input
+                    type="text"
+                    name="comment"
+                    value={this.state.comment}
+                    onChange={this.handleChange}
+                  />
+
+                  <div className="btn-container">
+                    <Button type="submit" className="button">
+                      Projekt anlegen
+                    </Button>
+                  </div>
+                  {this.state.error && (
+                    <div className="alert alert-danger" role="alert">
+                      Eintrag wurde nicht gespeichert, bitte erneut versuchen.
+                    </div>
+                  )}
+                </form>
               </div>
-            )}
-            </form>
-          </div>
+            </Col>
+            <Col>
+              <div className="card">
+                <h3>Erfasste Zeiten:</h3>
 
-          <div className="all-projects project-box">
-            <h2>Erfasste Zeiten:</h2>
-
-            <table className="project-table">
-              <thead>
-                <tr>
-                  <th>Datum</th>
-                  <th>Projekt</th>
-                  <th>Dauer</th>
-                  <th>Kommentar</th>
-                  <th>Bearbeiten</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.entries.map((entry) => {
-                  return (
-                    <tr key={entry._id} className="one-project">
-                      <td>{this.showDate(entry)}</td>
-                      <td>{entry.project.name}</td>
-                      <td>{entry.timespan}</td>
-                      <td>{entry.comment ? entry.comment : "/"}</td>
-                      <td>
-                        <Link to={`/zeiten/${entry._id}`}>
-                          <img className="project-img" src={Pen} alt="Pen" />
-                        </Link>
-                      </td>
+                <table>
+                  <thead className="thead">
+                    <tr>
+                      <th>Datum</th>
+                      <th>Projekt</th>
+                      <th>Dauer</th>
+                      <th>Kommentar</th>
+                      <th>Bearbeiten</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  </thead>
+                  
+                  <tbody>
+                    {this.state.entries.map((entry) => {
+                      return (
+                        <tr key={entry._id}>
+                          <td>{this.showDate(entry)}</td>
+                          <td>{entry.project.name}</td>
+                          <td>{entry.timespan}</td>
+                          <td>{entry.comment ? entry.comment : "/"}</td>
+                          <td>
+                            <Link to={`/zeiten/${entry._id}`}>
+                              <img className="pen-img" src={Pen} alt="Pen" />
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

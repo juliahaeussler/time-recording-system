@@ -36,11 +36,8 @@ class User extends React.Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     
-    
+
   };
-  
-
-
 
   render() {
     return (

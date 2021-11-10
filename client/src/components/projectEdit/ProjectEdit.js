@@ -17,7 +17,9 @@ class ProjectEdit extends React.Component {
     axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
-        project: resp.data,
+        name: resp.data.name,
+        projectCode: resp.data.projectCode,
+        comment: resp.data.comment,
       });
     });
   }
@@ -33,12 +35,12 @@ class ProjectEdit extends React.Component {
   handleEditSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`/projekte/${this.props.match.params.id}/bearbeiten`)
+      .patch(`/projekte/${this.props.match.params.id}/bearbeiten`, {
+        name: this.state.name,
+        projectCode: this.state.projectCode,
+        comment: this.state.comment,
+      })
       .then((resp) => {
-        this.setState({
-          project: resp.data,
-          error: false,
-        });
         this.props.history.push(`/projekte/${this.props.match.params.id}`);
       })
       .catch((error) => {
@@ -61,7 +63,7 @@ class ProjectEdit extends React.Component {
                 type="text"
                 name="name"
                 id="name"
-                value={this.state.project.name}
+                value={this.state.name}
                 onChange={this.handleChange}
               />
               <label htmlFor="projectCode">Projektnummer:</label>
@@ -69,7 +71,7 @@ class ProjectEdit extends React.Component {
                 type="text"
                 name="projectCode"
                 id="projectCode"
-                value={this.state.project.projectCode}
+                value={this.state.projectCode}
                 onChange={this.handleChange}
               />
               <label htmlFor="comment">Kommentar</label>
@@ -77,7 +79,7 @@ class ProjectEdit extends React.Component {
                 type="text"
                 name="comment"
                 id="comment"
-                value={this.state.project.comment}
+                value={this.state.comment}
                 onChange={this.handleChange}
               />
 

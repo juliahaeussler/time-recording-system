@@ -6,11 +6,61 @@
   padding: 0px;
   height: 100vh;
 }
-
 .App input {
   font-family: 'Dosis', sans-serif;
 }
-
 .App button {
   font-family: 'Dosis', sans-serif;
+}
+
+.pen-img {
+  width: 20px;
+}
+
+/* BUTTONS */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+button {
+  background-color: #1d9dd9 !important;
+  color: white; 
+  border: none;
+  width: 50%;
+}
+button:hover {
+  background-color: #64C2EE !important;
+  border-radius: 20px;
+}
+
+/* CARDS */
+.card {
+  background-color: #E2E4E5 !important;
+  border: 1px solid #1d9dd9 !important;
+  padding: 4px;
+  margin-bottom: 5px;
+}
+.form-card{
+  display: flex;
+  flex-direction: column;
+}
+.form-card input{
+  margin-bottom: 5px;
+}
+.details {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+/* TABLE */
+.thead{
+  border-bottom: 1px solid grey;
+}
+
+/* MESSAGES */
+.alert {
+  text-align: center;
+  margin: 14px 10px 0px 10px;
 }

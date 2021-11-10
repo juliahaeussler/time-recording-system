@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import "./App.css";
-//import Start from "./components/start/Start";
 import SignUp from "./components/signUp/SignUp";
 import LogIn from "./components/logIn/LogIn";
 import Times from "./components/times/Times";

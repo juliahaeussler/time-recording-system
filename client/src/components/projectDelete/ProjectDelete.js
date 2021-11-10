@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import "./ProjectDelete.css";
+import { Container, Row, Col } from "reactstrap";
+
 import Navbar from "../navbar/Navbar";
 
 class ProjectDelete extends React.Component {
@@ -41,25 +42,30 @@ class ProjectDelete extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="delete-container">
-          <div className="delete-box">
-            <h4>
-              Projekt{" "}
-              <span className="project-name">{this.state.project.name}</span>{" "}
-              endgültig löschen?
-            </h4>
-            <div className="btn-container">
-              <button className="delete" onClick={this.handleDelete}>
-                Löschen
-              </button>
+        <Container>
+          <Row>
+          <Col>
+            <div className="card details">
+              <h4>
+                Projekt{" "}
+                <span className="project-name">{this.state.project.name}</span>{" "}
+                endgültig löschen?
+              </h4>
+              <div className="btn-container">
+                <button className="delete" onClick={this.handleDelete}>
+                  Löschen
+                </button>
+                
+              </div>
               {this.state.error && (
-                <div class="alert alert-danger" role="alert">
-                  remove button didnt work please try again later
-                </div>
-              )}
+                  <div className="alert alert-danger" role="alert">
+                    Projekt konnte nicht gelöscht werden, bitte erneut versuchen.
+                  </div>
+                )}
             </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
