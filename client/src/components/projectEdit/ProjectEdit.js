@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-//import "./ProjectEdit.css";
+import { Container, Row, Col, Button } from "reactstrap";
 import Navbar from "../navbar/Navbar";
 
 class ProjectEdit extends React.Component {
@@ -11,6 +11,7 @@ class ProjectEdit extends React.Component {
     name: "",
     projectCode: "",
     comment: "",
+    isArchived: ""
   };
 
   componentDidMount() {
@@ -20,6 +21,7 @@ class ProjectEdit extends React.Component {
         name: resp.data.name,
         projectCode: resp.data.projectCode,
         comment: resp.data.comment,
+        isArchived: resp.data.isArchived
       });
     });
   }
@@ -32,6 +34,14 @@ class ProjectEdit extends React.Component {
     });
   };
 
+  handleCheckboxChange = (e) => {
+    let currentName = e.target.name 
+    this.setState({
+      ...this.state,
+      [currentName]: e.target.checked,
+    })
+  }
+
   handleEditSubmit = (event) => {
     event.preventDefault();
     axios
@@ -39,6 +49,7 @@ class ProjectEdit extends React.Component {
         name: this.state.name,
         projectCode: this.state.projectCode,
         comment: this.state.comment,
+        isArchived:this.state.isArchived
       })
       .then((resp) => {
         this.props.history.push(`/projekte/${this.props.match.params.id}`);
@@ -52,57 +63,66 @@ class ProjectEdit extends React.Component {
   };
 
   render() {
+
     return (
       <div>
         <Navbar />
-        <div className="delete-container">
-          <div className="delete-box">
-            <form onSubmit={this.handleEditSubmit}>
-              <label htmlFor="name">Titel:</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={this.state.name}
-                onChange={this.handleChange}
-              />
-              <label htmlFor="projectCode">Projektnummer:</label>
-              <input
-                type="text"
-                name="projectCode"
-                id="projectCode"
-                value={this.state.projectCode}
-                onChange={this.handleChange}
-              />
-              <label htmlFor="comment">Kommentar</label>
-              <input
-                type="text"
-                name="comment"
-                id="comment"
-                value={this.state.comment}
-                onChange={this.handleChange}
-              />
+        <Container>
+          <Row>
+            <Col className="one-card">
+              <div className="card edit-card">
+                <h3>Projekt bearbeiten</h3>
+                <form onSubmit={this.handleEditSubmit} className="form-card">
+                  <label htmlFor="name">Titel:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="projectCode">Projektnummer:</label>
+                  <input
+                    type="text"
+                    name="projectCode"
+                    id="projectCode"
+                    value={this.state.projectCode}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="comment">Kommentar</label>
+                  <input
+                    type="text"
+                    name="comment"
+                    id="comment"
+                    value={this.state.comment}
+                    onChange={this.handleChange}
+                  />
 
-              {/* <div>
-                <input
-                  type="checkbox"
-                  name="isArchived"
-                  id="isArchived"
-                  checked={this.state.isArchived}
-                  onChange={this.checkboxChangeHandler}
-                />
-                <label htmlFor="isArchived">Archivieren</label>
-              </div> */}
-              <button type="submit">Änderungen speichern</button>
-            </form>
+                  <label htmlFor="isArchived">Archivieren</label>
+                  <input
+                    type="checkbox"
+                    name="isArchived"
+                    id="isArchived"
+                    checked={this.state.isArchived}
+                    onChange={this.handleCheckboxChange}
+                  />
 
-            {this.state.error && (
-              <div className="alert alert-danger" role="alert">
-                edit button didnt work please try again later
+                  <div className="btn-container">
+                    <Button type="submit" className="button">
+                      Änderungen speichern
+                    </Button>
+                  </div>
+                </form>
+
+                {this.state.error && (
+                  <div className="alert alert-danger" role="alert">
+                    Änderungen wurden nicht gespeichert, bitte erneut versuchen.
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

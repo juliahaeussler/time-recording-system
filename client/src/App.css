@@ -33,13 +33,30 @@ button:hover {
   background-color: #64C2EE !important;
   border-radius: 20px;
 }
+.login-btn{
+  margin-bottom: 20px;
+  width: 25% !important;
+}
 
 /* CARDS */
+.one-card{
+  display: flex;
+  justify-content: center;
+}
 .card {
   background-color: #E2E4E5 !important;
   border: 1px solid #1d9dd9 !important;
-  padding: 4px;
+  padding: 20px;
   margin-bottom: 5px;
+  box-shadow: 5px 5px 5px #a39e9e;
+}
+.card-head{
+  display: flex;
+  justify-content: space-between;
+}
+.edit-card{
+  width: 50%;
+
 }
 .form-card{
   display: flex;
@@ -52,6 +69,35 @@ button:hover {
   display: flex;
   justify-content: center;
   text-align: center;
+}
+.login{
+  margin-top: 40px !important;
+  padding: 20px 40px 20px 40px;
+  
+  align-items: center;
+}
+.login-input{
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+
+/* DATE + TIME ENTRIES */
+.date-time-input{
+  display: flex;
+  justify-content: space-around;
+}
+.date-label{
+  margin-right: 5px;
+}
+.date-input {
+  width: 130px;
+}
+.time-label{
+  margin-right: 5px;
+}
+.time-input {
+  width: 60px;
 }
 
 /* TABLE */

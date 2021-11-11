@@ -105,6 +105,7 @@ class Projects extends React.Component {
                     name="startDate"
                     value={this.state.startDate}
                     onChange={this.handleChange}
+                    className="date-input"
                   />
 
                   <label htmlFor="comment">Kommentar</label>

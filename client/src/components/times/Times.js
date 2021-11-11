@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import { Container, Row, Col, Button } from "reactstrap";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
-import "./Times.css";
+
 import Pen from "./pen.png";
 import Config from "../../configs";
 
@@ -13,12 +14,15 @@ class Times extends React.Component {
     currentUser: this.props.user,
     entries: [],
     projects: [],
+    loading: true,
     error: false,
 
     projectName: "",
+    projectId: "",
     //set default input value to current date: (in format yyyy-mm-dd)
     date: new Date().toISOString().split("T")[0],
-    timespan: "",
+    timespanHours: "",
+    timespanMins: "00",
     servicePhase: "",
     comment: "",
   };
@@ -29,17 +33,12 @@ class Times extends React.Component {
     });
   };
 
-  updateProjects = (data) => {
-    this.setState({
-      projects: data,
-    });
-  };
-
   clearForm = () => {
     this.setState({
       projectName: "",
       date: "",
-      timespan: "",
+      timespanHours: "",
+      timespanMins: "",
       servicePhase: "",
       comment: "",
     });
@@ -47,14 +46,32 @@ class Times extends React.Component {
 
   componentDidMount() {
     axios.get("/zeiten").then((resp) => {
-      console.log(resp.data);
       this.updateEntries(resp.data);
     });
     axios.get("/projekte").then((resp) => {
-      console.log(resp.data);
-      this.updateProjects(resp.data);
+      let newData = resp.data.map((e) => {
+        return {
+          value: e.name,
+          id: e._id,
+          label: e.name,
+          name: e.name,
+        };
+      });
+      this.setState({
+        projects: newData,
+        loading: false,
+        error: false,
+      });
     });
   }
+
+  handleNameChange = (selectedItem) => {
+    this.setState({
+      projectName: selectedItem.name,
+      projectId: selectedItem.id,
+    });
+    console.log(this.state.projectId);
+  };
 
   handleChange = (e) => {
     let currentName = e.target.name;
@@ -74,9 +91,10 @@ class Times extends React.Component {
     axios
       .post("/zeiten", {
         // author: this.state.currentUser._id,
-        project: project._id,
+        project: this.state.projectId,
         date: this.state.date,
-        timespan: this.state.timespan,
+        timespanHours: this.state.timespanHours,
+        timespanMins: this.state.timespanMins,
         servicePhase: this.state.servicePhase,
         comment: this.state.comment,
       })
@@ -110,37 +128,52 @@ class Times extends React.Component {
                 <h3>Neue Zeit erfassen:</h3>
                 <form onSubmit={this.handleFormSubmit} className="form-card">
                   <label htmlFor="projectName">Projektname</label>
-                  <input
-                    list="projects"
-                    type="text"
-                    name="projectName"
-                    value={this.state.projectName}
-                    onChange={this.handleChange}
-                  />
-                  <datalist id="projects">
-                    {this.state.projects.map((project) => {
-                      return (
-                        <option key={project._id} value={project.name}></option>
-                      );
-                    })}
-                  </datalist>
-
-                  <label htmlFor="date">Datum</label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={this.state.date}
-                    onChange={this.handleChange}
+                  <Select
+                    options={this.state.projects}
+                    onChange={this.handleNameChange}
+                    placeholder="Auswählen..."
                   />
 
-                  <label htmlFor="timespan">Dauer</label>
-                  <input
-                    type="number"
-                    name="timespan"
-                    max="24"
-                    value={this.state.timespan}
-                    onChange={this.handleChange}
-                  />
+                  <div className="date-time-input">
+                    <div>
+                      <label htmlFor="date" className="date-label">
+                        Datum
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={this.state.date}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="timespanHours" className="time-label">
+                        Dauer (Stunden/Minuten)
+                      </label>
+                      <input
+                        type="number"
+                        name="timespanHours"
+                        max="24"
+                        value={this.state.timespanHours}
+                        onChange={this.handleChange}
+                        className="time-input"
+                      />
+                      <input
+                        list="minutes"
+                        type="number"
+                        name="timespanMins"
+                        value={this.state.timespanMins}
+                        onChange={this.handleChange}
+                        className="time-input"
+                      />
+                      <datalist id="minutes">
+                        <option>00</option>
+                        <option>15</option>
+                        <option>30</option>
+                        <option>45</option>
+                      </datalist>
+                    </div>
+                  </div>
 
                   <label htmlFor="servicePhase">Leistungsphase</label>
                   <input
@@ -166,7 +199,7 @@ class Times extends React.Component {
 
                   <div className="btn-container">
                     <Button type="submit" className="button">
-                      Projekt anlegen
+                      Zeiteintrag hinzufügen
                     </Button>
                   </div>
                   {this.state.error && (
@@ -187,18 +220,24 @@ class Times extends React.Component {
                       <th>Datum</th>
                       <th>Projekt</th>
                       <th>Dauer</th>
+
                       <th>Kommentar</th>
                       <th>Bearbeiten</th>
                     </tr>
                   </thead>
-                  
+
                   <tbody>
                     {this.state.entries.map((entry) => {
                       return (
                         <tr key={entry._id}>
                           <td>{this.showDate(entry)}</td>
                           <td>{entry.project.name}</td>
-                          <td>{entry.timespan}</td>
+                          <td>
+                            {entry.timespanHours}:
+                            {entry.timespanMins === 0
+                              ? "00"
+                              : entry.timespanMins}
+                          </td>
                           <td>{entry.comment ? entry.comment : "/"}</td>
                           <td>
                             <Link to={`/zeiten/${entry._id}`}>

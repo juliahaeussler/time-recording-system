@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import axios from "axios";
 
 import Navbar from "../navbar/Navbar";
@@ -43,6 +43,11 @@ class ProjectDetails extends React.Component {
               <h4>
                 Kommentar:
                 {this.state.project.comment ? this.state.project.comment : "/"}
+              </h4>
+              <h4>
+                {this.state.project.isArchived
+                  ? "Archiviert"
+                  : ""}
               </h4>
               <div className="btn-container">
                 <Link

@@ -1,4 +1,5 @@
 import React from "react";
+import Select from "react-select";
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
 
@@ -13,7 +14,7 @@ class Analysis extends React.Component {
     projectName: "",
     projectCode: "",
     isArchived: false,
-    projectId: ""
+    projectId: "",
   };
 
   updateProjects = (data) => {
@@ -34,9 +35,19 @@ class Analysis extends React.Component {
     axios
       .get("/projekte")
       .then((resp) => {
-        console.log("resp.data ==>", resp.data);
+        let newData = resp.data.map((e) => {
+          return {
+            value: e.name,
+            id: e._id,
+            label: e.name,
+            isArchived: e.isArchived,
+            projectCode: e.projectCode,
+            startDate: e.startDate,
+            name:e.name
+          };
+        });
         this.setState({
-          projects: resp.data,
+          projects: newData,
           loading: false,
           error: false,
         });
@@ -50,23 +61,17 @@ class Analysis extends React.Component {
   }
 
   handleCheckboxChange = (e) => {
-    let currentName = e.target.name 
-    let newState = {}
-    newState[currentName] = e.target.checked
-    this.setState(newState)
-  }
-
-  handleNameChange = (e) => {
     let currentName = e.target.name;
     let newState = {};
-    newState[currentName] = e.target.value;
-    this.setState(newState,()=>{
-      let project = this.state.projects.find(
-        (project) => project.name === this.state.projectName
-      );
-      this.setState({projectId:project._id})
-    })
+    newState[currentName] = e.target.checked;
+    this.setState(newState);
+  };
 
+  handleNameChange = (selectedItem) => {
+    this.setState({
+      projectName: selectedItem.name,
+      projectId: selectedItem.id
+    })
   };
 
   handleChange = (e) => {
@@ -79,15 +84,14 @@ class Analysis extends React.Component {
   //show entries of certain project:
   // 1. chronologically
   // 2. by employees
-  //show entries of a certain employee: 
+  //show entries of a certain employee:
   //(default: all projects, option: select 1 or more project)
   //(option: sort by servicePhase)
   // 1. of one week (past week? clarify)
   // 2. of one month
-  
 
   render() {
-    console.log(this.state)
+   
     return (
       <div>
         <Navbar />
@@ -95,24 +99,10 @@ class Analysis extends React.Component {
         <div>
           <form onSubmit={this.handleFormSubmit}>
             <label htmlFor="projectName">Projektname</label>
-            <input
-            list="projects"
-              type="text"
-              name="projectName"
-        
-              value={this.state.projectName}
+            <Select
+              options={this.state.projects}
               onChange={this.handleNameChange}
-              
             />
-            <datalist id="projects">
-                {this.state.projects.map((project) => {
-                  
-                  return (
-                    <option key={project._id} value={project.name}></option>
-                  );
-                })}
-              </datalist>
-            <br></br>
 
             <label htmlFor="projectCode">Projektnummer</label>
             <input
