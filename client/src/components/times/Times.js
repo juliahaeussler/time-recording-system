@@ -70,7 +70,6 @@ class Times extends React.Component {
       projectName: selectedItem.name,
       projectId: selectedItem.id,
     });
-    console.log(this.state.projectId);
   };
 
   handleChange = (e) => {
@@ -117,6 +116,11 @@ class Times extends React.Component {
     return d.toLocaleDateString();
   }
 
+  showServicePhase(entry) {
+    let s = entry.servicePhase
+    return s.split(".")[0];
+  }
+
   render() {
     return (
       <div>
@@ -132,6 +136,7 @@ class Times extends React.Component {
                     options={this.state.projects}
                     onChange={this.handleNameChange}
                     placeholder="Auswählen..."
+                    className="project-input"
                   />
 
                   <div className="date-time-input">
@@ -188,6 +193,11 @@ class Times extends React.Component {
                       return <option key={phase} value={phase}></option>;
                     })}
                   </datalist>
+                  {/* <Select
+                    options={Config.servicePhases}
+                    onChange={this.handleNameChange}
+                    placeholder="Auswählen..."
+                  /> */}
 
                   <label htmlFor="comment">Kommentar</label>
                   <input
@@ -219,8 +229,8 @@ class Times extends React.Component {
                     <tr>
                       <th>Datum</th>
                       <th>Projekt</th>
+                      <th>LP</th>
                       <th>Dauer</th>
-
                       <th>Kommentar</th>
                       <th>Bearbeiten</th>
                     </tr>
@@ -232,6 +242,7 @@ class Times extends React.Component {
                         <tr key={entry._id}>
                           <td>{this.showDate(entry)}</td>
                           <td>{entry.project.name}</td>
+                          <td>{this.showServicePhase(entry)}</td>
                           <td>
                             {entry.timespanHours}:
                             {entry.timespanMins === 0

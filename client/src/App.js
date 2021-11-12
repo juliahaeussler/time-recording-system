@@ -11,7 +11,8 @@ import ProjectEdit from './components/projectEdit/ProjectEdit';
 import ProjectDelete from './components/projectDelete/ProjectDelete'
 import Analysis from "./components/analysis/Analysis";
 import User from "./components/user/User";
-import UserDetails from './components/userDetails/UserDetails'
+import UserDetails from './components/userDetails/UserDetails';
+import UserEdit from './components/userEdit/UserEdit';
 import LogOut from "./components/logOut/LogOut";
 
 
@@ -41,7 +42,8 @@ class App extends React.Component {
         <Route exact path="/projekte/:id/loeschen" component={ProjectDelete} />
         <Route exact path="/auswertung" component={Analysis} />
         <Route exact path="/benutzer" component={() => <User user={this.state.currentUser}></User>} />
-        <Route exact path="/user/:id" component={UserDetails} />
+        <Route exact path="/benutzer/:id" component={UserDetails} />
+        <Route exact path="/benutzer/:id/bearbeiten" component={UserEdit} />
         <Route exact path="/logout" component={LogOut} />
 
         </Switch>

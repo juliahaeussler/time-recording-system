@@ -70,14 +70,7 @@ class User extends React.Component {
                   Aktiv: {this.state.currentUser.isActive ? "Ja" : "Nein"}
                 </h4>
 
-                {/* <form onSubmit={this.handleFormSubmit}>
-                <label>Name:</label>
-                <input type="text" name="name" onChange={this.handleChange} value={this.state.name}></input>
-                <br></br>
-                <label>Rate:</label>
-                <input type="number" name="rate" onChange={this.handleChange} value={this.state.rate}></input>
-                <br></br> 
-            </form> */}
+                
               </div>
             </Col>
             <Col>

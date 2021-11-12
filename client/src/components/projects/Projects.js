@@ -13,7 +13,7 @@ class Projects extends React.Component {
     error: false,
 
     name: "",
-    startDate: "",
+    startDate: new Date().toISOString().split("T")[0],
     comment: "",
     projectCode: "",
   };
@@ -67,18 +67,19 @@ class Projects extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    axios.post("/projekte", this.state)
+    axios
+      .post("/projekte", this.state)
       .then((resp) => {
-      console.log(resp.data);
-      this.updateProjects(this.state.projects.concat([resp.data]));
-      this.clearForm();
-    })
-    .catch((error) => {
-      console.log("adding project failed");
-      this.setState({
-        error: true,
+        console.log(resp.data);
+        this.updateProjects(this.state.projects.concat([resp.data]));
+        this.clearForm();
+      })
+      .catch((error) => {
+        console.log("adding project failed");
+        this.setState({
+          error: true,
+        });
       });
-    });
   };
 
   render() {
@@ -108,14 +109,6 @@ class Projects extends React.Component {
                     className="date-input"
                   />
 
-                  <label htmlFor="comment">Kommentar</label>
-                  <input
-                    type="text"
-                    name="comment"
-                    value={this.state.comment}
-                    onChange={this.handleChange}
-                  />
-
                   <label htmlFor="projectCode">Projektnummer</label>
                   <input
                     type="text"
@@ -124,10 +117,18 @@ class Projects extends React.Component {
                     onChange={this.handleChange}
                   />
 
-                  {/* <label htmlFor="isActive">aktiv</label>
-            <input type="checkbox" name="isActive" id="isActive" checked={this.state.isActive} onChange={this.checkboxHandleChange} /> */}
+                  <label htmlFor="comment">Kommentar</label>
+                  <input
+                    type="text"
+                    name="comment"
+                    value={this.state.comment}
+                    onChange={this.handleChange}
+                  />
+
                   <div className="btn-container">
-                    <Button type="submit" className="button">Projekt anlegen</Button>
+                    <Button type="submit" className="button">
+                      Projekt anlegen
+                    </Button>
                   </div>
 
                   {this.state.error && (
@@ -135,7 +136,6 @@ class Projects extends React.Component {
                       Projekt wurde nicht gespeichert, bitte erneut versuchen.
                     </div>
                   )}
-
                 </form>
               </div>
             </Col>
@@ -146,9 +146,6 @@ class Projects extends React.Component {
                   <thead className="thead">
                     <tr>
                       <th>Titel</th>
-                      {/* <th>Projektnummer</th>
-                  <th>Beginn</th>
-                  <th>Kommentar</th> */}
                       <th>Details/Bearbeiten</th>
                     </tr>
                   </thead>
@@ -156,10 +153,10 @@ class Projects extends React.Component {
                     {this.state.filteredProjects.map((project) => {
                       return (
                         <tr key={project._id} className="one-project">
-                          <td>{project.name}</td>
-                          {/* <td>{project.projectCode}</td>
-                      <th>{project.startDate}</th>
-                      <td>{project.comment}</td> */}
+                          <td>
+                            {project.name}
+                            {project.isArchived ? "✓" : ""}
+                          </td>
                           <td>
                             <Link to={`/projekte/${project._id}`}>
                               <img className="pen-img" src={Pen} alt="Pen" />

@@ -86,14 +86,20 @@ router.get('/benutzer', (req, res, next) => {
 
 // GET ONE USER
 router.get('/benutzer/:id', (req, res, next) => {
-  Project.findById(req.params.id)
+  User.findById(req.params.id)
     .then(response => {
       res.json(response);
   })
 });
 
-// EDIT USER
 
+// EDIT USER
+router.patch('/benutzer/:id/bearbeiten', (req, res, next) => {
+  User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((project) => {
+      res.json(project);
+    })
+})
 
 //LOG OUT
 router.post('/logout', (req, res, next) => {

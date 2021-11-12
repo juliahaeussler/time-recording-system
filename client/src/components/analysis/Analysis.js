@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Row, Col, Button } from "reactstrap";
 import Select from "react-select";
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
@@ -43,7 +44,7 @@ class Analysis extends React.Component {
             isArchived: e.isArchived,
             projectCode: e.projectCode,
             startDate: e.startDate,
-            name:e.name
+            name: e.name,
           };
         });
         this.setState({
@@ -70,8 +71,8 @@ class Analysis extends React.Component {
   handleNameChange = (selectedItem) => {
     this.setState({
       projectName: selectedItem.name,
-      projectId: selectedItem.id
-    })
+      projectId: selectedItem.id,
+    });
   };
 
   handleChange = (e) => {
@@ -91,46 +92,61 @@ class Analysis extends React.Component {
   // 2. of one month
 
   render() {
-   
     return (
       <div>
         <Navbar />
+        <Container>
+          <Row className="one-card">
+            <Col>
+            <div className="card">
+              <div>
+                <form onSubmit={this.handleFormSubmit} className="form-card">
+                  <label htmlFor="projectName">Projektname</label>
+                  <Select
+                    options={this.state.projects}
+                    onChange={this.handleNameChange}
+                    className="project-input"
+                  />
 
-        <div>
-          <form onSubmit={this.handleFormSubmit}>
-            <label htmlFor="projectName">Projektname</label>
-            <Select
-              options={this.state.projects}
-              onChange={this.handleNameChange}
-            />
+                  <label htmlFor="projectCode">Projektnummer</label>
+                  <input
+                    type="text"
+                    name="projectCode"
+                    value={this.state.projectCode}
+                    onChange={this.handleChange}
+                  />
 
-            <label htmlFor="projectCode">Projektnummer</label>
-            <input
-              type="text"
-              name="projectCode"
-              value={this.state.projectCode}
-              onChange={this.handleChange}
-            />
-            <br></br>
-
-            <div>
-              <input
-                type="checkbox"
-                name="isArchived"
-                id="isArchived"
-                checked={this.state.isArchived}
-                onChange={this.handleCheckboxChange}
-              />
-              <label htmlFor="isActive">
-                Archivierte Projekte einschließen
-              </label>
+                  <div>
+                    <input
+                      type="checkbox"
+                      name="isArchived"
+                      id="isArchived"
+                      checked={this.state.isArchived}
+                      onChange={this.handleCheckboxChange}
+                    />
+                    <label htmlFor="isActive">
+                      Archivierte Projekte einschließen
+                    </label>
+                  </div>
+                  <div className="btn-container">
+                    <Button className="button login-btn" type="submit">
+                      Auswertung
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            
             </div>
-
-            <button className="project-btn" type="submit">
+            
+            </Col>
+            
+          </Row>
+          <Row><Col>
+            <div className="card">
               Auswertung
-            </button>
-          </form>
-        </div>
+            </div>
+          </Col></Row>
+        </Container>
       </div>
     );
   }

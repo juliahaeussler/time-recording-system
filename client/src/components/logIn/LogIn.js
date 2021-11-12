@@ -41,6 +41,7 @@ class Login extends React.Component {
         <Container>
           <Row>
             <Col className="card one-card login details">
+            
               <h3>Anmelden</h3>
               <input
                 type="text"
@@ -64,6 +65,7 @@ class Login extends React.Component {
               </Button>
 
               <Link to={"/signup"}>Benutzer hinzufügen</Link>
+          
             </Col>
           </Row>
         </Container>
