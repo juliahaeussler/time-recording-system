@@ -3,25 +3,25 @@ import axios from "axios";
 import { Container, Row, Col, Button } from "reactstrap";
 import Navbar from "../navbar/Navbar";
 
-class ProjectEdit extends React.Component {
+class UserEdit extends React.Component {
   state = {
-    project: {},
+    user: {},
     error: false,
 
+    username: "",
     name: "",
-    projectCode: "",
-    comment: "",
-    isArchived: ""
+    rate: "",
+    isActive: ""
   };
 
   componentDidMount() {
-    axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/benutzer/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
+        username: resp.data.username,
         name: resp.data.name,
-        projectCode: resp.data.projectCode,
-        comment: resp.data.comment,
-        isArchived: resp.data.isArchived
+        rate: resp.data.rate,
+        isActive: resp.data.isActive
       });
     });
   }
@@ -45,14 +45,14 @@ class ProjectEdit extends React.Component {
   handleEditSubmit = (event) => {
     event.preventDefault();
     axios
-      .patch(`/projekte/${this.props.match.params.id}/bearbeiten`, {
+      .patch(`/benutzer/${this.props.match.params.id}/bearbeiten`, {
+        username: this.state.username,
         name: this.state.name,
-        projectCode: this.state.projectCode,
-        comment: this.state.comment,
-        isArchived:this.state.isArchived
+        rate: this.state.rate,
+        isActive:this.state.isActive
       })
       .then((resp) => {
-        this.props.history.push(`/projekte/${this.props.match.params.id}`);
+        this.props.history.push(`/benutzer/${this.props.match.params.id}`);
       })
       .catch((error) => {
         console.log("editing failed");
@@ -71,9 +71,17 @@ class ProjectEdit extends React.Component {
           <Row>
             <Col className="one-card">
               <div className="card edit-card">
-                <h3>Projekt bearbeiten</h3>
+                <h3>Benutzer bearbeiten</h3>
                 <form onSubmit={this.handleEditSubmit} className="form-card">
-                  <label htmlFor="name">Titel:</label>
+                  <label htmlFor="username">Benutzername:</label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="projectCode">Name:</label>
                   <input
                     type="text"
                     name="name"
@@ -81,29 +89,21 @@ class ProjectEdit extends React.Component {
                     value={this.state.name}
                     onChange={this.handleChange}
                   />
-                  <label htmlFor="projectCode">Projektnummer:</label>
+                  <label htmlFor="rate">Stundensatz</label>
                   <input
-                    type="text"
-                    name="projectCode"
-                    id="projectCode"
-                    value={this.state.projectCode}
-                    onChange={this.handleChange}
-                  />
-                  <label htmlFor="comment">Kommentar</label>
-                  <input
-                    type="text"
-                    name="comment"
-                    id="comment"
-                    value={this.state.comment}
+                    type="number"
+                    name="rate"
+                    id="rate"
+                    value={this.state.rate}
                     onChange={this.handleChange}
                   />
 
-                  <label htmlFor="isArchived">Archivieren</label>
+                  <label htmlFor="isActive">Aktiv</label>
                   <input
                     type="checkbox"
-                    name="isArchived"
-                    id="isArchived"
-                    checked={this.state.isArchived}
+                    name="isActive"
+                    id="isActive"
+                    checked={this.state.isActive}
                     onChange={this.handleCheckboxChange}
                   />
 
@@ -128,4 +128,4 @@ class ProjectEdit extends React.Component {
   }
 }
 
-export default ProjectEdit;
+export default UserEdit;

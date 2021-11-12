@@ -1,22 +1,20 @@
-import React from 'react'
-import axios from 'axios'
-import './LogIn.css'
+import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { Container, Row, Col, Button } from "reactstrap";
 
 class Login extends React.Component {
-
   state = {
-    username: '',
-    password: ''
-  }
+    username: "",
+    password: "",
+  };
 
   changeHandler = (e) => {
-    let currentName = e.target.name
-    let newState = {}
-    newState[currentName] = e.target.value 
-    this.setState(newState)
-  }
+    let currentName = e.target.name;
+    let newState = {};
+    newState[currentName] = e.target.value;
+    this.setState(newState);
+  };
 
   submitHandler = () => {
     axios
@@ -33,22 +31,44 @@ class Login extends React.Component {
 
         this.props.history.push("/zeiten");
       });
-  }
-
+  };
 
   render() {
-    console.log("props",this.props)
+    console.log("props", this.props);
 
     return (
-      <div className="login-form" >
-        <h3>Anmelden</h3>
-        <input type="text" name="username" value={this.state.username} onChange={this.changeHandler} placeholder="Benutzername" />
-        <input type="password" name="password" value={this.state.password} onChange={this.changeHandler} placeholder="Passwort" />
-        <button onClick={this.submitHandler}>LOG IN</button>
+      <div>
+        <Container>
+          <Row>
+            <Col className="card one-card login details">
+            
+              <h3>Anmelden</h3>
+              <input
+                type="text"
+                name="username"
+                value={this.state.username}
+                onChange={this.changeHandler}
+                placeholder="Benutzername"
+                className="login-input"
+              />
+              <input
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.changeHandler}
+                placeholder="Passwort"
+                className="login-input"
+              />
 
-        <div className="box">
-        <Link to={"/signup"}>Benutzer hinzufügen</Link>
-      </div>
+              <Button onClick={this.submitHandler} className="button login-btn">
+                LOG IN
+              </Button>
+
+              <Link to={"/signup"}>Benutzer hinzufügen</Link>
+          
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

@@ -51,6 +51,9 @@ app.use('/', projects);
 const time = require('./routes/time');
 app.use('/', time);
 
+const analysis = require('./routes/analysis');
+app.use('/', analysis);
+
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));

@@ -78,8 +78,9 @@
 .navbar {
     display: flex;
     align-items: center;
-    background-color: #D0D8DE;
+    background-color: #E2E4E5;
     border-bottom: 3px solid #1d9dd9;
+    margin-bottom: 20px;
 }
 
 a{
