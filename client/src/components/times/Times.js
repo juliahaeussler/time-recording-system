@@ -121,7 +121,21 @@ class Times extends React.Component {
     return s.split(".")[0];
   }
 
+  showCommentStart(entry) {
+    let c = entry.comment
+    return c.slice(0, 16);
+  }
+
   render() {
+
+    if (this.state.loading) {
+      return (
+        <div>
+          Inhalte werden geladen.
+        </div>
+      );
+    }
+    
     return (
       <div>
         <Navbar />
@@ -200,9 +214,10 @@ class Times extends React.Component {
                   /> */}
 
                   <label htmlFor="comment">Kommentar</label>
-                  <input
+                  <textarea
                     type="text"
                     name="comment"
+                    rows="5"
                     value={this.state.comment}
                     onChange={this.handleChange}
                   />
@@ -249,7 +264,7 @@ class Times extends React.Component {
                               ? "00"
                               : entry.timespanMins}
                           </td>
-                          <td>{entry.comment ? entry.comment : "/"}</td>
+                          <td>{entry.comment ? this.showCommentStart(entry) + "..." : "/"}</td>
                           <td>
                             <Link to={`/zeiten/${entry._id}`}>
                               <img className="pen-img" src={Pen} alt="Pen" />

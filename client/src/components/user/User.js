@@ -11,6 +11,8 @@ class User extends React.Component {
   state = {
     currentUser: this.props.user,
     users: [],
+    loading: true,
+    error: false,
   };
 
   componentDidMount() {
@@ -18,6 +20,8 @@ class User extends React.Component {
       console.log(resp.data);
       this.setState({
         users: resp.data,
+        loading: false,
+        error: false,
       });
     });
   }
@@ -40,7 +44,16 @@ class User extends React.Component {
     event.preventDefault();
   };
 
+ 
+
   render() {
+    if (this.state.loading) {
+      return (
+        <div>
+          Inhalte werden geladen.
+        </div>
+      );
+    }
     return (
       <div>
         <Navbar />
@@ -61,7 +74,7 @@ class User extends React.Component {
                 </div>
 
                 <h4>Name: {this.state.currentUser.name}</h4>
-                <h4>Stundensatz: {this.state.currentUser.rate}</h4>
+                <h4>Stundensatz: {this.state.currentUser.rate.toFixed(2)}</h4>
                 <h4>
                   Administrator:{" "}
                   {this.state.currentUser.isAdmin ? "Ja" : "Nein"}

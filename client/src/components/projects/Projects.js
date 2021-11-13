@@ -18,12 +18,7 @@ class Projects extends React.Component {
     projectCode: "",
   };
 
-  updateProjects = (data) => {
-    this.setState({
-      projects: data,
-      filteredProjects: data,
-    });
-  };
+
 
   clearForm = () => {
     this.setState({
@@ -40,6 +35,13 @@ class Projects extends React.Component {
       this.updateProjects(resp.data);
     });
   }
+
+  updateProjects = (data) => {
+    this.setState({
+      projects: data,
+      filteredProjects: data,
+    });
+  };
 
   searchProjects = (name) => {
     const filteredProjects = this.state.projects.filter((project) => {

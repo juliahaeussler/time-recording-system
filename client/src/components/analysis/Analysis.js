@@ -8,31 +8,22 @@ class Analysis extends React.Component {
   state = {
     currentUser: this.props.user,
     projects: [],
-    filteredProjects: [],
+    users: [],
     loading: true,
     error: false,
 
     projectName: "",
     projectCode: "",
+    startDate: "",
     isArchived: false,
     projectId: "",
-  };
-
-  updateProjects = (data) => {
-    this.setState({
-      projects: data,
-      filteredProjects: data,
-    });
-  };
-
-  clearForm = () => {
-    this.setState({
-      name: "",
-      projectCode: "",
-    });
+    projectComment: "",
   };
 
   componentDidMount() {
+    axios.get("/benutzer").then((resp) => {
+      this.updateEntries(resp.data);
+    });
     axios
       .get("/projekte")
       .then((resp) => {
@@ -61,6 +52,12 @@ class Analysis extends React.Component {
       });
   }
 
+  updateEntries = (data) => {
+    this.setState({
+      users: data,
+    });
+  };
+
   handleCheckboxChange = (e) => {
     let currentName = e.target.name;
     let newState = {};
@@ -72,6 +69,9 @@ class Analysis extends React.Component {
     this.setState({
       projectName: selectedItem.name,
       projectId: selectedItem.id,
+      projectCode: selectedItem.projectCode,
+      projectComment: selectedItem.comment,
+      startDate: selectedItem.startDate,
     });
   };
 
@@ -91,61 +91,68 @@ class Analysis extends React.Component {
   // 1. of one week (past week? clarify)
   // 2. of one month
 
+  showDate(date) {
+    let d = new Date(date);
+    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    return d.toLocaleDateString();
+  }
+
   render() {
+    
     return (
       <div>
         <Navbar />
         <Container>
           <Row className="one-card">
             <Col>
-            <div className="card">
-              <div>
-                <form onSubmit={this.handleFormSubmit} className="form-card">
-                  <label htmlFor="projectName">Projektname</label>
-                  <Select
-                    options={this.state.projects}
-                    onChange={this.handleNameChange}
-                    className="project-input"
-                  />
-
-                  <label htmlFor="projectCode">Projektnummer</label>
-                  <input
-                    type="text"
-                    name="projectCode"
-                    value={this.state.projectCode}
-                    onChange={this.handleChange}
-                  />
-
-                  <div>
-                    <input
-                      type="checkbox"
-                      name="isArchived"
-                      id="isArchived"
-                      checked={this.state.isArchived}
-                      onChange={this.handleCheckboxChange}
+              <div className="card">
+                <div>
+                  <form onSubmit={this.handleFormSubmit} className="form-card">
+                    <label htmlFor="projectName">Projektname</label>
+                    <Select
+                      options={this.state.projects}
+                      onChange={this.handleNameChange}
+                      className="project-input"
                     />
-                    <label htmlFor="isActive">
-                      Archivierte Projekte einschließen
-                    </label>
-                  </div>
-                  <div className="btn-container">
-                    <Button className="button login-btn" type="submit">
-                      Auswertung
-                    </Button>
-                  </div>
-                </form>
+
+                    <label htmlFor="projectCode">Projektnummer</label>
+                    <input
+                      type="text"
+                      name="projectCode"
+                      value={this.state.projectCode}
+                      onChange={this.handleChange}
+                    />
+
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="isArchived"
+                        id="isArchived"
+                        checked={this.state.isArchived}
+                        onChange={this.handleCheckboxChange}
+                      />
+                      <label htmlFor="isActive">
+                        Archivierte Projekte einschließen
+                      </label>
+                    </div>
+                    <div className="btn-container">
+                      <Button className="button login-btn" type="submit">
+                        Auswertung
+                      </Button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            
-            </div>
-            
             </Col>
-            
           </Row>
-          <Row><Col>
-            <div className="card">
-              Auswertung
-            </div>
-          </Col></Row>
+          <Row>
+            <Col>
+              <div className="card">
+                <h3>{this.state.projectName}</h3>
+                <h2>{this.showDate(this.state.startDate)}</h2>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );

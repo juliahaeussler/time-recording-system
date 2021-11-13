@@ -7,23 +7,24 @@ const Project = require("../models/Project");
 
 //ADD TIME ENTRY
 router.post("/zeiten", (req, res, next) => {
-  Time.create({
-    author: req.session.currentUser._id,
-    project: req.body.project,
-    date: req.body.date,
-    timespanHours: req.body.timespanHours,
-    timespanMins: req.body.timespanMins,
-    servicePhase: req.body.servicePhase,
-    comment: req.body.comment,
-    rate: req.session.currentUser.rate,
-    })
-    .then((newEntry) => {
-        Time.findById(newEntry._id)
-            .populate("project")
-            .then((timeWithProject) => {
-                res.json(timeWithProject);
-            })      
+  User.findById(req.session.currentUser._id).then((user) => {
+    Time.create({
+      author: req.session.currentUser._id,
+      project: req.body.project,
+      date: req.body.date,
+      timespanHours: req.body.timespanHours,
+      timespanMins: req.body.timespanMins,
+      servicePhase: req.body.servicePhase,
+      comment: req.body.comment,
+      rate: user.rate,
+    }).then((newEntry) => {
+      Time.findById(newEntry._id)
+        .populate("project")
+        .then((timeWithProject) => {
+          res.json(timeWithProject);
+        });
     });
+  });
 });
 
 //SHOW TIME ENTRIES
