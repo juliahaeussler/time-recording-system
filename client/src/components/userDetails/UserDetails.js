@@ -43,7 +43,8 @@ class UserDetails extends React.Component {
             <Col className="card details">
               <h2>Benutzername: {this.state.user.username}</h2>
               <h4>Name: {this.state.user.name}</h4>
-              <h4>Stundensatz: {this.state.user.rate.toFixed(2)}</h4>
+              <h4>Stundensatz: {this.state.user.rate.toFixed(2)}€</h4>
+              
               <div className="btn-container">
                 <Link
                   to={`/benutzer/${this.state.user._id}/bearbeiten`}

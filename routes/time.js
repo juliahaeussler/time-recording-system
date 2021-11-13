@@ -37,6 +37,15 @@ router.get("/zeiten", (req, res, next) => {
     });
 });
 
+//SHOW ONE ENTRY
+router.get('/zeiten/:id', (req, res, next) => {
+  Time.findById(req.params.id)
+    .populate("project")
+    .then(entry => {
+      res.json(entry);
+  })
+});
+
 // //EDIT ENTRY
 // router.put('/zeiten/:id/bearbeiten', (req, res, next) => {
 //     Time.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -45,13 +54,14 @@ router.get("/zeiten", (req, res, next) => {
 //       })
 // })
 
-// //DELETE ENTRY
-// router.delete("/zeiten/:id/loeschen", (req, res, next) => {
-//   Time.findByIdAndRemove(req.params.id).then(() => {
-//     res.json({
-//       message: `Project with ${req.params.id} is removed successfully.`,
-//     });
-//   });
-// });
+
+//DELETE ENTRY
+router.delete('/zeiten/:id/loeschen', (req, res, next) => {
+  Time.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({ message: `Time entry with ${req.params.id} is removed successfully.` });
+    })
+})
+
 
 module.exports = router;

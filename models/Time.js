@@ -35,7 +35,11 @@ const timeSchema = new Schema({
   },
   rate: {
     type: Number,
-  }
+  },
+  isDeducted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Time = mongoose.model('Time', timeSchema);

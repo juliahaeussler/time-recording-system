@@ -36,7 +36,7 @@ class Times extends React.Component {
   clearForm = () => {
     this.setState({
       projectName: "",
-      date: "",
+     
       timespanHours: "",
       timespanMins: "",
       servicePhase: "",
@@ -79,6 +79,12 @@ class Times extends React.Component {
     this.setState(newState);
   };
 
+  handleStageChange = (selectedStage) => {
+    this.setState({
+      servicePhase: selectedStage.label,
+    });
+  };
+
   handleFormSubmit = (event) => {
     event.preventDefault();
     let project = this.state.projects.find(
@@ -117,25 +123,28 @@ class Times extends React.Component {
   }
 
   showServicePhase(entry) {
-    let s = entry.servicePhase
+    let s = entry.servicePhase;
     return s.split(".")[0];
   }
 
   showCommentStart(entry) {
-    let c = entry.comment
+    let c = entry.comment;
     return c.slice(0, 16);
   }
 
+
+
   render() {
+   
+
+    let selectedDay = this.state.entries.filter((e) => {
+      return e.date.includes(this.state.date);
+    });
 
     if (this.state.loading) {
-      return (
-        <div>
-          Inhalte werden geladen.
-        </div>
-      );
+      return <div>Inhalte werden geladen.</div>;
     }
-    
+
     return (
       <div>
         <Navbar />
@@ -195,23 +204,11 @@ class Times extends React.Component {
                   </div>
 
                   <label htmlFor="servicePhase">Leistungsphase</label>
-                  <input
-                    list="servicePhases"
-                    type="text"
-                    name="servicePhase"
-                    value={this.state.servicePhase}
-                    onChange={this.handleChange}
-                  />
-                  <datalist id="servicePhases">
-                    {Config.servicePhases.map((phase) => {
-                      return <option key={phase} value={phase}></option>;
-                    })}
-                  </datalist>
-                  {/* <Select
+                  <Select
                     options={Config.servicePhases}
-                    onChange={this.handleNameChange}
+                    onChange={this.handleStageChange}
                     placeholder="Auswählen..."
-                  /> */}
+                  />
 
                   <label htmlFor="comment">Kommentar</label>
                   <textarea
@@ -237,7 +234,10 @@ class Times extends React.Component {
             </Col>
             <Col>
               <div className="card">
-                <h3>Erfasste Zeiten:</h3>
+                <h3>
+                  Erfasste Zeiten vom{" "}
+                  {this.state.date.split("-").reverse().join(".")}:
+                </h3>
 
                 <table>
                   <thead className="thead">
@@ -252,7 +252,7 @@ class Times extends React.Component {
                   </thead>
 
                   <tbody>
-                    {this.state.entries.map((entry) => {
+                    {selectedDay.map((entry) => {
                       return (
                         <tr key={entry._id}>
                           <td>{this.showDate(entry)}</td>
@@ -264,7 +264,11 @@ class Times extends React.Component {
                               ? "00"
                               : entry.timespanMins}
                           </td>
-                          <td>{entry.comment ? this.showCommentStart(entry) + "..." : "/"}</td>
+                          <td>
+                            {entry.comment
+                              ? this.showCommentStart(entry) + "..."
+                              : "/"}
+                          </td>
                           <td>
                             <Link to={`/zeiten/${entry._id}`}>
                               <img className="pen-img" src={Pen} alt="Pen" />

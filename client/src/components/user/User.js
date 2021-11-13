@@ -6,6 +6,8 @@ import Navbar from "../navbar/Navbar";
 
 
 import Pen from "./pen.png";
+import Check from './check.png';
+import noCheck from './no-check.png';
 
 class User extends React.Component {
   state = {
@@ -74,13 +76,12 @@ class User extends React.Component {
                 </div>
 
                 <h4>Name: {this.state.currentUser.name}</h4>
-                <h4>Stundensatz: {this.state.currentUser.rate.toFixed(2)}</h4>
+                <h4>Stundensatz: {this.state.currentUser.rate.toFixed(2)}€</h4>
                 <h4>
-                  Administrator:{" "}
-                  {this.state.currentUser.isAdmin ? "Ja" : "Nein"}
+                  {this.state.currentUser.isAdmin ? <h4><img className="pen-img" src={Check} alt="Check" /> Administrator</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Eingeschränkt</h4>}
                 </h4>
                 <h4>
-                  Aktiv: {this.state.currentUser.isActive ? "Ja" : "Nein"}
+                  {this.state.currentUser.isActive ? <h4><img className="pen-img" src={Check} alt="Check" /> Aktiv</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Deaktiviert</h4>}
                 </h4>
 
                 

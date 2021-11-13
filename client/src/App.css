@@ -22,16 +22,20 @@
   display: flex;
   justify-content: center;
   padding: 5px;
+  margin-top: 10px;
 }
 button {
   background-color: #1d9dd9 !important;
   color: white; 
-  border: none;
+  border: none !important;
   width: 50%;
+
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
+
 button:hover {
   background-color: #64C2EE !important;
-  border-radius: 20px;
+ 
 }
 .login-btn{
   margin-bottom: 20px;
@@ -56,12 +60,24 @@ button:hover {
 }
 .edit-card{
   width: 50%;
-
 }
 .form-card{
   display: flex;
   flex-direction: column;
 }
+input{
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding-left: 5px;
+}
+textarea{
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding-left: 5px;
+}
+
 .form-card input{
   margin-bottom: 5px;
 }
@@ -101,6 +117,7 @@ button:hover {
 }
 .time-input {
   width: 65px;
+  margin-right: 2px;
 }
 
 /* TABLE */

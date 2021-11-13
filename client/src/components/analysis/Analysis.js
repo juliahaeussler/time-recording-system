@@ -9,6 +9,7 @@ class Analysis extends React.Component {
     currentUser: this.props.user,
     projects: [],
     users: [],
+
     loading: true,
     error: false,
 
@@ -91,6 +92,37 @@ class Analysis extends React.Component {
   // 1. of one week (past week? clarify)
   // 2. of one month
 
+  handleSubmit = (event) => {
+    // event.preventDefault();
+    // let project = this.state.projects.find(
+    //   (project) => project.name === this.state.projectName
+    // );
+    // if (!project) {
+    //   return;
+    // }
+    // axios
+    //   .post("/zeiten", {
+    //     // author: this.state.currentUser._id,
+    //     project: this.state.projectId,
+    //     date: this.state.date,
+    //     timespanHours: this.state.timespanHours,
+    //     timespanMins: this.state.timespanMins,
+    //     servicePhase: this.state.servicePhase,
+    //     comment: this.state.comment,
+    //   })
+    //   .then((resp) => {
+    //     console.log(resp.data);
+    //     this.updateEntries(this.state.entries.concat([resp.data]));
+    //     this.clearForm();
+    //   })
+      // .catch((error) => {
+      //   console.log("search failed");
+      //   this.setState({
+      //     error: true,
+      //   });
+      // });
+  };
+
   showDate(date) {
     let d = new Date(date);
     //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
@@ -98,6 +130,13 @@ class Analysis extends React.Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div>
+          Inhalte werden geladen.
+        </div>
+      );
+    }
     
     return (
       <div>
@@ -107,7 +146,7 @@ class Analysis extends React.Component {
             <Col>
               <div className="card">
                 <div>
-                  <form onSubmit={this.handleFormSubmit} className="form-card">
+                  <form onSubmit={this.handleSubmit} className="form-card">
                     <label htmlFor="projectName">Projektname</label>
                     <Select
                       options={this.state.projects}
