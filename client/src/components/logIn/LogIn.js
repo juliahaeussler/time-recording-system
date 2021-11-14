@@ -43,6 +43,7 @@ class Login extends React.Component {
             <Col className="card one-card login details">
             
               <h3>Anmelden</h3>
+              <br></br>
               <input
                 type="text"
                 name="username"
@@ -59,6 +60,7 @@ class Login extends React.Component {
                 placeholder="Passwort"
                 className="login-input"
               />
+              <br></br>
 
               <Button onClick={this.submitHandler} className="button login-btn">
                 LOG IN

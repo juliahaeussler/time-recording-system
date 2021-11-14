@@ -64,6 +64,7 @@ class Analysis extends React.Component {
     let newState = {};
     newState[currentName] = e.target.checked;
     this.setState(newState);
+    console.log(this.state.isArchived)
   };
 
   handleNameChange = (selectedItem) => {
@@ -93,34 +94,7 @@ class Analysis extends React.Component {
   // 2. of one month
 
   handleSubmit = (event) => {
-    // event.preventDefault();
-    // let project = this.state.projects.find(
-    //   (project) => project.name === this.state.projectName
-    // );
-    // if (!project) {
-    //   return;
-    // }
-    // axios
-    //   .post("/zeiten", {
-    //     // author: this.state.currentUser._id,
-    //     project: this.state.projectId,
-    //     date: this.state.date,
-    //     timespanHours: this.state.timespanHours,
-    //     timespanMins: this.state.timespanMins,
-    //     servicePhase: this.state.servicePhase,
-    //     comment: this.state.comment,
-    //   })
-    //   .then((resp) => {
-    //     console.log(resp.data);
-    //     this.updateEntries(this.state.entries.concat([resp.data]));
-    //     this.clearForm();
-    //   })
-      // .catch((error) => {
-      //   console.log("search failed");
-      //   this.setState({
-      //     error: true,
-      //   });
-      // });
+
   };
 
   showDate(date) {
@@ -162,7 +136,7 @@ class Analysis extends React.Component {
                       onChange={this.handleChange}
                     />
 
-                    <div>
+                    <div className='input-group'>
                       <input
                         type="checkbox"
                         name="isArchived"

@@ -36,7 +36,7 @@ class Times extends React.Component {
   clearForm = () => {
     this.setState({
       projectName: "",
-     
+
       timespanHours: "",
       timespanMins: "",
       servicePhase: "",
@@ -132,11 +132,7 @@ class Times extends React.Component {
     return c.slice(0, 16);
   }
 
-
-
   render() {
-   
-
     let selectedDay = this.state.entries.filter((e) => {
       return e.date.includes(this.state.date);
     });
@@ -176,30 +172,32 @@ class Times extends React.Component {
                     </div>
                     <div>
                       <label htmlFor="timespanHours" className="time-label">
-                        Dauer (Stunden/Minuten)
+                        Dauer (h/min)
                       </label>
-                      <input
-                        type="number"
-                        name="timespanHours"
-                        max="24"
-                        value={this.state.timespanHours}
-                        onChange={this.handleChange}
-                        className="time-input"
-                      />
-                      <input
-                        list="minutes"
-                        type="number"
-                        name="timespanMins"
-                        value={this.state.timespanMins}
-                        onChange={this.handleChange}
-                        className="time-input"
-                      />
-                      <datalist id="minutes">
-                        <option>00</option>
-                        <option>15</option>
-                        <option>30</option>
-                        <option>45</option>
-                      </datalist>
+                      
+                        <input
+                          type="number"
+                          name="timespanHours"
+                          max="24"
+                          value={this.state.timespanHours}
+                          onChange={this.handleChange}
+                          className="time-input"
+                        />
+                        <input
+                          list="minutes"
+                          type="number"
+                          name="timespanMins"
+                          value={this.state.timespanMins}
+                          onChange={this.handleChange}
+                          className="time-input"
+                        />
+                        <datalist id="minutes">
+                          <option>00</option>
+                          <option>15</option>
+                          <option>30</option>
+                          <option>45</option>
+                        </datalist>
+                      
                     </div>
                   </div>
 

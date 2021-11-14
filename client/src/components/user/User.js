@@ -13,6 +13,7 @@ class User extends React.Component {
   state = {
     currentUser: this.props.user,
     users: [],
+    updatedUser: null,
     loading: true,
     error: false,
   };
@@ -20,8 +21,14 @@ class User extends React.Component {
   componentDidMount() {
     axios.get("/benutzer").then((resp) => {
       console.log(resp.data);
+      const updatedUser = resp.data.find((user) => {
+        if (this.state.currentUser._id === user._id) {
+          return user
+        }
+      });
       this.setState({
         users: resp.data,
+        updatedUser: updatedUser,
         loading: false,
         error: false,
       });
@@ -49,6 +56,7 @@ class User extends React.Component {
  
 
   render() {
+    console.log(this.state.currentUser.isActive)
     if (this.state.loading) {
       return (
         <div>
@@ -66,23 +74,22 @@ class User extends React.Component {
                 <div className="card-head">
                   <h2>
                     Angemeldet als{" "}
-                    {this.state.currentUser
-                      ? this.state.currentUser.username
+                    {this.state.updatedUser
+                      ? this.state.updatedUser.username
                       : "unknown user"}
                   </h2>
-                  <Link to={`/benutzer/${this.state.currentUser._id}`}>
+                  <Link to={`/benutzer/${this.state.updatedUser._id}`}>
                     <img className="pen-img" src={Pen} alt="Pen" />
                   </Link>
                 </div>
 
-                <h4>Name: {this.state.currentUser.name}</h4>
-                <h4>Stundensatz: {this.state.currentUser.rate.toFixed(2)}€</h4>
-                <h4>
-                  {this.state.currentUser.isAdmin ? <h4><img className="pen-img" src={Check} alt="Check" /> Administrator</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Eingeschränkt</h4>}
-                </h4>
-                <h4>
-                  {this.state.currentUser.isActive ? <h4><img className="pen-img" src={Check} alt="Check" /> Aktiv</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Deaktiviert</h4>}
-                </h4>
+                <h4>Name: {this.state.updatedUser.name}</h4>
+                <h4>Stundensatz: {this.state.updatedUser.rate.toFixed(2)}€</h4>
+                
+                  {this.state.updatedUser.isAdmin ? <h4><img className="pen-img" src={Check} alt="Check" /> Administrator</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Eingeschränkt</h4>}
+                
+                  {this.state.updatedUser.isActive ? <h4><img className="pen-img" src={Check} alt="Check" /> Aktiv</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Deaktiviert</h4>}
+               
 
                 
               </div>

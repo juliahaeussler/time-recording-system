@@ -84,6 +84,7 @@ router.get('/benutzer', (req, res, next) => {
     })
 });
 
+
 // GET ONE USER
 router.get('/benutzer/:id', (req, res, next) => {
   User.findById(req.params.id)
