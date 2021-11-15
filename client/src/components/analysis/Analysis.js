@@ -86,7 +86,7 @@ class Analysis extends React.Component {
   };
 
   //show entries of certain project:
-  // 1. chronologically
+  // 1. chronologically 
   // 2. by employees
   //show entries of a certain employee:
   //(default: all projects, option: select 1 or more project)
@@ -106,10 +106,11 @@ class Analysis extends React.Component {
         this.clearForm();
       })
       .catch((error) => {
-        console.log("sending the project ID failed");
+        console.log("submitting failed");
         this.setState({
           error: true,
         });
+       
       })
      
   };
@@ -130,6 +131,8 @@ class Analysis extends React.Component {
         </div>
       );
     }
+    console.log(this.state.error)
+    console.log(this.state.entries)
     
     return (
       <div>

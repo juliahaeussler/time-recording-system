@@ -28,7 +28,7 @@ const Project = require("../models/Project");
 
 router.get('/auswertung/:id', (req, res, next) => {
  
-  Time.find({ project: req.params.id }).populate('project')
+  Time.find({ project: req.params.id }).populate('project').populate('author')
     .then(timeWithProject => {
      
       res.json(timeWithProject);

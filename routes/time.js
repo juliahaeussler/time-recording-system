@@ -7,7 +7,9 @@ const Project = require("../models/Project");
 
 //ADD TIME ENTRY
 router.post("/zeiten", (req, res, next) => {
+  
   User.findById(req.session.currentUser._id).then((user) => {
+    
     Time.create({
       author: req.session.currentUser._id,
       project: req.body.project,
