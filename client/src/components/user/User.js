@@ -24,7 +24,7 @@ class User extends React.Component {
       const updatedUser = resp.data.find((user) => {
         if (this.state.currentUser._id === user._id) {
           return user
-        }
+        } return user
       });
       this.setState({
         users: resp.data,
@@ -56,7 +56,7 @@ class User extends React.Component {
  
 
   render() {
-    console.log(this.state.currentUser.isActive)
+   
     if (this.state.loading) {
       return (
         <div>

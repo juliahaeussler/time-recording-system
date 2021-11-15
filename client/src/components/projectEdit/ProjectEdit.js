@@ -7,11 +7,12 @@ class ProjectEdit extends React.Component {
   state = {
     project: {},
     error: false,
+    loading: true,
 
     name: "",
     projectCode: "",
     comment: "",
-    isArchived: ""
+    isArchived: false,
   };
 
   componentDidMount() {
@@ -21,7 +22,8 @@ class ProjectEdit extends React.Component {
         name: resp.data.name,
         projectCode: resp.data.projectCode,
         comment: resp.data.comment,
-        isArchived: resp.data.isArchived
+        isArchived: resp.data.isArchived,
+        loading: false,
       });
     });
   }
@@ -34,13 +36,25 @@ class ProjectEdit extends React.Component {
     });
   };
 
+
+  // handleCheckboxChange = (e) => {
+  //   let currentName = e.target.name;
+  //   let newState = {};
+  //   newState[currentName] = e.target.checked;
+  //   this.setState({newState}, () => {
+  //     console.log(this.state.isArchived)
+  //   });
+  // };
+
   handleCheckboxChange = (e) => {
-    let currentName = e.target.name 
+    let currentName = e.target.name;
     this.setState({
       ...this.state,
       [currentName]: e.target.checked,
     })
-  }
+  };
+
+
 
   handleEditSubmit = (event) => {
     event.preventDefault();
@@ -49,7 +63,7 @@ class ProjectEdit extends React.Component {
         name: this.state.name,
         projectCode: this.state.projectCode,
         comment: this.state.comment,
-        isArchived:this.state.isArchived
+        isArchived: this.state.isArchived,
       })
       .then((resp) => {
         this.props.history.push(`/projekte/${this.props.match.params.id}`);
@@ -63,7 +77,10 @@ class ProjectEdit extends React.Component {
   };
 
   render() {
-
+    if (this.state.loading) {
+      return <div>Inhalte werden geladen.</div>;
+    }
+    console.log(this.state.isArchived)
     return (
       <div>
         <Navbar />
@@ -98,14 +115,17 @@ class ProjectEdit extends React.Component {
                     onChange={this.handleChange}
                   />
 
-                  <label htmlFor="isArchived">Archivieren</label>
-                  <input
-                    type="checkbox"
-                    name="isArchived"
-                    id="isArchived"
-                    checked={this.state.isArchived}
-                    onChange={this.handleCheckboxChange}
-                  />
+                  <div className="input-group">
+                    
+                    <input
+                      type="checkbox"
+                      name="isArchived"
+                      id="isArchived"
+                      checked={this.state.isArchived}
+                      onChange={this.handleCheckboxChange}
+                    />
+                    <label htmlFor="isArchived">Archivieren</label>
+                  </div>
 
                   <div className="btn-container">
                     <Button type="submit" className="button">

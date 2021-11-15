@@ -9,6 +9,7 @@ class Analysis extends React.Component {
     currentUser: this.props.user,
     projects: [],
     users: [],
+    entries: [],
 
     loading: true,
     error: false,
@@ -94,8 +95,26 @@ class Analysis extends React.Component {
   // 2. of one month
 
   handleSubmit = (event) => {
-
+    event.preventDefault();
+    axios
+      .get(`/auswertung/${this.state.projectId}`)
+      .then((projectEntries) => {
+        console.log(projectEntries.data);
+        this.setState({
+          entries: projectEntries.data
+        })
+        this.clearForm();
+      })
+      .catch((error) => {
+        console.log("sending the project ID failed");
+        this.setState({
+          error: true,
+        });
+      })
+     
   };
+
+ 
 
   showDate(date) {
     let d = new Date(date);
@@ -148,6 +167,14 @@ class Analysis extends React.Component {
                         Archivierte Projekte einschließen
                       </label>
                     </div>
+
+                    <div>
+                    Einträge sortieren
+                    -Datum
+                    -nach Mitarbeitern
+                    </div>
+
+
                     <div className="btn-container">
                       <Button className="button login-btn" type="submit">
                         Auswertung
@@ -161,8 +188,11 @@ class Analysis extends React.Component {
           <Row>
             <Col>
               <div className="card">
-                <h3>{this.state.projectName}</h3>
-                <h2>{this.showDate(this.state.startDate)}</h2>
+              {this.state.entries.map((entry) => {
+                return (
+                  <h1 key={entry._id}>{entry._id}</h1>
+                )
+              })}
               </div>
             </Col>
           </Row>

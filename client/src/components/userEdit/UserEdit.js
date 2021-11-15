@@ -39,13 +39,9 @@ class UserEdit extends React.Component {
     this.setState({
       ...this.state,
       [currentName]: e.target.checked,
-    }, () =>{
-      
+    }, () =>{  
       console.log(this.state.isActive)
     })
-    
-    
-    
   };
 
   handleEditSubmit = (event) => {
