@@ -21,9 +21,11 @@ class Analysis extends React.Component {
     isArchived: false,
     projectId: "",
     projectComment: "",
-    totalHours :"",
-    totalMinutes:''
-
+    totalHours: "",
+    totalMinutes: "",
+    totalEur: "",
+    totalOpen: "",
+    totalDeduct: "",
   };
 
   componentDidMount() {
@@ -89,30 +91,6 @@ class Analysis extends React.Component {
     this.setState(newState);
   };
 
-  clearForm = () => {
-    this.setState({
-      projectName: "",
-      projectCode: "",
-    
-    });
-  };
-
-
-
-
-  filterUsers = (event)=>{
-
-
-
-    this.setState({
-      entries: this.state.entries.filter(e=>{
-        return e.author.name.toLowerCase().includes(event.target.value.toLowerCase())
-      })
-    })
-  }
-
-  
-
   //show entries of certain project:
   // 1. chronologically
   // 2. by employees
@@ -127,28 +105,61 @@ class Analysis extends React.Component {
     axios
       .get(`/auswertung/${this.state.projectId}`)
       .then((projectEntries) => {
-
+        //SUM TOTAL TIME:
         //REDUCER instead of FOREACH
-        let hours = projectEntries.data.map(({ timespanHours }) => timespanHours)
-        let sumH = 0
+        let hours = projectEntries.data.map(
+          ({ timespanHours }) => timespanHours
+        );
+        let sumH = 0;
         hours.forEach((hour) => {
-          sumH+=hour
-        })
-        let mins = projectEntries.data.map(({ timespanMins }) => timespanMins)
-        let sumM = 0
+          sumH += hour;
+        });
+        let mins = projectEntries.data.map(({ timespanMins }) => timespanMins);
+        let sumM = 0;
         mins.forEach((min) => {
-          sumM+=min
-        })
-        let restHours =  Math.floor( sumM/ 60)
-        let restMinutes = sumM % 60
-        
+          sumM += min;
+        });
+        let restHours = Math.floor(sumM / 60);
+        let restMinutes = sumM % 60;
+
+        //SUM TOTAL EUR
+        let entrySums = projectEntries.data.map(({ entrySum }) => entrySum);
+        let totalEur = 0;
+        entrySums.forEach((eur) => {
+          totalEur += eur;
+        });
+
+        //SUM OPEN EUR
+        let entriesOpenSums = projectEntries.data.filter(
+          (time) => time.isDeducted === false
+        );
+        let openSums = entriesOpenSums.map(({ entrySum }) => entrySum);
+        let totalOpen = 0;
+        openSums.forEach((eur) => {
+          totalOpen += eur;
+        });
+
+        //SUM DEDUCTED EUR
+        let entriesDeductSums = projectEntries.data.filter(
+          (time) => time.isDeducted === true
+        );
+        let deductSums = entriesDeductSums.map(({ entrySum }) => entrySum);
+        let totalDeduct = 0;
+        deductSums.forEach((eur) => {
+          totalDeduct += eur;
+        });
+
+
+
+
         this.setState({
           entries: projectEntries.data,
-          totalHours: sumH +restHours,
-          totalMinutes:restMinutes
+          totalHours: sumH + restHours,
+          totalMinutes: restMinutes,
+          totalEur: totalEur.toFixed(2) + "€",
+          totalOpen: totalOpen.toFixed(2) + "€",
+          totalDeduct: totalDeduct.toFixed(2) + "€"
         });
-       
-        this.clearForm();
       })
       .catch((error) => {
         console.log("submitting failed", error);
@@ -160,44 +171,47 @@ class Analysis extends React.Component {
 
   showDate(date) {
     let d = new Date(date);
-    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     return d.toLocaleDateString();
-  
   }
 
-  sortDate =()=>{
-    let sorted = this.state.entries.sort(function(a,b){
+  sortNewToOld = () => {
+    let sorted = this.state.entries.sort(function (a, b) {
       var c = new Date(a.date);
       var d = new Date(b.date);
-      return c-d;
-  
-    })
-    console.log("sorted",sorted)
+      return c - d;
+    });
     this.setState({
-      entries:sorted
-    }) 
-  }
+      entries: sorted,
+    });
+  };
 
-  calcEach(rate, hours, mins) {
-    let time = hours + (mins/60)
-    
-    return rate*time
-  }
+  sortOldToNew = () => {
+    let sorted = this.state.entries.sort(function (a, b) {
+      var c = new Date(a.date);
+      var d = new Date(b.date);
+      return d - c;
+    });
+    this.setState({
+      entries: sorted,
+    });
+  };
+
+  filterUsers = (event) => {
+    this.setState({
+      entries: this.state.entries.filter((e) => {
+        return e.author.name
+          .toLowerCase()
+          .includes(event.target.value.toLowerCase());
+      }),
+    });
+  };
 
 
-
-
-
-
-
+  
   render() {
     if (this.state.loading) {
       return <div>Inhalte werden geladen.</div>;
     }
-   
-
-
-  
 
     return (
       <div>
@@ -251,79 +265,70 @@ class Analysis extends React.Component {
           <Row>
             <Col>
               <div className="card">
+                <button onClick={this.sortNewToOld}>
+                  Datum (Älteste zuerst)
+                </button>
+                <button onClick={this.sortOldToNew}>
+                  Datum (Neueste zuerst)
+                </button>
+
+                <input onChange={this.filterUsers}></input>
+
                 <div>
-                  {/* <div className="">
-                    <input
-                      type="radio
-                      name="sortDate"
-                      id="isArchived"
-                      checked={this.state.isArchived}
-                      onChange={this.handleCheckboxChange}
-                    />
-                    <label htmlFor="isActive">
-                      Archivierte Projekte einschließen
-                    </label>
-
-
-
-                  </div> */}
+                  <h5>Projekt: {this.state.projectName}</h5>
+                  <h5>Projektnr.: {this.state.projectCode}</h5>
+                  <h5>Beginn: {this.showDate(this.state.startDate)}</h5>
+                  <h5>Kommentar: {this.state.projectComment}</h5>
                 </div>
-               
-                  <button onClick={this.sortDate}>sort me </button>
 
-                  <input onChange={this.filterUsers} ></input>
                 <Table striped bordered hover>
-                <thead>
+                  <thead>
                     <tr>
-                        <th>Datum</th>
-                        <th>Mitarbeiter</th>
-                        <th>Leistungsphase</th>
-                        <th>Kommentar</th>
-                        <th>Std</th>
-                        <th>Min</th>
-                        <th>Stundensatz</th>
-                        <th>Summe netto</th>
-                        <th>abgerechnet</th>
-                        <th>offen</th>
+                      <th>Datum</th>
+                      <th>Mitarbeiter</th>
+                      <th>Leistungsphase</th>
+                      <th>Kommentar</th>
+                      <th>Std</th>
+                      <th>Min</th>
+                      <th>Stundensatz</th>
+                      <th>Summe netto</th>
+                      <th>abgerechnet</th>
+                      <th>offen</th>
                     </tr>
-                </thead>
-                <tbody>
-                {this.state.entries.map((entry) => {
-                  return (
-                    <tr key={entry._id}>
-                      <td>{this.showDate(entry.date)}</td>
-                      <td>{entry.author.name}</td>
-                      <td>{entry.servicePhase}</td>
-                      <td>{entry.comment}</td>
-                      <td>{entry.timespanHours}</td>
-                      <td>{entry.timespanMins}</td>
-                      <td>{entry.rate}</td>
-                      <td>{this.calcEach(entry.rate, entry.timespanHours, entry.timespanMins )}</td>
-                      <td>{entry.isDeducted
-                              ? "✓"
-                              : ""}</td>
-                      <td>{entry.isDeducted
-                              ? ""
-                              : "✓"}</td>
+                  </thead>
+                  <tbody>
+                    {this.state.entries.map((entry) => {
+                      return (
+                        <tr key={entry._id}>
+                          <td>{this.showDate(entry.date)}</td>
+                          <td>{entry.author.name}</td>
+                          <td>{entry.servicePhase}</td>
+                          <td>{entry.comment}</td>
+                          <td>{entry.timespanHours}</td>
+                          <td>{entry.timespanMins}</td>
+                          <td>{entry.rate.toFixed(2)}€</td>
+                          <td>{entry.entrySum.toFixed(2)}€</td>
+                          <td>{entry.isDeducted ? "✓" : ""}</td>
+                          <td>{entry.isDeducted ? "" : "✓"}</td>
+                        </tr>
+                      );
+                    })}
+
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>Summe:</td>
+                      <td>{this.state.totalHours}</td>
+                      <td>{this.state.totalMinutes}</td>
+                      <td></td>
+                      <td>{this.state.totalEur}</td>
+                      <td>{this.state.totalDeduct}</td>
+                      <td>{this.state.totalOpen}</td>
+                      
                     </tr>
-                    )
-                })}
-                
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  
-                 
-                  <td>{this.state.totalHours}</td>
-                  <td>{this.state.totalMinutes}</td>
-                  <td>Summe</td>
-                  <td>Summe</td>
-                </tr>
-                  
-                </tbody>
-            </Table>
+                  </tbody>
+                </Table>
               </div>
             </Col>
           </Row>
@@ -334,8 +339,3 @@ class Analysis extends React.Component {
 }
 
 export default Analysis;
-
-
-
-  
-

@@ -31,6 +31,17 @@ class SignUp extends React.Component {
     this.setState(newState);
   };
 
+  clearForm = () => {
+    this.setState({
+      username: "",
+      password: "",
+      name: "",
+      rate: "",
+      isAdmin: false,
+      isActive: true,
+    });
+  };
+
   submitHandler = () => {
     axios
       .post("/signup", {
@@ -45,6 +56,7 @@ class SignUp extends React.Component {
         this.setState({
           success: true,
         });
+        this.clearForm();
       })
       .catch((error) => {
         console.log("adding a user failed");

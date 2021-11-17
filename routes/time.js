@@ -19,6 +19,7 @@ router.post("/zeiten", (req, res, next) => {
       servicePhase: req.body.servicePhase,
       comment: req.body.comment,
       rate: user.rate,
+      entrySum: (req.body.timespanHours+(req.body.timespanMins/60))*user.rate
     }).then((newEntry) => {
       Time.findById(newEntry._id)
         .populate("project")

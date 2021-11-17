@@ -10,6 +10,7 @@ class Projects extends React.Component {
     currentUser: this.props.user,
     projects: [],
     filteredProjects: [],
+    loading: true,
     error: false,
 
     name: "",
@@ -31,8 +32,10 @@ class Projects extends React.Component {
 
   componentDidMount() {
     axios.get("/projekte").then((resp) => {
-      console.log(resp.data);
       this.updateProjects(resp.data);
+      this.setState({
+        loading: false
+      });
     });
   }
 
@@ -85,6 +88,12 @@ class Projects extends React.Component {
   };
 
   render() {
+
+    if (this.state.loading) {
+      return <div>Inhalte werden geladen.</div>;
+    }
+
+
     return (
       <div>
         <Navbar />
@@ -120,9 +129,10 @@ class Projects extends React.Component {
                   />
 
                   <label htmlFor="comment">Kommentar</label>
-                  <input
+                  <textarea
                     type="text"
                     name="comment"
+                    rows="5"
                     value={this.state.comment}
                     onChange={this.handleChange}
                   />

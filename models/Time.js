@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const timeSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId, 
@@ -34,6 +35,9 @@ const timeSchema = new Schema({
       type: String,
   },
   rate: {
+    type: Number,
+  },
+  entrySum: {
     type: Number,
   },
   isDeducted: {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Select from "react-select";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Table } from "reactstrap";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
@@ -36,7 +36,6 @@ class Times extends React.Component {
   clearForm = () => {
     this.setState({
       projectName: "",
-
       timespanHours: "",
       timespanMins: "",
       servicePhase: "",
@@ -95,7 +94,6 @@ class Times extends React.Component {
     }
     axios
       .post("/zeiten", {
-        // author: this.state.currentUser._id,
         project: this.state.projectId,
         date: this.state.date,
         timespanHours: this.state.timespanHours,
@@ -118,7 +116,6 @@ class Times extends React.Component {
 
   showDate(entry) {
     let d = new Date(entry.date);
-    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     return d.toLocaleDateString();
   }
 
@@ -237,7 +234,7 @@ class Times extends React.Component {
                   {this.state.date.split("-").reverse().join(".")}:
                 </h3>
 
-                <table>
+                <Table striped bordered hover>
                   <thead className="thead">
                     <tr>
                       <th>Datum</th>
@@ -276,7 +273,7 @@ class Times extends React.Component {
                       );
                     })}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </Col>
           </Row>

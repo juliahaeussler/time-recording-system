@@ -7,6 +7,7 @@ class Login extends React.Component {
   state = {
     username: "",
     password: "",
+    error: false,
   };
 
   changeHandler = (e) => {
@@ -24,17 +25,19 @@ class Login extends React.Component {
       })
       .then((resp) => {
         let data = resp.data;
-
         let user = data.user;
-
         this.props.logInTheUser(user);
-
         this.props.history.push("/zeiten");
-      });
+      })
+      .catch((error) => {
+        console.log("login failed");
+        this.setState({
+          error: true,
+        })
+      })
   };
 
   render() {
-    console.log("props", this.props);
 
     return (
       <div>
@@ -65,6 +68,12 @@ class Login extends React.Component {
               <Button onClick={this.submitHandler} className="button login-btn">
                 LOG IN
               </Button>
+
+              {this.state.error && (
+                <div className="alert alert-danger" role="alert">
+                  Login nicht möglich, bitte erneut versuchen.
+                </div>
+              )}
 
               <Link to={"/signup"}>Benutzer hinzufügen</Link>
           
