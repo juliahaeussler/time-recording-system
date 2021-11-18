@@ -75,7 +75,7 @@ class App extends React.Component {
             path="/benutzer"
             component={() => <User user={this.state.currentUser}></User>}
           />
-          <Route exact path="/benutzer/:id" component={() => <UserDetails user={this.state.currentUser}></UserDetails>} />
+          <Route exact path="/benutzer/:id" component={(props) => <UserDetails user={this.state.currentUser} {...props}></UserDetails>} />
           <Route exact path="/benutzer/:id/bearbeiten" component={UserEdit} />
 
           <Route exact path="/logout" component={LogOut} />

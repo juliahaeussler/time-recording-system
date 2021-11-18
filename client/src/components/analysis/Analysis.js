@@ -238,7 +238,7 @@ class Analysis extends React.Component {
     }
 
     return (
-      <div>
+      <div className="background">
         <Navbar />
         <Container>
           <Row className="one-card">

@@ -1,10 +1,12 @@
 .App {
   background-image: url('./concrete.jpg');
   background-size: cover;
+  height: 100vh;
+  background-repeat: repeat-y;
   font-family: 'Dosis', sans-serif;
   margin: 0px;
   padding: 0px;
-  height: 100vh;
+
 }
 .App input {
   font-family: 'Dosis', sans-serif;
@@ -12,6 +14,12 @@
 .App button {
   font-family: 'Dosis', sans-serif;
 }
+
+.background {
+  background-image: url('./concrete.jpg');
+  background-size: cover;
+}
+
 
 .pen-img {
   width: 20px;

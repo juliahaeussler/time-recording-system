@@ -13,6 +13,8 @@ class UserDetails extends React.Component {
   };
 
   componentDidMount() {
+    console.log("mir----->", this.props)
+
     axios.get(`/api/v1/benutzer/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
@@ -32,6 +34,8 @@ class UserDetails extends React.Component {
     if (this.state.loading) {
       return <Loading></Loading>;
     }
+
+    console.log("props----->", this.props)
     return (
       <div>
         <Navbar />
