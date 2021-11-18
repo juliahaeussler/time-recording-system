@@ -2,16 +2,18 @@ import React from "react";
 import axios from "axios";
 import { Container, Row, Col, Button } from "reactstrap";
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class UserEdit extends React.Component {
   state = {
     user: {},
     error: false,
+    loading: true,
 
     username: "",
     name: "",
     rate: "",
-    isActive: ""
+    isActive: false,
   };
 
   componentDidMount() {
@@ -21,7 +23,8 @@ class UserEdit extends React.Component {
         username: resp.data.username,
         name: resp.data.name,
         rate: resp.data.rate,
-        isActive: resp.data.isActive
+        isActive: resp.data.isActive,
+        loading: false,
       });
     });
   }
@@ -35,12 +38,14 @@ class UserEdit extends React.Component {
   };
 
   handleCheckboxChange = (e) => {
-    let currentName = e.target.name 
+    let currentName = e.target.name;
     this.setState({
       ...this.state,
       [currentName]: e.target.checked,
+    }, () =>{  
+      console.log(this.state.isActive)
     })
-  }
+  };
 
   handleEditSubmit = (event) => {
     event.preventDefault();
@@ -49,7 +54,7 @@ class UserEdit extends React.Component {
         username: this.state.username,
         name: this.state.name,
         rate: this.state.rate,
-        isActive:this.state.isActive
+        isActive: this.state.isActive,
       })
       .then((resp) => {
         this.props.history.push(`/benutzer/${this.props.match.params.id}`);
@@ -63,7 +68,9 @@ class UserEdit extends React.Component {
   };
 
   render() {
-
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />
@@ -98,14 +105,17 @@ class UserEdit extends React.Component {
                     onChange={this.handleChange}
                   />
 
-                  <label htmlFor="isActive">Aktiv</label>
-                  <input
-                    type="checkbox"
-                    name="isActive"
-                    id="isActive"
-                    checked={this.state.isActive}
-                    onChange={this.handleCheckboxChange}
-                  />
+                  <div className="input-group">
+                    
+                    <input
+                      type="checkbox"
+                      name="isActive"
+                      id="isActive"
+                      checked={this.state.isActive}
+                      onChange={this.handleCheckboxChange}
+                    />
+                    <label htmlFor="isActive">Aktiv</label>
+                  </div>
 
                   <div className="btn-container">
                     <Button type="submit" className="button">

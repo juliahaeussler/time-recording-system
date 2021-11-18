@@ -16,27 +16,76 @@
 .pen-img {
   width: 20px;
 }
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h3 > span {
+  transform: skew(-9deg,0deg);
+  display: block;
+}
+.h3Style {
+  background-color: rgba(0, 166, 255, 0.317);
+  transform: skew(9deg,0deg);
+  padding: 5px 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.line{
+  display: flex;
+  align-items: center;
+}
+.line-title{
+  /* background-color: rgba(0, 166, 255, 0.317); */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  padding: 3px;
+  border-radius: 3px;
+  margin-right: 2px;
+}
+
+
 
 /* BUTTONS */
 .btn-container {
   display: flex;
   justify-content: center;
   padding: 5px;
+  margin-top: 10px;
 }
 button {
+  border-radius: 5px !important;
   background-color: #1d9dd9 !important;
   color: white; 
-  border: none;
+  border: none !important;
   width: 50%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 button:hover {
   background-color: #64C2EE !important;
-  border-radius: 20px;
 }
 .login-btn{
   margin-bottom: 20px;
   width: 25% !important;
 }
+.sort-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.sort-btn {
+  width: 200px;
+}
+.sort-btn:focus {
+  width: 200px;
+  background-color: #64C2EE !important;
+}
+
+
+
+
+
+
 
 /* CARDS */
 .one-card{
@@ -46,7 +95,7 @@ button:hover {
 .card {
   background-color: #E2E4E5 !important;
   border: 1px solid #1d9dd9 !important;
-  padding: 20px;
+  padding: 30px;
   margin-bottom: 10px;
   box-shadow: 5px 5px 5px #a39e9e;
 }
@@ -56,14 +105,30 @@ button:hover {
 }
 .edit-card{
   width: 50%;
-
 }
 .form-card{
   display: flex;
   flex-direction: column;
 }
+label{
+  margin-top: 10px;
+}
+input{
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding-left: 5px;
+  height: 30px;
+}
+textarea{
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding-left: 5px;
+}
 .form-card input{
   margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 .details {
   display: flex;
@@ -77,14 +142,70 @@ button:hover {
   align-items: center;
 }
 .login-input{
-  width: 50%;
-  margin-bottom: 10px;
+  width: 30%;
+  margin: 10px;
 }
-
-
 .project-input{
   margin-bottom: 10px;
 }
+.user-card {
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0 5px 0;
+}
+
+
+
+
+
+/* CHECKBOX */
+.input-group {
+  display: block;
+  margin-bottom: 15px;
+}
+.input-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+.input-group label {
+  position: relative;
+  cursor: pointer;
+  color: rgb(60, 60, 60);
+}
+.input-group label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 10px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.input-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 9px;
+  width: 6px;
+  height: 14px;
+  
+  border: solid #1d9dd9;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+
 /* DATE + TIME ENTRIES */
 .date-time-input{
   display: flex;
@@ -101,12 +222,17 @@ button:hover {
 }
 .time-input {
   width: 65px;
+  margin-right: 2px;
 }
+
+
 
 /* TABLE */
 .thead{
   border-bottom: 1px solid grey;
 }
+
+
 
 /* MESSAGES */
 .alert {

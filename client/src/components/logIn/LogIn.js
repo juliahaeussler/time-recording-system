@@ -2,12 +2,22 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
+import Loading from "../loading/Loading";
 
 class Login extends React.Component {
   state = {
     username: "",
     password: "",
+    error: false,
+    laoding: true,
   };
+
+  componentDidMount() {
+    this.setState({
+      loading: false,
+      error: false,
+    });
+  }
 
   changeHandler = (e) => {
     let currentName = e.target.name;
@@ -24,17 +34,22 @@ class Login extends React.Component {
       })
       .then((resp) => {
         let data = resp.data;
-
         let user = data.user;
-
         this.props.logInTheUser(user);
-
         this.props.history.push("/zeiten");
-      });
+      })
+      .catch((error) => {
+        console.log("login failed");
+        this.setState({
+          error: true,
+        })
+      })
   };
 
   render() {
-    console.log("props", this.props);
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
 
     return (
       <div>
@@ -42,7 +57,10 @@ class Login extends React.Component {
           <Row>
             <Col className="card one-card login details">
             
-              <h3>Anmelden</h3>
+            <h3 className="h3Style">
+                  <span>Anmelden</span>
+                </h3>
+              <br></br>
               <input
                 type="text"
                 name="username"
@@ -59,10 +77,17 @@ class Login extends React.Component {
                 placeholder="Passwort"
                 className="login-input"
               />
+              <br></br>
 
               <Button onClick={this.submitHandler} className="button login-btn">
                 LOG IN
               </Button>
+
+              {this.state.error && (
+                <div className="alert alert-danger" role="alert">
+                  Login nicht möglich, bitte erneut versuchen.
+                </div>
+              )}
 
               <Link to={"/signup"}>Benutzer hinzufügen</Link>
           

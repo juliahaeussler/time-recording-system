@@ -5,18 +5,18 @@ import Loading from "../loading/Loading";
 
 import Navbar from "../navbar/Navbar";
 
-class ProjectDelete extends React.Component {
+class TimeDelete extends React.Component {
   state = {
-    project: {},
+    entry: {},
     error: false,
     loading: true,
   };
 
   componentDidMount() {
-    axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/zeiten/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
-        project: resp.data,
+        entry: resp.data,
         loading: false,
       });
     });
@@ -26,12 +26,12 @@ class ProjectDelete extends React.Component {
     console.log("props", this.props.match.params.id);
 
     axios
-      .delete(`/projekte/${this.props.match.params.id}/loeschen`)
+      .delete(`/zeiten/${this.props.match.params.id}/loeschen`)
       .then((resp) => {
         this.setState({
           error: false,
         });
-        this.props.history.push("/projekte");
+        this.props.history.push("/zeiten");
       })
       .catch((error) => {
         console.log("removing failed");
@@ -53,9 +53,7 @@ class ProjectDelete extends React.Component {
           <Col>
             <div className="card details">
               <h4>
-                Projekt{" "}
-                <span className="project-name">{this.state.project.name}</span>{" "}
-                endgültig löschen?
+               Eintrag endgültig löschen?
               </h4>
               <div className="btn-container">
                 <button className="delete" onClick={this.handleDelete}>
@@ -65,7 +63,7 @@ class ProjectDelete extends React.Component {
               </div>
               {this.state.error && (
                   <div className="alert alert-danger" role="alert">
-                    Projekt konnte nicht gelöscht werden, bitte erneut versuchen.
+                    Eintrag konnte nicht gelöscht werden, bitte erneut versuchen.
                   </div>
                 )}
             </div>
@@ -77,4 +75,4 @@ class ProjectDelete extends React.Component {
   }
 }
 
-export default ProjectDelete;
+export default TimeDelete;

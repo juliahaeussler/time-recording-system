@@ -3,10 +3,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class UserDetails extends React.Component {
   state = {
     user: {},
+    loading: true,
+    error: false,
   };
 
   componentDidMount() {
@@ -14,11 +17,21 @@ class UserDetails extends React.Component {
       console.log(resp.data);
       this.setState({
         user: resp.data,
+        loading: false,
+        error: false,
       });
     });
   }
 
+  showTwoDigits(entry) {
+    let r = entry.rate
+    return r.toFixed(2);
+  }
+
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />
@@ -27,21 +40,19 @@ class UserDetails extends React.Component {
             <Col className="card details">
               <h2>Benutzername: {this.state.user.username}</h2>
               <h4>Name: {this.state.user.name}</h4>
-              <h4>Stundensatz: {this.state.user.rate}</h4>
-              <div className="btn-container">
+              <h4>Stundensatz: {this.state.user.rate.toFixed(2)}€</h4>
+              
+           
+                <div className="btn-container">
                 <Link
                   to={`/benutzer/${this.state.user._id}/bearbeiten`}
                   className="edit"
                 >
                   Bearbeiten
                 </Link>
-                <Link
-                  to={`/benutzer/${this.state.user._id}/loeschen`}
-                  className="delete"
-                >
-                  Löschen
-                </Link>
               </div>
+               
+              
             </Col>
           </Row>
         </Container>

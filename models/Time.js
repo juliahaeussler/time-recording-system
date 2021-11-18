@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const timeSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId, 
@@ -35,7 +36,14 @@ const timeSchema = new Schema({
   },
   rate: {
     type: Number,
-  }
+  },
+  entrySum: {
+    type: Number,
+  },
+  isDeducted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Time = mongoose.model('Time', timeSchema);

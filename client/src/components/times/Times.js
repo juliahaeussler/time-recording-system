@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Select from "react-select";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Table } from "reactstrap";
+import Loading from "../loading/Loading";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
@@ -36,7 +37,6 @@ class Times extends React.Component {
   clearForm = () => {
     this.setState({
       projectName: "",
-      date: "",
       timespanHours: "",
       timespanMins: "",
       servicePhase: "",
@@ -79,6 +79,12 @@ class Times extends React.Component {
     this.setState(newState);
   };
 
+  handleStageChange = (selectedStage) => {
+    this.setState({
+      servicePhase: selectedStage.label,
+    });
+  };
+
   handleFormSubmit = (event) => {
     event.preventDefault();
     let project = this.state.projects.find(
@@ -89,7 +95,6 @@ class Times extends React.Component {
     }
     axios
       .post("/zeiten", {
-        // author: this.state.currentUser._id,
         project: this.state.projectId,
         date: this.state.date,
         timespanHours: this.state.timespanHours,
@@ -112,16 +117,28 @@ class Times extends React.Component {
 
   showDate(entry) {
     let d = new Date(entry.date);
-    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     return d.toLocaleDateString();
   }
 
   showServicePhase(entry) {
-    let s = entry.servicePhase
+    let s = entry.servicePhase;
     return s.split(".")[0];
   }
 
+  showCommentStart(entry) {
+    let c = entry.comment;
+    return c.slice(0, 16);
+  }
+
   render() {
+    let selectedDay = this.state.entries.filter((e) => {
+      return e.date.includes(this.state.date);
+    });
+
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
+
     return (
       <div>
         <Navbar />
@@ -129,7 +146,9 @@ class Times extends React.Component {
           <Row>
             <Col>
               <div className="card">
-                <h3>Neue Zeit erfassen:</h3>
+              <h3 className="h3Style">
+                <span>Neue Zeit erfassen:</span>
+              </h3>
                 <form onSubmit={this.handleFormSubmit} className="form-card">
                   <label htmlFor="projectName">Projektname</label>
                   <Select
@@ -153,56 +172,47 @@ class Times extends React.Component {
                     </div>
                     <div>
                       <label htmlFor="timespanHours" className="time-label">
-                        Dauer (Stunden/Minuten)
+                        Dauer (h/min)
                       </label>
-                      <input
-                        type="number"
-                        name="timespanHours"
-                        max="24"
-                        value={this.state.timespanHours}
-                        onChange={this.handleChange}
-                        className="time-input"
-                      />
-                      <input
-                        list="minutes"
-                        type="number"
-                        name="timespanMins"
-                        value={this.state.timespanMins}
-                        onChange={this.handleChange}
-                        className="time-input"
-                      />
-                      <datalist id="minutes">
-                        <option>00</option>
-                        <option>15</option>
-                        <option>30</option>
-                        <option>45</option>
-                      </datalist>
+                      
+                        <input
+                          type="number"
+                          name="timespanHours"
+                          max="24"
+                          value={this.state.timespanHours}
+                          onChange={this.handleChange}
+                          className="time-input"
+                        />
+                        <input
+                          list="minutes"
+                          type="number"
+                          name="timespanMins"
+                          value={this.state.timespanMins}
+                          onChange={this.handleChange}
+                          className="time-input"
+                        />
+                        <datalist id="minutes">
+                          <option>00</option>
+                          <option>15</option>
+                          <option>30</option>
+                          <option>45</option>
+                        </datalist>
+                      
                     </div>
                   </div>
 
                   <label htmlFor="servicePhase">Leistungsphase</label>
-                  <input
-                    list="servicePhases"
-                    type="text"
-                    name="servicePhase"
-                    value={this.state.servicePhase}
-                    onChange={this.handleChange}
-                  />
-                  <datalist id="servicePhases">
-                    {Config.servicePhases.map((phase) => {
-                      return <option key={phase} value={phase}></option>;
-                    })}
-                  </datalist>
-                  {/* <Select
+                  <Select
                     options={Config.servicePhases}
-                    onChange={this.handleNameChange}
+                    onChange={this.handleStageChange}
                     placeholder="Auswählen..."
-                  /> */}
+                  />
 
                   <label htmlFor="comment">Kommentar</label>
-                  <input
+                  <textarea
                     type="text"
                     name="comment"
+                    rows="5"
                     value={this.state.comment}
                     onChange={this.handleChange}
                   />
@@ -222,9 +232,14 @@ class Times extends React.Component {
             </Col>
             <Col>
               <div className="card">
-                <h3>Erfasste Zeiten:</h3>
+                
 
-                <table>
+                <h3 className="h3Style">
+                <span>Erfasste Zeiten vom{" "}
+                  {this.state.date.split("-").reverse().join(".")}:</span>
+              </h3>
+
+                <Table striped bordered hover>
                   <thead className="thead">
                     <tr>
                       <th>Datum</th>
@@ -237,7 +252,7 @@ class Times extends React.Component {
                   </thead>
 
                   <tbody>
-                    {this.state.entries.map((entry) => {
+                    {selectedDay.map((entry) => {
                       return (
                         <tr key={entry._id}>
                           <td>{this.showDate(entry)}</td>
@@ -249,7 +264,11 @@ class Times extends React.Component {
                               ? "00"
                               : entry.timespanMins}
                           </td>
-                          <td>{entry.comment ? entry.comment : "/"}</td>
+                          <td>
+                            {entry.comment
+                              ? this.showCommentStart(entry) + "..."
+                              : "/"}
+                          </td>
                           <td>
                             <Link to={`/zeiten/${entry._id}`}>
                               <img className="pen-img" src={Pen} alt="Pen" />
@@ -259,7 +278,7 @@ class Times extends React.Component {
                       );
                     })}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </Col>
           </Row>
