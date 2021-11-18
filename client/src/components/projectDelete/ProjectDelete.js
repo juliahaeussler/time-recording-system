@@ -13,7 +13,7 @@ class ProjectDelete extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/projekte/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         project: resp.data,
@@ -26,7 +26,7 @@ class ProjectDelete extends React.Component {
     console.log("props", this.props.match.params.id);
 
     axios
-      .delete(`/projekte/${this.props.match.params.id}/loeschen`)
+      .delete(`/api/v1/projekte/${this.props.match.params.id}/loeschen`)
       .then((resp) => {
         this.setState({
           error: false,

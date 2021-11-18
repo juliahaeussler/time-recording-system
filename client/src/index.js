@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
-axios.get("/checkuser").then((res) => {
+axios.get("/api/v1/checkuser").then((res) => {
   ReactDOM.render(
     <Router>
       <App user={res.data.userDoc} />

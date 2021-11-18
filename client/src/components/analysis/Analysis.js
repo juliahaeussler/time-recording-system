@@ -32,11 +32,11 @@ class Analysis extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("/benutzer").then((resp) => {
+    axios.get("/api/v1/benutzer").then((resp) => {
       this.updateEntries(resp.data);
     });
     axios
-      .get("/projekte")
+      .get("/api/v1/projekte")
       .then((resp) => {
         let newData = resp.data.map((e) => {
           return {
@@ -107,7 +107,7 @@ class Analysis extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .get(`/auswertung/${this.state.projectId}`)
+      .get(`/api/v1/auswertung/${this.state.projectId}`)
       .then((projectEntries) => {
         //SUM TOTAL TIME:
         //REDUCER instead of FOREACH

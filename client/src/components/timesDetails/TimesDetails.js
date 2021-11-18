@@ -14,7 +14,7 @@ class TimesDetails extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/zeiten/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/zeiten/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         entry: resp.data,

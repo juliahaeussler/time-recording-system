@@ -13,7 +13,7 @@ class UserDetails extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/benutzer/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/benutzer/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         user: resp.data,

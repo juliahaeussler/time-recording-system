@@ -30,7 +30,7 @@ class Projects extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("/projekte").then((resp) => {
+    axios.get("/api/v1/projekte").then((resp) => {
       this.updateProjects(resp.data);
       this.setState({
         loading: false,
@@ -72,7 +72,7 @@ class Projects extends React.Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/projekte", this.state)
+      .post("/api/v1/projekte", this.state)
       .then((resp) => {
         console.log(resp.data);
         this.updateProjects(this.state.projects.concat([resp.data]));

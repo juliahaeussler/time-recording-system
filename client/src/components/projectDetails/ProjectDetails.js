@@ -14,7 +14,7 @@ class ProjectDetails extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/projekte/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         project: resp.data,

@@ -52,7 +52,7 @@ class SignUp extends React.Component {
 
   submitHandler = () => {
     axios
-      .post("/signup", {
+      .post("/api/v1/signup", {
         username: this.state.username,
         password: this.state.password,
         name: this.state.name,

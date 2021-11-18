@@ -17,7 +17,7 @@ class ProjectEdit extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/projekte/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/projekte/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         name: resp.data.name,
@@ -60,7 +60,7 @@ class ProjectEdit extends React.Component {
   handleEditSubmit = (event) => {
     event.preventDefault();
     axios
-      .patch(`/projekte/${this.props.match.params.id}/bearbeiten`, {
+      .patch(`/api/v1/projekte/${this.props.match.params.id}/bearbeiten`, {
         name: this.state.name,
         projectCode: this.state.projectCode,
         comment: this.state.comment,

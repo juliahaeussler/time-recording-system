@@ -17,7 +17,7 @@ class UserEdit extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/benutzer/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/benutzer/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         username: resp.data.username,
@@ -50,7 +50,7 @@ class UserEdit extends React.Component {
   handleEditSubmit = (event) => {
     event.preventDefault();
     axios
-      .patch(`/benutzer/${this.props.match.params.id}/bearbeiten`, {
+      .patch(`/api/v1/benutzer/${this.props.match.params.id}/bearbeiten`, {
         username: this.state.username,
         name: this.state.name,
         rate: this.state.rate,

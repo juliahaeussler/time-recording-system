@@ -13,7 +13,7 @@ class TimeDelete extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`/zeiten/${this.props.match.params.id}`).then((resp) => {
+    axios.get(`/api/v1/zeiten/${this.props.match.params.id}`).then((resp) => {
       console.log(resp.data);
       this.setState({
         entry: resp.data,
@@ -26,7 +26,7 @@ class TimeDelete extends React.Component {
     console.log("props", this.props.match.params.id);
 
     axios
-      .delete(`/zeiten/${this.props.match.params.id}/loeschen`)
+      .delete(`/api/v1/zeiten/${this.props.match.params.id}/loeschen`)
       .then((resp) => {
         this.setState({
           error: false,

@@ -38,21 +38,22 @@ app.locals.title = 'BLUE HOUR TIME RECORD';
 
 
 // ROUTES
+const apiPrefix = '/api/v1'
 
 const index = require('./routes/index');
-app.use('/', index);
+app.use(apiPrefix, index);
 
 const auth = require('./routes/auth');
-app.use('/', auth);
+app.use(apiPrefix, auth);
 
 const projects = require('./routes/projects');
-app.use('/', projects);
+app.use(apiPrefix, projects);
 
 const time = require('./routes/time');
-app.use('/', time);
+app.use(apiPrefix, time);
 
 const analysis = require('./routes/analysis');
-app.use('/', analysis);
+app.use(apiPrefix, analysis);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

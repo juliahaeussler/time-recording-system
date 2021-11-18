@@ -28,7 +28,7 @@ class Login extends React.Component {
 
   submitHandler = () => {
     axios
-      .post("/login", {
+      .post("/api/v1/login", {
         username: this.state.username,
         password: this.state.password,
       })

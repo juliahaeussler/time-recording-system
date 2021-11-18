@@ -45,10 +45,10 @@ class Times extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("/zeiten").then((resp) => {
+    axios.get("/api/v1/zeiten").then((resp) => {
       this.updateEntries(resp.data);
     });
-    axios.get("/projekte").then((resp) => {
+    axios.get("/api/v1/projekte").then((resp) => {
       let newData = resp.data.map((e) => {
         return {
           value: e.name,
@@ -94,7 +94,7 @@ class Times extends React.Component {
       return;
     }
     axios
-      .post("/zeiten", {
+      .post("/api/v1/zeiten", {
         project: this.state.projectId,
         date: this.state.date,
         timespanHours: this.state.timespanHours,

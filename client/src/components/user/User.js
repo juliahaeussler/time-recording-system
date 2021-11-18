@@ -19,7 +19,7 @@ class User extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("/benutzer").then((resp) => {
+    axios.get("/api/v1/benutzer").then((resp) => {
       console.log(resp.data);
       const updatedUser = resp.data.find((user) => {
         if (this.state.currentUser._id === user._id) {
@@ -50,7 +50,7 @@ class User extends React.Component {
 
   updateUser(id, updatedUser) {
     return axios
-      .patch(`/characters/${id}`, updatedUser)
+      .patch(`/api/v1/characters/${id}`, updatedUser)
       .catch((err) => "Benutzer nicht gefunden");
   }
 
