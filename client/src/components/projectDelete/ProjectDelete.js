@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Container, Row, Col } from "reactstrap";
+import Loading from "../loading/Loading";
 
 import Navbar from "../navbar/Navbar";
 
@@ -8,6 +9,7 @@ class ProjectDelete extends React.Component {
   state = {
     project: {},
     error: false,
+    loading: true,
   };
 
   componentDidMount() {
@@ -15,6 +17,7 @@ class ProjectDelete extends React.Component {
       console.log(resp.data);
       this.setState({
         project: resp.data,
+        loading: false,
       });
     });
   }
@@ -39,6 +42,9 @@ class ProjectDelete extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />

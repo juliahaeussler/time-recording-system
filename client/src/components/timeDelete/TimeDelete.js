@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Container, Row, Col } from "reactstrap";
+import Loading from "../loading/Loading";
 
 import Navbar from "../navbar/Navbar";
 
@@ -8,6 +9,7 @@ class TimeDelete extends React.Component {
   state = {
     entry: {},
     error: false,
+    loading: true,
   };
 
   componentDidMount() {
@@ -15,6 +17,7 @@ class TimeDelete extends React.Component {
       console.log(resp.data);
       this.setState({
         entry: resp.data,
+        loading: false,
       });
     });
   }
@@ -39,6 +42,9 @@ class TimeDelete extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />

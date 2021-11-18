@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
-import "./SignUp.css"
+import "./SignUp.css";
+import Loading from "../loading/Loading";
 
 class SignUp extends React.Component {
   state = {
@@ -15,7 +16,14 @@ class SignUp extends React.Component {
 
     error: false,
     success: false,
+    loading: true,
   };
+
+  componentDidMount() {
+    this.setState({
+      loading: false,
+    });
+  }
 
   changeHandler = (e) => {
     let currentName = e.target.name;
@@ -67,13 +75,17 @@ class SignUp extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Container>
           <Row>
             <Col className="card one-card signup">
-            
-              <h3>Benutzer anlegen</h3>
+              <h3 class="h3Style">
+                <span>Benutzer anlegen:</span>
+              </h3>
 
               <input
                 type="text"
@@ -108,31 +120,32 @@ class SignUp extends React.Component {
                 className="login-input"
               />
 
-              <div className='input-group'>
+              <div className="input-group">
                 <input
                   type="checkbox"
                   name="isAdmin"
                   id="isAdmin"
                   checked={this.state.isAdmin}
                   onChange={this.checkboxChangeHandler}
-                 
                 />
                 <label htmlFor="isAdmin">Administrator</label>
               </div>
 
-              <div className='input-group'>
+              <div className="input-group">
                 <input
                   type="checkbox"
                   name="isActive"
                   id="isActive"
                   checked={this.state.isActive}
                   onChange={this.checkboxChangeHandler}
-                  
                 />
                 <label htmlFor="isActive">Aktiv</label>
               </div>
 
-              <button className="signup-button signup-btn" onClick={this.submitHandler}>
+              <button
+                className="signup-button signup-btn"
+                onClick={this.submitHandler}
+              >
                 Benutzer anlegen
               </button>
 
@@ -151,7 +164,6 @@ class SignUp extends React.Component {
                   Benutzer wurde nicht gespeichert, bitte erneut versuchen.
                 </div>
               )}
-           
             </Col>
           </Row>
         </Container>

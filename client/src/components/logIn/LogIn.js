@@ -2,13 +2,22 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
+import Loading from "../loading/Loading";
 
 class Login extends React.Component {
   state = {
     username: "",
     password: "",
     error: false,
+    laoding: true,
   };
+
+  componentDidMount() {
+    this.setState({
+      loading: false,
+      error: false,
+    });
+  }
 
   changeHandler = (e) => {
     let currentName = e.target.name;
@@ -38,6 +47,9 @@ class Login extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
 
     return (
       <div>
@@ -45,7 +57,9 @@ class Login extends React.Component {
           <Row>
             <Col className="card one-card login details">
             
-              <h3>Anmelden</h3>
+            <h3 className="h3Style">
+                  <span>Anmelden</span>
+                </h3>
               <br></br>
               <input
                 type="text"

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Container, Row, Col, Button, Table } from "reactstrap";
+import Loading from "../loading/Loading";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
@@ -135,7 +136,7 @@ class Times extends React.Component {
     });
 
     if (this.state.loading) {
-      return <div>Inhalte werden geladen.</div>;
+      return <Loading></Loading>;
     }
 
     return (
@@ -145,7 +146,9 @@ class Times extends React.Component {
           <Row>
             <Col>
               <div className="card">
-                <h3>Neue Zeit erfassen:</h3>
+              <h3 className="h3Style">
+                <span>Neue Zeit erfassen:</span>
+              </h3>
                 <form onSubmit={this.handleFormSubmit} className="form-card">
                   <label htmlFor="projectName">Projektname</label>
                   <Select
@@ -229,10 +232,12 @@ class Times extends React.Component {
             </Col>
             <Col>
               <div className="card">
-                <h3>
-                  Erfasste Zeiten vom{" "}
-                  {this.state.date.split("-").reverse().join(".")}:
-                </h3>
+                
+
+                <h3 className="h3Style">
+                <span>Erfasste Zeiten vom{" "}
+                  {this.state.date.split("-").reverse().join(".")}:</span>
+              </h3>
 
                 <Table striped bordered hover>
                   <thead className="thead">

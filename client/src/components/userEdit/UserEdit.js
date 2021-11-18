@@ -2,11 +2,13 @@ import React from "react";
 import axios from "axios";
 import { Container, Row, Col, Button } from "reactstrap";
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class UserEdit extends React.Component {
   state = {
     user: {},
     error: false,
+    loading: true,
 
     username: "",
     name: "",
@@ -22,6 +24,7 @@ class UserEdit extends React.Component {
         name: resp.data.name,
         rate: resp.data.rate,
         isActive: resp.data.isActive,
+        loading: false,
       });
     });
   }
@@ -65,6 +68,9 @@ class UserEdit extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />

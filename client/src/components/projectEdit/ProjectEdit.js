@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Container, Row, Col, Button } from "reactstrap";
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class ProjectEdit extends React.Component {
   state = {
@@ -78,7 +79,7 @@ class ProjectEdit extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <div>Inhalte werden geladen.</div>;
+      return <Loading></Loading>;
     }
     console.log(this.state.isArchived)
     return (

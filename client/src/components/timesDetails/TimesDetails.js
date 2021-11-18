@@ -4,10 +4,13 @@ import { Container, Row, Col } from "reactstrap";
 import axios from "axios";
 
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class TimesDetails extends React.Component {
   state = {
     entry: {},
+    loading: true,
+    error: false,
   };
 
   componentDidMount() {
@@ -29,7 +32,7 @@ class TimesDetails extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <div>Inhalte werden geladen.</div>;
+      return <Loading></Loading>;
     }
 
     return (

@@ -16,8 +16,33 @@
 .pen-img {
   width: 20px;
 }
-
-
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h3 > span {
+  transform: skew(-9deg,0deg);
+  display: block;
+}
+.h3Style {
+  background-color: rgba(0, 166, 255, 0.317);
+  transform: skew(9deg,0deg);
+  padding: 5px 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.line{
+  display: flex;
+  align-items: center;
+}
+.line-title{
+  /* background-color: rgba(0, 166, 255, 0.317); */
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  padding: 3px;
+  border-radius: 3px;
+  margin-right: 2px;
+}
 
 
 
@@ -29,13 +54,13 @@
   margin-top: 10px;
 }
 button {
+  border-radius: 5px !important;
   background-color: #1d9dd9 !important;
   color: white; 
   border: none !important;
   width: 50%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 button:hover {
   background-color: #64C2EE !important;
 }
@@ -43,6 +68,19 @@ button:hover {
   margin-bottom: 20px;
   width: 25% !important;
 }
+.sort-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.sort-btn {
+  width: 200px;
+}
+.sort-btn:focus {
+  width: 200px;
+  background-color: #64C2EE !important;
+}
+
 
 
 
@@ -109,6 +147,12 @@ textarea{
 }
 .project-input{
   margin-bottom: 10px;
+}
+.user-card {
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0 5px 0;
 }
 
 

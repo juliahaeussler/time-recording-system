@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import Navbar from "../navbar/Navbar";
+import Loading from "../loading/Loading";
 
 class UserDetails extends React.Component {
   state = {
@@ -29,11 +30,7 @@ class UserDetails extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <div>
-          Inhalte werden geladen.
-        </div>
-      );
+      return <Loading></Loading>;
     }
     return (
       <div>
@@ -45,15 +42,17 @@ class UserDetails extends React.Component {
               <h4>Name: {this.state.user.name}</h4>
               <h4>Stundensatz: {this.state.user.rate.toFixed(2)}€</h4>
               
-              <div className="btn-container">
+           
+                <div className="btn-container">
                 <Link
                   to={`/benutzer/${this.state.user._id}/bearbeiten`}
                   className="edit"
                 >
                   Bearbeiten
                 </Link>
-                
               </div>
+               
+              
             </Col>
           </Row>
         </Container>

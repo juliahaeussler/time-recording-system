@@ -9,7 +9,7 @@ const Project = require("../models/Project");
 router.post("/zeiten", (req, res, next) => {
   
   User.findById(req.session.currentUser._id).then((user) => {
-    
+    console.log(req.body)
     Time.create({
       author: req.session.currentUser._id,
       project: req.body.project,
@@ -19,7 +19,7 @@ router.post("/zeiten", (req, res, next) => {
       servicePhase: req.body.servicePhase,
       comment: req.body.comment,
       rate: user.rate,
-      entrySum: (req.body.timespanHours+(req.body.timespanMins/60))*user.rate
+      entrySum: ((req.body.timespanMins/60)+ Number(req.body.timespanHours))*user.rate
     }).then((newEntry) => {
       Time.findById(newEntry._id)
         .populate("project")

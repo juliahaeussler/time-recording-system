@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import axios from "axios";
+import Loading from "../loading/Loading";
 
 import Navbar from "../navbar/Navbar";
 
@@ -17,6 +18,7 @@ class ProjectDetails extends React.Component {
       console.log(resp.data);
       this.setState({
         project: resp.data,
+        loading: false,
       });
     });
   }
@@ -28,6 +30,9 @@ class ProjectDetails extends React.Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <Loading></Loading>;
+    }
     return (
       <div>
         <Navbar />

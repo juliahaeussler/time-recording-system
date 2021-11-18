@@ -15,9 +15,11 @@ import ProjectEdit from "./components/projectEdit/ProjectEdit";
 import ProjectDelete from "./components/projectDelete/ProjectDelete";
 
 import Analysis from "./components/analysis/Analysis";
+
 import User from "./components/user/User";
 import UserDetails from "./components/userDetails/UserDetails";
 import UserEdit from "./components/userEdit/UserEdit";
+
 import LogOut from "./components/logOut/LogOut";
 
 class App extends React.Component {
@@ -66,14 +68,14 @@ class App extends React.Component {
             component={ProjectDelete}
           />
 
-          <Route exact path="/auswertung" component={Analysis} />
+          <Route exact path="/auswertung" component={() => <Analysis user={this.state.currentUser}></Analysis>} />
 
           <Route
             exact
             path="/benutzer"
             component={() => <User user={this.state.currentUser}></User>}
           />
-          <Route exact path="/benutzer/:id" component={UserDetails} />
+          <Route exact path="/benutzer/:id" component={() => <UserDetails user={this.state.currentUser}></UserDetails>} />
           <Route exact path="/benutzer/:id/bearbeiten" component={UserEdit} />
 
           <Route exact path="/logout" component={LogOut} />

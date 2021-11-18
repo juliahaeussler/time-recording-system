@@ -104,6 +104,7 @@ router.patch('/benutzer/:id/bearbeiten', (req, res, next) => {
 
 //LOG OUT
 router.post('/logout', (req, res, next) => {
+
   req.session.destroy();
   
 })

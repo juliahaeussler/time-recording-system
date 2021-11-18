@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Table } from "reactstrap";
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
 import Pen from "./pen.png";
+import Loading from "../loading/Loading";
 
 class Projects extends React.Component {
   state = {
@@ -19,8 +20,6 @@ class Projects extends React.Component {
     projectCode: "",
   };
 
-
-
   clearForm = () => {
     this.setState({
       name: "",
@@ -34,7 +33,7 @@ class Projects extends React.Component {
     axios.get("/projekte").then((resp) => {
       this.updateProjects(resp.data);
       this.setState({
-        loading: false
+        loading: false,
       });
     });
   }
@@ -88,11 +87,9 @@ class Projects extends React.Component {
   };
 
   render() {
-
     if (this.state.loading) {
-      return <div>Inhalte werden geladen.</div>;
+      return <Loading></Loading>;
     }
-
 
     return (
       <div>
@@ -101,7 +98,9 @@ class Projects extends React.Component {
           <Row>
             <Col>
               <div className="card">
-                <h3>Neues Projekt:</h3>
+                <h3 class="h3Style">
+                  <span>Neues Projekt:</span>
+                </h3>
                 <form onSubmit={this.handleFormSubmit} className="form-card">
                   <label htmlFor="name">Titel</label>
                   <input
@@ -153,8 +152,10 @@ class Projects extends React.Component {
             </Col>
             <Col>
               <div className="card">
-                <h3>Alle Projekte:</h3>
-                <table>
+              <h3 class="h3Style">
+                  <span>Alle Projekte:</span>
+                </h3>
+                <Table striped bordered hover>
                   <thead className="thead">
                     <tr>
                       <th>Titel</th>
@@ -178,7 +179,7 @@ class Projects extends React.Component {
                       );
                     })}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </Col>
           </Row>

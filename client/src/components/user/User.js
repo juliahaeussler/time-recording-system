@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import axios from "axios";
 import Navbar from "../navbar/Navbar";
-
+import Loading from "../loading/Loading";
 
 import Pen from "./pen.png";
-import Check from './check.png';
-import noCheck from './no-check.png';
+import Check from "./check.png";
+import noCheck from "./no-check.png";
 
 class User extends React.Component {
   state = {
@@ -23,11 +23,16 @@ class User extends React.Component {
       console.log(resp.data);
       const updatedUser = resp.data.find((user) => {
         if (this.state.currentUser._id === user._id) {
-          return user
-        } return user
+          return user;
+        }
+        return user;
+      });
+      let sorted = resp.data.sort(function compare(user) {
+        if (user.isAdmin === true && user.isActive === true) return -1;
+        if (user.isAdmin === false && user.isActive === false) return 1;
       });
       this.setState({
-        users: resp.data,
+        users: sorted,
         updatedUser: updatedUser,
         loading: false,
         error: false,
@@ -53,31 +58,28 @@ class User extends React.Component {
     event.preventDefault();
   };
 
- 
-
   render() {
-   
     if (this.state.loading) {
-      return (
-        <div>
-          Inhalte werden geladen.
-        </div>
-      );
+      return <Loading></Loading>;
     }
+
     return (
       <div>
         <Navbar />
         <Container>
           <Row>
             <Col>
-            <div className="card">
+              <div className="card">
                 <div className="card-head">
-                  <h2>
-                    Angemeldet als{" "}
-                    {this.state.updatedUser
-                      ? this.state.updatedUser.username
-                      : "unknown user"}
-                  </h2>
+                  <h3 className="h3Style">
+                    <span>
+                      Angemeldet als{" "}
+                      {this.state.updatedUser
+                        ? this.state.updatedUser.username
+                        : "unknown user"}
+                    </span>
+                  </h3>
+
                   <Link to={`/benutzer/${this.state.updatedUser._id}`}>
                     <img className="pen-img" src={Pen} alt="Pen" />
                   </Link>
@@ -85,27 +87,89 @@ class User extends React.Component {
 
                 <h4>Name: {this.state.updatedUser.name}</h4>
                 <h4>Stundensatz: {this.state.updatedUser.rate.toFixed(2)}€</h4>
-                
-                  {this.state.updatedUser.isAdmin ? <h4><img className="pen-img" src={Check} alt="Check" /> Administrator</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Eingeschränkt</h4>}
-                
-                  {this.state.updatedUser.isActive ? <h4><img className="pen-img" src={Check} alt="Check" /> Aktiv</h4>  : <h4><img className="pen-img" src={noCheck} alt="No-Check" /> Deaktiviert</h4>}
-               
 
-                
+                {this.state.updatedUser.isAdmin ? (
+                  <h4>
+                    <img className="pen-img" src={Check} alt="Check" />{" "}
+                    Administrator
+                  </h4>
+                ) : (
+                  <h4>
+                    <img className="pen-img" src={noCheck} alt="No-Check" />{" "}
+                    Eingeschränkt
+                  </h4>
+                )}
+
+                {this.state.updatedUser.isActive ? (
+                  <h4>
+                    <img className="pen-img" src={Check} alt="Check" /> Aktiv
+                  </h4>
+                ) : (
+                  <h4>
+                    <img className="pen-img" src={noCheck} alt="No-Check" />{" "}
+                    Deaktiviert
+                  </h4>
+                )}
               </div>
             </Col>
             <Col>
               <div className="card">
-                <h2>Alle Benutzer:</h2>
+                <h3 className="h3Style">
+                  <span>Alle Benutzer:</span>
+                </h3>
                 {this.state.users.map((user) => {
                   return (
-                    <h4 key={user._id} className="one-user">
-                      {user.name}
+                    <div key={user._id} className="user-card">
+                      <div>
+                        <h4 className="one-user">
+                          {user.name}
+                        </h4>
+                        <h4>({user.username})</h4>
+                        <h4>{user.rate.toFixed(2)}€</h4>
+                      </div>
+                      <div>
+                        {this.state.currentUser.isAdmin ? (
+                          <Link to={`/benutzer/${user._id}`}>
+                            <img className="pen-img" src={Pen} alt="Pen" />
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                        
 
-                      <Link to={`/benutzer/${user._id}`}>
-                        <img className="pen-img" src={Pen} alt="Pen" />
-                      </Link>
-                    </h4>
+                        {user.isActive ? (
+                          <h4>
+                            <img className="pen-img" src={Check} alt="Check" />{" "}
+                            Aktiv
+                          </h4>
+                        ) : (
+                          <h4>
+                            <img
+                              className="pen-img"
+                              src={noCheck}
+                              alt="No-Check"
+                            />{" "}
+                            Deaktiviert
+                          </h4>
+                        )}
+
+                        {user.isAdmin ? (
+                          <h4>
+                            <img className="pen-img" src={Check} alt="Check" />{" "}
+                            Administrator
+                          </h4>
+                        ) : (
+                          <h4>
+                            <img
+                              className="pen-img"
+                              src={noCheck}
+                              alt="No-Check"
+                            />{" "}
+                            Eingeschränkt
+                          </h4>
+                        )}
+                      </div>
+                    </div>
                   );
                 })}
               </div>
