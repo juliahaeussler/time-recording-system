@@ -10,7 +10,7 @@ module.exports = (app) => {
       saveUninitialized: true,
       cookie: {maxAge: 60 * 60 * 24 * 1000}, // 1 day
       store: MongoStore.create({
-        mongoUrl: process.env.MONGOURI,
+        mongoUrl: process.env.MONGODB_URI,
 
         //ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day
       }),
