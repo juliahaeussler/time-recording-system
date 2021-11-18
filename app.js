@@ -25,7 +25,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/client/build')));
 
 
 require('./configs/session.config')(app);
@@ -33,7 +33,7 @@ require('./configs/session.config')(app);
 
 
 // default value for title local
-app.locals.title = 'TIME RECORDING SYSTEM';
+app.locals.title = 'BLUE HOUR TIME RECORD';
 
 
 
@@ -68,6 +68,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
 });
 
 module.exports = app;
