@@ -37,16 +37,6 @@ class ProjectEdit extends React.Component {
     });
   };
 
-
-  // handleCheckboxChange = (e) => {
-  //   let currentName = e.target.name;
-  //   let newState = {};
-  //   newState[currentName] = e.target.checked;
-  //   this.setState({newState}, () => {
-  //     console.log(this.state.isArchived)
-  //   });
-  // };
-
   handleCheckboxChange = (e) => {
     let currentName = e.target.name;
     this.setState({
@@ -89,7 +79,9 @@ class ProjectEdit extends React.Component {
           <Row>
             <Col className="one-card">
               <div className="card edit-card">
-                <h3>Projekt bearbeiten</h3>
+              <h3 className="h3Style">
+                  <span>Projekt bearbeiten:</span>
+                </h3>
                 <form onSubmit={this.handleEditSubmit} className="form-card">
                   <label htmlFor="name">Titel:</label>
                   <input

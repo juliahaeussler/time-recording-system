@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import "./SignUp.css";
 import Loading from "../loading/Loading";
 
@@ -82,11 +82,11 @@ class SignUp extends React.Component {
       <div>
         <Container>
           <Row>
-            <Col className="card one-card signup">
-              <h3 class="h3Style">
+            <Col className="card one-card login details">
+              <h3 className="h3Style">
                 <span>Benutzer anlegen:</span>
               </h3>
-
+              <br></br>
               <input
                 type="text"
                 name="username"
@@ -119,7 +119,6 @@ class SignUp extends React.Component {
                 placeholder="Stundensatz"
                 className="login-input"
               />
-
               <div className="input-group">
                 <input
                   type="checkbox"
@@ -130,7 +129,6 @@ class SignUp extends React.Component {
                 />
                 <label htmlFor="isAdmin">Administrator</label>
               </div>
-
               <div className="input-group">
                 <input
                   type="checkbox"
@@ -141,13 +139,16 @@ class SignUp extends React.Component {
                 />
                 <label htmlFor="isActive">Aktiv</label>
               </div>
-
-              <button
-                className="signup-button signup-btn"
-                onClick={this.submitHandler}
-              >
+              <br></br>
+              <Button onClick={this.submitHandler} className="button login-btn">
                 Benutzer anlegen
-              </button>
+              </Button>
+
+              {this.state.error && (
+                <div className="alert alert-danger" role="alert">
+                  Benutzer wurde nicht gespeichert, bitte erneut versuchen.
+                </div>
+              )}
 
               {this.state.success && (
                 <div>
@@ -156,12 +157,6 @@ class SignUp extends React.Component {
                   </div>
 
                   <Link to={"/"}>Zurück zum Log In</Link>
-                </div>
-              )}
-
-              {this.state.error && (
-                <div className="alert alert-danger" role="alert">
-                  Benutzer wurde nicht gespeichert, bitte erneut versuchen.
                 </div>
               )}
             </Col>

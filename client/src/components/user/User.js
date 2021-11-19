@@ -80,7 +80,7 @@ class User extends React.Component {
                     </span>
                   </h3>
 
-                  <Link to={`/benutzer/${this.state.updatedUser._id}`}>
+                  <Link to={`/benutzer/${this.state.updatedUser._id}/bearbeiten`}>
                     <img className="pen-img" src={Pen} alt="Pen" />
                   </Link>
                 </div>
@@ -129,7 +129,7 @@ class User extends React.Component {
                       </div>
                       <div>
                         {this.state.currentUser.isAdmin ? (
-                          <Link to={`/benutzer/${user._id}`}>
+                          <Link to={`/benutzer/${user._id}/bearbeiten`}>
                             <img className="pen-img" src={Pen} alt="Pen" />
                           </Link>
                         ) : (

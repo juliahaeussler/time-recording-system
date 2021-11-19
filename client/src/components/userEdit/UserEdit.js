@@ -14,6 +14,7 @@ class UserEdit extends React.Component {
     name: "",
     rate: "",
     isActive: false,
+    isAdmin: false,
   };
 
   componentDidMount() {
@@ -24,6 +25,7 @@ class UserEdit extends React.Component {
         name: resp.data.name,
         rate: resp.data.rate,
         isActive: resp.data.isActive,
+        isAdmin: resp.data.isAdmin,
         loading: false,
       });
     });
@@ -42,9 +44,7 @@ class UserEdit extends React.Component {
     this.setState({
       ...this.state,
       [currentName]: e.target.checked,
-    }, () =>{  
-      console.log(this.state.isActive)
-    })
+    });
   };
 
   handleEditSubmit = (event) => {
@@ -55,9 +55,10 @@ class UserEdit extends React.Component {
         name: this.state.name,
         rate: this.state.rate,
         isActive: this.state.isActive,
+        isAdmin: this.state.isAdmin,
       })
       .then((resp) => {
-        this.props.history.push(`/benutzer/${this.props.match.params.id}`);
+        this.props.history.push(`/benutzer`);
       })
       .catch((error) => {
         console.log("editing failed");
@@ -106,7 +107,16 @@ class UserEdit extends React.Component {
                   />
 
                   <div className="input-group">
-                    
+                    <input
+                      type="checkbox"
+                      name="isAdmin"
+                      id="isAdmin"
+                      checked={this.state.isAdmin}
+                      onChange={this.handleCheckboxChange}
+                    />
+                    <label htmlFor="isAdmin">Administrator</label>
+                  </div>
+                  <div className="input-group">
                     <input
                       type="checkbox"
                       name="isActive"
