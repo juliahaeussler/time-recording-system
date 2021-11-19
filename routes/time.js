@@ -44,18 +44,19 @@ router.get("/zeiten", (req, res, next) => {
 router.get('/zeiten/:id', (req, res, next) => {
   Time.findById(req.params.id)
     .populate("project")
+    .populate("author")
     .then(entry => {
       res.json(entry);
   })
 });
 
-// //EDIT ENTRY
-// router.put('/zeiten/:id/bearbeiten', (req, res, next) => {
-//     Time.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//       .then((project) => {
-//         res.json(project);
-//       })
-// })
+//EDIT ENTRY
+router.patch('/zeiten/:id/bearbeiten', (req, res, next) => {
+    Time.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then((project) => {
+        res.json(project);
+      })
+})
 
 
 //DELETE ENTRY

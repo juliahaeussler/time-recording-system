@@ -1,5 +1,6 @@
 import React from "react";
 import Loading from "../loading/Loading";
+import { Link } from "react-router-dom";
 
 import "./LogOut.css";
 
@@ -21,6 +22,8 @@ class LogOut extends React.Component {
     return (
       <div className="card loading">
         <h1>Benutzer abgemeldet.</h1>
+        <br></br>
+        <Link to={"/"}>Zurück zum Log In</Link>
       </div>
     );
   }

@@ -1,14 +1,12 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Container, Row, Col, Button, Table } from "reactstrap";
 import Loading from "../loading/Loading";
-
-import axios from "axios";
 import Navbar from "../navbar/Navbar";
-
-import Pen from "./pen.png";
 import Config from "../../configs";
+import Pen from "./pen.png";
 
 class Times extends React.Component {
   state = {
@@ -146,9 +144,10 @@ class Times extends React.Component {
           <Row>
             <Col>
               <div className="card">
-              <h3 className="h3Style">
-                <span>Neue Zeit erfassen:</span>
-              </h3>
+                <h3 className="h3Style">
+                  <span>Neue Zeit erfassen:</span>
+                </h3>
+
                 <form onSubmit={this.handleFormSubmit} className="form-card">
                   <label htmlFor="projectName">Projektname</label>
                   <Select
@@ -158,46 +157,43 @@ class Times extends React.Component {
                     className="project-input"
                   />
 
-                  <div className="date-time-input">
-                    <div>
-                      <label htmlFor="date" className="date-label">
-                        Datum
-                      </label>
+                  <div className="date-time-container">
+                    <div className="date-time">
+                      <label htmlFor="date">Datum</label>
+                      <div>
                       <input
                         type="date"
                         name="date"
                         value={this.state.date}
                         onChange={this.handleChange}
                       />
+                      </div>
                     </div>
-                    <div>
-                      <label htmlFor="timespanHours" className="time-label">
-                        Dauer (h/min)
-                      </label>
-                      
-                        <input
-                          type="number"
-                          name="timespanHours"
-                          max="24"
-                          value={this.state.timespanHours}
-                          onChange={this.handleChange}
-                          className="time-input"
-                        />
-                        <input
-                          list="minutes"
-                          type="number"
-                          name="timespanMins"
-                          value={this.state.timespanMins}
-                          onChange={this.handleChange}
-                          className="time-input"
-                        />
-                        <datalist id="minutes">
-                          <option>00</option>
-                          <option>15</option>
-                          <option>30</option>
-                          <option>45</option>
-                        </datalist>
-                      
+
+                    <div className="date-time">
+                      <label htmlFor="timespanHours">Dauer (h/min)</label>
+                      <div className="time-input">
+                      <input
+                        type="number"
+                        name="timespanHours"
+                        max="24"
+                        value={this.state.timespanHours}
+                        onChange={this.handleChange}
+                      />
+                      <input
+                        list="minutes"
+                        type="number"
+                        name="timespanMins"
+                        value={this.state.timespanMins}
+                        onChange={this.handleChange}
+                      />
+                      <datalist id="minutes">
+                        <option>00</option>
+                        <option>15</option>
+                        <option>30</option>
+                        <option>45</option>
+                      </datalist>
+                      </div>
                     </div>
                   </div>
 
@@ -206,7 +202,7 @@ class Times extends React.Component {
                     options={Config.servicePhases}
                     onChange={this.handleStageChange}
                     placeholder="Auswählen..."
-                  />
+                  /><br></br>
 
                   <label htmlFor="comment">Kommentar</label>
                   <textarea
@@ -232,12 +228,12 @@ class Times extends React.Component {
             </Col>
             <Col>
               <div className="card">
-                
-
                 <h3 className="h3Style">
-                <span>Erfasste Zeiten vom{" "}
-                  {this.state.date.split("-").reverse().join(".")}:</span>
-              </h3>
+                  <span>
+                    Erfasste Zeiten vom{" "}
+                    {this.state.date.split("-").reverse().join(".")}:
+                  </span>
+                </h3>
 
                 <Table striped bordered hover>
                   <thead className="thead">

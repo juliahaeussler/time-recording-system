@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import axios from "axios";
 import Loading from "../loading/Loading";
 
@@ -25,7 +25,6 @@ class ProjectDetails extends React.Component {
 
   showDate() {
     let d = new Date(this.state.project.startDate);
-    //let startD = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     return d.toLocaleDateString();
   }
 
@@ -38,37 +37,54 @@ class ProjectDetails extends React.Component {
         <Navbar />
         <Container>
           <Row>
-            <Col className="card details">
-              <h2>Titel: {this.state.project.name}</h2>
-              <h4>
-                Projektnummer:{" "}
-                {this.state.project.projectCode
-                  ? this.state.project.projectCode
-                  : "/"}
-              </h4>
-              <h4>Startdatum: {this.showDate()} </h4>
-              <h4>
-                Kommentar:
-                {this.state.project.comment ? this.state.project.comment : "/"}
-              </h4>
-              <h4>
-                {this.state.project.isArchived
-                  ? "Archiviert"
-                  : ""}
-              </h4>
-              <div className="btn-container">
+            <Col className="card project-details">
+              <div>
+                <div className="line">
+                  <h4 className="line-title">Projekt: </h4>
+                  <h4>{this.state.project.name}</h4>
+                </div>
+
+                <div className="line">
+                  <h4 className="line-title">Projektnr.: </h4>
+                  <h4>
+                    {this.state.project.projectCode
+                      ? this.state.project.projectCode
+                      : "/"}
+                  </h4>
+                </div>
+
+                <div className="line">
+                  <h4 className="line-title">Beginn: </h4>
+                  <h4>{this.showDate(this.state.startDate)}</h4>
+                </div>
+
+                <div className="line">
+                  <h4 className="line-title">Kommentar: </h4>
+                  <h4>
+                    {this.state.project.comment
+                      ? this.state.project.comment
+                      : "/"}
+                  </h4>
+                </div>
+              </div>
+
+              <div className="project-btn-container">
+              <Button className="project-btn">
                 <Link
                   to={`/projekte/${this.state.project._id}/bearbeiten`}
                   className="edit"
                 >
                   Bearbeiten
                 </Link>
+                </Button>
+                <Button className="project-btn">
                 <Link
                   to={`/projekte/${this.state.project._id}/loeschen`}
-                  className="delete"
+                  className="edit"
                 >
                   Löschen
                 </Link>
+                </Button>
               </div>
             </Col>
           </Row>

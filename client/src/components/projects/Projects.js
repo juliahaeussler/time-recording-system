@@ -98,7 +98,7 @@ class Projects extends React.Component {
           <Row>
             <Col>
               <div className="card">
-                <h3 class="h3Style">
+                <h3 className="h3Style">
                   <span>Neues Projekt:</span>
                 </h3>
                 <form onSubmit={this.handleFormSubmit} className="form-card">
@@ -152,7 +152,7 @@ class Projects extends React.Component {
             </Col>
             <Col>
               <div className="card">
-              <h3 class="h3Style">
+              <h3 className="h3Style">
                   <span>Alle Projekte:</span>
                 </h3>
                 <Table striped bordered hover>

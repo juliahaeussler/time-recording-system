@@ -7,6 +7,7 @@ import LogIn from "./components/logIn/LogIn";
 
 import Times from "./components/times/Times";
 import TimesDetails from "./components/timesDetails/TimesDetails";
+import TimeEdit from "./components/timeEdit/TimeEdit";
 import TimeDelete from "./components/timeDelete/TimeDelete";
 
 import Projects from "./components/projects/Projects";
@@ -53,6 +54,11 @@ class App extends React.Component {
             component={() => <Times user={this.state.currentUser}></Times>}
           />
           <Route exact path="/zeiten/:id" component={TimesDetails} />
+          <Route
+            exact
+            path="/zeiten/:id/bearbeiten"
+            component={TimeEdit}
+          />
           <Route exact path="/zeiten/:id/loeschen" component={TimeDelete} />
 
           <Route exact path="/projekte" component={Projects} />
