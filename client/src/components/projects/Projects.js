@@ -92,7 +92,7 @@ class Projects extends React.Component {
     }
 
     return (
-      <div>
+      <div className="background">
         <Navbar />
         <Container>
           <Row>
