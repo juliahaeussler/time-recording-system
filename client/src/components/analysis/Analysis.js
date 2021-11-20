@@ -324,7 +324,7 @@ class Analysis extends React.Component {
                       <thead>
                         <tr>
                           <th>Datum</th>
-                          <th>Mitarbeiter</th>
+                          <th>MitarbeiterIn</th>
                           <th>Leistungsphase</th>
                           <th>Kommentar</th>
                           <th>Std</th>
