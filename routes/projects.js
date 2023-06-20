@@ -5,16 +5,21 @@ const router = express.Router();
 
 const Project = require('../models/Project');
 
+router.get('/test', (req, res, next) => {
+  res.json({msg: 'test'})
+});
+
 //SHOW PROJECTS
-router.get('/projekte', (req, res, next) => {
+router.get('/projects', (req, res, next) => {
     Project.find()
       .then(allProjects => {
+        console.log('allProjects', allProjects)
         res.json(allProjects);
     })
 });
 
 //SHOW ONE PROJECT
-router.get('/projekte/:id', (req, res, next) => {
+router.get('/projects/:id', (req, res, next) => {
   Project.findById(req.params.id)
     .then(project => {
       res.json(project);
@@ -22,12 +27,12 @@ router.get('/projekte/:id', (req, res, next) => {
 });
 
 //ADD PROJECT
-router.post('/projekte', (req, res, next) => {
+router.post('/projects', (req, res, next) => {
   Project.create({
     name: req.body.name,
-    startDate: req.body.startDate,
-    comment: req.body.comment,
-    projectCode: req.body.projectCode,
+    number: req.body.number,
+    date: req.body.date,
+    note: req.body.note,
   }).then((response) => {
     res.json(response);
   });

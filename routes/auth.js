@@ -27,10 +27,6 @@ router.post('/signup', (req, res, next) => {
         const aNewUser = new User({
           username: username,
           password: hashPass,
-          name: name,
-          rate: rate,
-          isAdmin: isAdmin,
-          isActive: isActive,
         });
   
         aNewUser.save().then(() => {
@@ -69,11 +65,12 @@ router.post('/login', (req, res, next) => {
 
 // CHECK USER
 router.get('/checkuser', (req, res, next) => {
-  if (req.session.currentUser) {
-    res.json({ userDoc: req.session.currentUser });
-  } else {
-    res.json({ userDoc: null });
-  }
+  res.json({ userDoc: {_id: 1, username: 'admin', password: 'test'} });
+  // if (req.session.currentUser) {
+  //   res.json({ userDoc: req.session.currentUser });
+  // } else {
+  //   res.json({ userDoc: null });
+  // }
 });
 
 // GET USERS

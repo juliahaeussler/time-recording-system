@@ -1,30 +1,25 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const projectSchema = new Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  startDate: {
-    type: Date,
-    required: true,
-  },
-  comment: {
+const projectSchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
+      unique: true,
+      required: true,
+    },
+    number: {
+      type: String,
+    },
+    date: {
+      type: Date,
+    },
+    note: {
+      type: String,
+    },
   },
-  projectCode: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  isArchived: {
-    type: Boolean,
-    default: false,
-  },
-});
+  { collection: "projects" }
+);
 
-const Project = mongoose.model('Project', projectSchema);
+const Project = mongoose.model("Project", projectSchema);
 
 module.exports = Project;

@@ -22,6 +22,7 @@ import UserDetails from "./components/userDetails/UserDetails";
 import UserEdit from "./components/userEdit/UserEdit";
 
 import LogOut from "./components/logOut/LogOut";
+import { Home } from "./components/home/Home";
 
 class App extends React.Component {
   state = {
@@ -47,7 +48,11 @@ class App extends React.Component {
             )}
           />
           <Route exact path="/signup" component={SignUp} />
-
+          <Route
+            exact
+            path="/home"
+            component={() => <Home />}
+          />
           <Route
             exact
             path="/zeiten"

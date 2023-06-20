@@ -33,12 +33,12 @@ require('./configs/session.config')(app);
 
 
 // default value for title local
-app.locals.title = 'BLUE HOUR TIME RECORD';
+app.locals.title = 'Häußler Architekt';
 
 
 
 // ROUTES
-const apiPrefix = '/api/v1'
+const apiPrefix = '/api'
 
 const index = require('./routes/index');
 app.use(apiPrefix, index);
