@@ -46,8 +46,14 @@ app.use(apiPrefix, index);
 const auth = require('./routes/auth');
 app.use(apiPrefix, auth);
 
+const phases = require('./routes/phases');
+app.use(apiPrefix, phases);
+
 const projects = require('./routes/projects');
 app.use(apiPrefix, projects);
+
+const time_entries = require('./routes/time_entries');
+app.use(apiPrefix, time_entries);
 
 const time = require('./routes/time');
 app.use(apiPrefix, time);

@@ -18,27 +18,18 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  VStack, IconButton
+  VStack,
+  IconButton,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import { Form, Formik } from "formik";
 import { TextAreaInput, TextInput } from "../helpers/inputs";
-import { getRequest, postRequest, putRequest } from "../helpers/functions";
-import { useCallback, useEffect, useState } from "react";
+import { postRequest, putRequest } from "../helpers/functions";
+import { useState } from "react";
 
-export const TimeProjects = () => {
+export const TimeProjects = ({ projects, fetchProjects }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [projects, setProjects] = useState([]);
   const [projectToEdit, setProjectToEdit] = useState({});
-
-  const fetchProjects = useCallback(async () => {
-    const result = await getRequest("/api/projects");
-    setProjects(result);
-  }, []);
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
 
   const handleSave = async (values, actions) => {
     actions.setSubmitting(true);
@@ -49,7 +40,7 @@ export const TimeProjects = () => {
       actions.setSubmitting(false);
       onClose();
       fetchProjects();
-      setProjectToEdit({})
+      setProjectToEdit({});
     }
   };
 
@@ -88,7 +79,13 @@ export const TimeProjects = () => {
                         <Td>{p.note}</Td>
                         <Td pr={0} isNumeric>
                           <IconButton
-                            variant="link" onClick={() => {setProjectToEdit(p); onOpen()}}
+                            variant="ghost"
+                            colorScheme="blue"
+                            size="xs"
+                            onClick={() => {
+                              setProjectToEdit(p);
+                              onOpen();
+                            }}
                             aria-label="Edit project"
                             icon={<EditIcon />}
                           />
@@ -109,7 +106,7 @@ export const TimeProjects = () => {
             _id: projectToEdit._id,
             name: projectToEdit.name,
             number: projectToEdit.number,
-            date: projectToEdit._date,
+            date: projectToEdit.date,
             note: projectToEdit.note,
           }}
           onSubmit={(values, actions) => handleSave(values, actions)}

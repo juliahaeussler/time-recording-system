@@ -17,7 +17,7 @@ router.get("/projects", async (req, res, next) => {
 router.get("/projects/:id", async (req, res, next) => {
   try {
     const response = await Project.findById(req.params.id);
-    res.json(project);
+    res.json(response);
   } catch (err) {
     console.log(`GET project with ID ${req.params.id} failed:`, err);
   }
