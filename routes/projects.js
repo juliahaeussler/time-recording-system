@@ -1,57 +1,61 @@
-const { response } = require('express');
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
-
-const Project = require('../models/Project');
-
-router.get('/test', (req, res, next) => {
-  res.json({msg: 'test'})
-});
+const Project = require("../models/Project");
 
 //SHOW PROJECTS
-router.get('/projects', (req, res, next) => {
-    Project.find()
-      .then(allProjects => {
-        console.log('allProjects', allProjects)
-        res.json(allProjects);
-    })
+router.get("/projects", async (req, res, next) => {
+  try {
+    const projects = await Project.find();
+    res.json(projects);
+  } catch (err) {
+    console.log("GET projects failed:", err);
+  }
 });
 
 //SHOW ONE PROJECT
-router.get('/projects/:id', (req, res, next) => {
-  Project.findById(req.params.id)
-    .then(project => {
-      res.json(project);
-  })
+router.get("/projects/:id", async (req, res, next) => {
+  try {
+    const response = await Project.findById(req.params.id);
+    res.json(project);
+  } catch (err) {
+    console.log(`GET project with ID ${req.params.id} failed:`, err);
+  }
 });
 
 //ADD PROJECT
-router.post('/projects', (req, res, next) => {
-  Project.create({
-    name: req.body.name,
-    number: req.body.number,
-    date: req.body.date,
-    note: req.body.note,
-  }).then((response) => {
+router.post("/projects", async (req, res, next) => {
+  try {
+    const response = await Project.create({
+      name: req.body.name,
+      number: req.body.number,
+      date: req.body.date,
+      note: req.body.note,
+    });
     res.json(response);
-  });
+  } catch (err) {
+    console.log("POST project failed:", err);
+  }
 });
 
 //EDIT PROJECT
-router.patch('/projekte/:id/bearbeiten', (req, res, next) => {
-  Project.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((project) => {
-      res.json(project);
-    })
-})
+router.put("/projects/:id", async (req, res, next) => {
+  try {
+    const response = await Project.findByIdAndUpdate(req.params.id, req.body);
+    res.json(response);
+  } catch (err) {
+    console.log(`PUT project with ID ${req.params.id} failed:`, err);
+  }
+});
 
 //DELETE PROJECT
-router.delete('/projekte/:id/loeschen', (req, res, next) => {
-  Project.findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({ message: `Project with ${req.params.id} is removed successfully.` });
-    })
-})
+router.delete("/projects/:id", async (req, res, next) => {
+  try {
+    const response = await Project.findByIdAndRemove(req.params.id);
+    res.json(response);
+  } catch (err) {
+    console.log(`DELETE project with ID ${req.params.id} failed:`, err);
+  }
+});
 
 module.exports = router;

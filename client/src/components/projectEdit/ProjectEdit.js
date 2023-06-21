@@ -11,7 +11,7 @@ class ProjectEdit extends React.Component {
     loading: true,
 
     name: "",
-    projectCode: "",
+    // projectCode: "",
     comment: "",
     isArchived: false,
   };
@@ -21,7 +21,7 @@ class ProjectEdit extends React.Component {
       console.log(resp.data);
       this.setState({
         name: resp.data.name,
-        projectCode: resp.data.projectCode,
+        // projectCode: resp.data.projectCode,
         comment: resp.data.comment,
         isArchived: resp.data.isArchived,
         loading: false,
@@ -52,7 +52,7 @@ class ProjectEdit extends React.Component {
     axios
       .patch(`/api/v1/projekte/${this.props.match.params.id}/bearbeiten`, {
         name: this.state.name,
-        projectCode: this.state.projectCode,
+        // projectCode: this.state.projectCode,
         comment: this.state.comment,
         isArchived: this.state.isArchived,
       })
@@ -74,7 +74,7 @@ class ProjectEdit extends React.Component {
     console.log(this.state.isArchived)
     return (
       <div>
-        <Navbar />
+        {/* <Navbar />
         <Container>
           <Row>
             <Col className="one-card">
@@ -135,7 +135,7 @@ class ProjectEdit extends React.Component {
               </div>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
     );
   }

@@ -48,11 +48,11 @@ class TimesDetails extends React.Component {
 
                 <div className="line">
                   <h4 className="line-title">Projektnr.: </h4>
-                  <h4>
+                  {/* <h4>
                     {this.state.entry.project.projectCode
                       ? this.state.entry.project.projectCode
                       : "/"}
-                  </h4>
+                  </h4> */}
                 </div>
 
                 <div className="line">

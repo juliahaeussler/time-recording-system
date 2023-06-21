@@ -46,11 +46,11 @@ class ProjectDetails extends React.Component {
 
                 <div className="line">
                   <h4 className="line-title">Projektnr.: </h4>
-                  <h4>
+                  {/* <h4>
                     {this.state.project.projectCode
                       ? this.state.project.projectCode
                       : "/"}
-                  </h4>
+                  </h4> */}
                 </div>
 
                 <div className="line">
