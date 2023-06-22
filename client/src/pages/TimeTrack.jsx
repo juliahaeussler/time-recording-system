@@ -8,6 +8,7 @@ import {
   Button,
   HStack,
   VStack,
+  Stack,
 } from "@chakra-ui/react";
 import { TimeEntries } from "./TimeEntries";
 import { TimeProjects } from "./TimeProjects";
@@ -20,8 +21,8 @@ export const TimeTrack = () => {
   const initial = {
     project: { value: "", label: "" },
     date: "",
-    hours: '',
-    mins: '',
+    hours: "",
+    mins: "",
     time: "",
     phase: { value: "", label: "" },
     comment: "",
@@ -83,12 +84,11 @@ export const TimeTrack = () => {
             >
               {(formikProps) => (
                 <Form>
-                  <Box mt={8}>
+                  <Box >
                     <HStack
                       spacing="24px"
                       w="100%"
                       mb="15px"
-                      h="250px"
                       alignItems="start"
                     >
                       <VStack w="40%">
@@ -96,9 +96,7 @@ export const TimeTrack = () => {
                           name="project"
                           label="Projekt"
                           handleChange={(e) =>
-                       {   console.log(e.value)
                             formikProps.setFieldValue("project", e)
-                            }
                           }
                           value={formikProps.values.project}
                           options={projectOptions}
@@ -122,7 +120,7 @@ export const TimeTrack = () => {
                             formikProps.setFieldValue("date", e.target.value)
                           }
                         />
-                        <HStack>
+                        <HStack justify="space-between" w="100%">
                           <TextInput
                             name="hours"
                             label="Stunden"
@@ -144,30 +142,43 @@ export const TimeTrack = () => {
                           />
                         </HStack>
                       </VStack>
-
-                      <VStack w="60%">
-                        <TextAreaInput name={"comment"} label={"Kommentar"}  value={formikProps.values.comment} handleChange={(e) =>
+       
+                      <VStack
+                        w="60%"
+                        h="100%"
+                        justify="space-between"
+                        spacing="30px"
+                      >
+                        <TextAreaInput
+                          name={"comment"}
+                          label={"Kommentar"}
+                          value={formikProps.values.comment}
+                          handleChange={(e) =>
                             formikProps.setFieldValue("comment", e.target.value)
-                          } />
+                          }
+                        />
+                        <Stack d="flex" align="end" w="100%">
+                          <Button
+                            bgColor={"brand.900"}
+                            color={"white"}
+                            type="submit"
+                            isLoading={formikProps.isSubmitting}
+                          >
+                            Speichern
+                          </Button>
+                        </Stack>
                       </VStack>
                     </HStack>
-
-                    <Box d="flex" align="end">
-                      <Button
-                        bgColor={"brand.900"}
-                        color={"white"}
-                        type="submit"
-                      >
-                        Speichern
-                      </Button>
-                    </Box>
                   </Box>
                 </Form>
               )}
             </Formik>
           </TabPanel>
           <TabPanel p={0}>
-            <TimeEntries projectOptions={projectOptions} phaseOptions={phaseOptions} />
+            <TimeEntries
+              projectOptions={projectOptions}
+              phaseOptions={phaseOptions}
+            />
           </TabPanel>
           <TabPanel p={0}>
             <TimeProjects projects={projects} fetchProjects={fetchProjects} />

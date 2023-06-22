@@ -13,15 +13,15 @@ router.get("/time_entries", async (req, res, next) => {
   }
 });
 
-//SHOW ONE PROJECT
-// router.get("/projects/:id", async (req, res, next) => {
-//   try {
-//     const response = await Project.findById(req.params.id);
-//     res.json(project);
-//   } catch (err) {
-//     console.log(`GET project with ID ${req.params.id} failed:`, err);
-//   }
-// });
+//SHOW ONE ENTRY
+router.get("/time_entries/:id", async (req, res, next) => {
+  try {
+    const response = await Time.findById(req.params.id);
+    res.json(response);
+  } catch (err) {
+    console.log(`GET time entry with ID ${req.params.id} failed:`, err);
+  }
+});
 
 //ADD TIME ENTRY
 router.post("/time_entries", async (req, res, next) => {
@@ -44,13 +44,13 @@ router.put("/time_entries/:id", async (req, res, next) => {
 });
 
 //DELETE PROJECT
-// router.delete("/projects/:id", async (req, res, next) => {
-//   try {
-//     const response = await Project.findByIdAndRemove(req.params.id);
-//     res.json(response);
-//   } catch (err) {
-//     console.log(`DELETE project with ID ${req.params.id} failed:`, err);
-//   }
-// });
+router.delete("/time_entries/:id", async (req, res, next) => {
+  try {
+    const response = await Time.findByIdAndRemove(req.params.id);
+    res.json(response);
+  } catch (err) {
+    console.log(`DELETE project with ID ${req.params.id} failed:`, err);
+  }
+});
 
 module.exports = router;

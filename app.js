@@ -8,6 +8,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
+const nodemailer = require("nodemailer");
 
 // Connects to the database
 const connectDB = require('./db/db');
@@ -30,6 +31,23 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 require('./configs/session.config')(app);
 
+const contactEmail = nodemailer.createTransport({
+  service: process.env.MAIL_SERVICE,
+  auth: {
+    user: process.env.MAIL,
+    pass: process.env.MAIL_PASSWORD,
+  },
+});
+
+//TEST EMAIL
+contactEmail.verify((error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Ready to Send");
+  }
+});
+
 
 
 // default value for title local
@@ -45,6 +63,9 @@ app.use(apiPrefix, index);
 
 const auth = require('./routes/auth');
 app.use(apiPrefix, auth);
+
+const contact = require('./routes/contact');
+app.use(apiPrefix, contact);
 
 const phases = require('./routes/phases');
 app.use(apiPrefix, phases);

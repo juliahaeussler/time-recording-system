@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useState } from "react";
-import { getRequest, putRequest } from "../helpers/functions";
+import { getRequest, putRequest, deleteRequest } from "../helpers/functions";
 import { Form, Formik } from "formik";
 import { SelectInput, TextAreaInput, TextInput } from "../helpers/inputs";
 
@@ -45,16 +45,26 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
     const payload = {
       ...values,
       project: values.project.value,
-      phase: values.phase.value
+      phase: values.phase.value,
     };
-    console.log('payload', payload)
+    console.log("payload", payload);
     const result = await putRequest(`/api/time_entries/${values._id}`, payload);
-    console.log('RESULT', result)
+    console.log("RESULT", result);
     if (result.ok) {
       actions.setSubmitting(false);
       onClose();
       fetchEntries();
       setEntryToEdit({});
+    }
+  };
+
+  const handleDelete = async (id) => {
+    // eslint-disable-next-line no-restricted-globals
+    let answer = confirm('Eintrag löschen?')
+    if (answer) {
+      const result = await deleteRequest(`/api/time_entries/${id}`);
+      console.log(result);
+      if (result) fetchEntries()
     }
   };
 
@@ -82,7 +92,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
                 ? entries.map((e, idx) => {
                     return (
                       <Tr key={idx}>
-                        <Td pl={0}>
+                        <Td>
                           {
                             projectOptions.find((p) => p.value === e.project)
                               .label
@@ -114,10 +124,9 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
                               size="xs"
                               aria-label="Löschen"
                               icon={<DeleteIcon />}
-                              //   onClick={() => {
-                              //   setEntryToEdit(p);
-                              //   onOpen();
-                              // }}
+                              onClick={() => {
+                                handleDelete(e._id);
+                              }}
                             />
                           </HStack>
                         </Td>

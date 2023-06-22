@@ -43,3 +43,17 @@ export const putRequest = async (url, payload) => {
       console.error('Error:', error);
     }
 }
+
+export const deleteRequest = async (url) => {
+  try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });  
+      return response
+    } catch (error) {
+      console.error('Error:', error);
+    }
+}
