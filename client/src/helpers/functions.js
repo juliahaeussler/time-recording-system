@@ -56,3 +56,28 @@ export const deleteRequest = async (url) => {
       console.error('Error:', error);
     }
 }
+
+export const getDateFromDatetime = (datetime) => {
+  return datetime.slice(0, datetime.indexOf('T'));
+};
+
+export const formatDateYYYYMMDD = (datetime) => {
+  const date = getDateFromDatetime(datetime);
+  return date.split('-').reverse().join('.');
+};
+
+export const formatTime = (time) => {
+  if (isNaN(time) || !time) return '00'
+  return time <= 9 ? `0${time}` : time
+}
+
+export const truncate = (str, n, useWordBoundary) => {
+  if (str == null) {
+    return '';
+  }
+  if (str.length <= n) {
+    return str;
+  }
+  const subString = str.substring(0, n - 1); // the original check
+  return (useWordBoundary ? subString.substring(0, subString.lastIndexOf(' ')) : subString) + '...';
+}

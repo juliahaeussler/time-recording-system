@@ -55,6 +55,8 @@ export const TimeTrack = () => {
     actions.setSubmitting(true);
     const payload = {
       ...values,
+      hours: values.hours || 0,
+      mins: values.mins || 0,
       project: values.project.value,
       phase: values.phase.value,
     };
@@ -162,7 +164,7 @@ export const TimeTrack = () => {
                             handleChange={(e) =>
                               formikProps.setFieldValue("mins", e)
                             }
-                            min={0}
+                            min={0} max={59}
                           />
                         </HStack>
                       </VStack>

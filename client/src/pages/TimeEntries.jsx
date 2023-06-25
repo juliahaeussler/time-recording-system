@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useState } from "react";
-import { getRequest, putRequest, deleteRequest } from "../helpers/functions";
+import { getRequest, putRequest, deleteRequest, formatDateYYYYMMDD, formatTime } from "../helpers/functions";
 import { Form, Formik } from "formik";
 import { SelectInput, TextAreaInput, TextInput } from "../helpers/inputs";
 
@@ -78,8 +78,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
               <Tr>
                 <Th>Projekt</Th>
                 <Th>Datum</Th>
-                <Th>Stunden</Th>
-                <Th>Minuten</Th>
+                <Th>Zeit</Th>
                 <Th>Phase</Th>
                 <Th>Kommentar</Th>
                 <Th pr={0} isNumeric>
@@ -98,9 +97,8 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
                               .label
                           }
                         </Td>
-                        <Td>{e.date.slice(0, 10)}</Td>
-                        <Td>{e.hours}</Td>
-                        <Td>{e.mins}</Td>
+                        <Td>{formatDateYYYYMMDD(e.date)}</Td>
+                        <Td>{`${formatTime(e.hours)}:${formatTime(e.mins)}`}</Td>
                         <Td>
                           {phaseOptions.find((p) => p.value === e.phase).label}
                         </Td>
