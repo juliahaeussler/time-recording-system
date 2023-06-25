@@ -22,7 +22,6 @@ export const postRequest = async (url, payload) => {
           },
           body: JSON.stringify(payload)
         });  
-        const result = await response.json();
         return response
       } catch (error) {
         console.error('Error:', error);

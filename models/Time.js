@@ -11,10 +11,10 @@ const timeSchema = new Schema(
       type: Date,
     },
     hours: {
-      type: String,
+      type: Number,
     },
     mins: {
-      type: String,
+      type: Number,
     },
     phase: {
       type: Schema.Types.ObjectId,

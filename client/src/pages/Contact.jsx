@@ -1,15 +1,23 @@
-import { Box, Button, VStack, Center, Stack } from "@chakra-ui/react";
+import { Box, Button, VStack, Center, Stack, useToast } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { TextAreaInput, TextInput } from "../helpers/inputs";
 import { postRequest } from "../helpers/functions";
 
 export const Contact = () => {
+  const toast = useToast();
+
   const handleSave = async (values, actions) => {
-    actions.isSubmitting(true)
-    const response = await postRequest('/api/contact', values)
-    console.log(response);
-    actions.isSubmitting(false)
-    //empty form
+    actions.setSubmitting(true);
+    const response = await postRequest("/api/contact", values);
+    const result = await response.json();
+    toast({
+      title: result.msg,
+      status: result.status,
+      duration: 9000,
+      isClosable: true,
+    });
+    actions.setSubmitting(false);
+    actions.resetForm();
   };
 
   return (
@@ -25,10 +33,7 @@ export const Contact = () => {
         {(formikProps) => (
           <Form>
             <Center>
-              <VStack
-                w="500px"          
-                align="center"
-              >
+              <VStack w="500px" align="center">
                 <VStack w="100%">
                   <TextInput
                     name="name"
@@ -58,6 +63,12 @@ export const Contact = () => {
                     value={formikProps.values.message}
                   />
                 </VStack>
+
+                {/* <div 
+                id="html_element" 
+                // className="g-recaptcha" 
+                // data-sitekey={process.env.RECAPTCHA}
+                ></div> */}
 
                 <Stack d="flex" align="end" w="100%">
                   <Button

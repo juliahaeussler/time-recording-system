@@ -1,7 +1,20 @@
-import { Box, HStack, Spacer } from "@chakra-ui/react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Box, HStack, Spacer, Button } from "@chakra-ui/react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { getUserFromLocalStorage } from "../helpers/localStorage";
+import { postRequest } from "../helpers/functions";
 
 const Navbar = () => {
+  const user = getUserFromLocalStorage();
+  const navigate = useNavigate();
+  const handleLogOut = async () => {
+    const response = await postRequest("/api/login/logout");
+    const result = await response.json();
+    if (result.status === "ok") {
+      window.localStorage.removeItem("user");
+      navigate("/home");
+    }
+  };
+
   return (
     <HStack
       w={"100%"}
@@ -14,10 +27,18 @@ const Navbar = () => {
     >
       <NavLink to={"/home"}>Architekt</NavLink>
       <NavLink to={"/projekte"}>Projekte</NavLink>
-      <Spacer />
       <NavLink to={"/kontakt"}>Kontakt</NavLink>
-      <NavLink to={"/login"}>Log in</NavLink>
-      <NavLink to={"/zeiterfassung"}>Zeiterfassung (kommt weg)</NavLink>
+      <Spacer />
+      {user ? (
+        <>
+          <NavLink to={"/zeiterfassung"}>Zeiterfassung</NavLink>
+          <Button variant="link" color={"white"} onClick={() => handleLogOut()}>
+            Log out
+          </Button>
+        </>
+      ) : (
+        <NavLink to={"/login"}>Log in</NavLink>
+      )}
     </HStack>
   );
 };
@@ -26,7 +47,9 @@ export const Frame = () => {
   return (
     <Box fontFamily={"fontFamily"}>
       <Navbar />
-      <Box m={4}><Outlet /></Box>
+      <Box m={4}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };

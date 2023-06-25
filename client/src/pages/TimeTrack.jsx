@@ -9,27 +9,24 @@ import {
   HStack,
   VStack,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { TimeEntries } from "./TimeEntries";
 import { TimeProjects } from "./TimeProjects";
 import { Form, Formik } from "formik";
-import { SelectInput, TextAreaInput, TextInput } from "../helpers/inputs";
+import {
+  DateInput,
+  NumberTimeInput,
+  SelectInput,
+  TextAreaInput,
+} from "../helpers/inputs";
 import { useCallback, useEffect, useState } from "react";
 import { getRequest, postRequest } from "../helpers/functions";
 
 export const TimeTrack = () => {
-  const initial = {
-    project: { value: "", label: "" },
-    date: "",
-    hours: "",
-    mins: "",
-    time: "",
-    phase: { value: "", label: "" },
-    comment: "",
-  };
+  const toast = useToast();
   const [projects, setProjects] = useState([]);
   const [phases, setPhases] = useState([]);
-  const [initialEntry, setInitialEntry] = useState(initial);
 
   const projectOptions = projects.map((p) => {
     return { value: p._id, label: p.name };
@@ -64,11 +61,24 @@ export const TimeTrack = () => {
     const result = await postRequest("/api/time_entries", payload);
     if (result.ok) {
       actions.setSubmitting(false);
-      setInitialEntry(initial);
+      actions.resetForm();
+      toast({
+        title: "Gespeichert",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Speichern nicht möglich",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
-  return (
+  return projectOptions.length > 0 && phaseOptions.length > 0 ? (
     <Box>
       <Tabs isLazy isFitted>
         <TabList mb="1em">
@@ -79,12 +89,20 @@ export const TimeTrack = () => {
         <TabPanels>
           <TabPanel p={0}>
             <Formik
-              initialValues={initialEntry}
+              initialValues={{
+                project: projectOptions[0],
+                date: new Date(),
+                hours: "",
+                mins: "",
+                time: "",
+                phase: phaseOptions[0],
+                comment: "",
+              }}
               onSubmit={(values, actions) => handleSave(values, actions)}
             >
               {(formikProps) => (
-                <Form>
-                  <Box >
+                <Form autoComplete="off">
+                  <Box>
                     <HStack
                       spacing="24px"
                       w="100%"
@@ -95,6 +113,7 @@ export const TimeTrack = () => {
                         <SelectInput
                           name="project"
                           label="Projekt"
+                          isRequired
                           handleChange={(e) =>
                             formikProps.setFieldValue("project", e)
                           }
@@ -105,6 +124,7 @@ export const TimeTrack = () => {
                         <SelectInput
                           name="phase"
                           label="Phase"
+                          isRequired
                           handleChange={(e) =>
                             formikProps.setFieldValue("phase", e)
                           }
@@ -112,37 +132,41 @@ export const TimeTrack = () => {
                           options={phaseOptions}
                         />
 
-                        <TextInput
+                        <DateInput
                           name="date"
                           label="Datum"
-                          value={formikProps.values.date}
+                          isRequired
+                          className="new-entry-date-input"
+                          selected={formikProps.values.date}
                           handleChange={(e) =>
-                            formikProps.setFieldValue("date", e.target.value)
+                            formikProps.setFieldValue("date", e)
                           }
                         />
-                        <HStack justify="space-between" w="100%">
-                          <TextInput
+
+                        <HStack justify="space-between" w="100%" pt="7px">
+                          <NumberTimeInput
                             name="hours"
                             label="Stunden"
+                            isRequired
                             value={formikProps.values.hours}
                             handleChange={(e) =>
-                              formikProps.setFieldValue("hours", e.target.value)
+                              formikProps.setFieldValue("hours", e)
                             }
+                            min={0}
                           />
-                          <TextInput
+                          <NumberTimeInput
                             name="mins"
                             label="Minuten"
+                            isRequired
                             value={formikProps.values.mins}
                             handleChange={(e) =>
-                              formikProps.setFieldValue(
-                                "minutes",
-                                e.target.value
-                              )
+                              formikProps.setFieldValue("mins", e)
                             }
+                            min={0}
                           />
                         </HStack>
                       </VStack>
-       
+
                       <VStack
                         w="60%"
                         h="100%"
@@ -186,5 +210,5 @@ export const TimeTrack = () => {
         </TabPanels>
       </Tabs>
     </Box>
-  );
+  ) : null;
 };

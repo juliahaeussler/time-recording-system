@@ -10,23 +10,7 @@ const userSchema = new Schema({
   password: { //hashed
     type: String,
     required: true,
-  },
-  name: {
-      type: String,
-      required: true,
-  },
-  rate: {
-    type: Number,
-    required: true,
-  },
-  isAdmin: {
-    type: Boolean,
-    required: true,
-  },
-  isActive: {
-    type: Boolean,
-    required: true,
-  },
+  }
 });
 
 const User = mongoose.model('User', userSchema);
