@@ -49,6 +49,7 @@ export const TimeTrack = () => {
   useEffect(() => {
     fetchProjects();
     fetchPhases();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = async (values, actions) => {
@@ -164,7 +165,8 @@ export const TimeTrack = () => {
                             handleChange={(e) =>
                               formikProps.setFieldValue("mins", e)
                             }
-                            min={0} max={59}
+                            min={0}
+                            max={59}
                           />
                         </HStack>
                       </VStack>

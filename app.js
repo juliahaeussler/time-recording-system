@@ -64,9 +64,6 @@ const apiPrefix = '/api'
 const index = require('./routes/index');
 app.use(apiPrefix, index);
 
-const auth = require('./routes/auth');
-app.use(apiPrefix, auth);
-
 const checkAuth = require('./routes/check-auth');
 app.use(apiPrefix, checkAuth);
 
@@ -87,12 +84,6 @@ app.use(apiPrefix, time_entries);
 
 const user = require('./routes/user');
 app.use(apiPrefix, user);
-
-const time = require('./routes/time');
-app.use(apiPrefix, time);
-
-const analysis = require('./routes/analysis');
-app.use(apiPrefix, analysis);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
