@@ -6,13 +6,14 @@ const bcrypt = require("bcrypt");
 // LOG IN
 router.post("/login", async (req, res, next) => {
   const foundUser = await User.findOne({ username: req.body.username });
+  console.log(foundUser)
 
   if (!foundUser) {
     res.json({
       message: "Benutzername nicht vorhanden, bitte zuerst anlegen.",
     });
   } else {
-    bcrypt.compare(req.body.password, foundUser.hash, function (err, result) {
+    bcrypt.compare(req.body.password, foundUser.password, function (err, result) {
       if (result) {
         //******* SAVE THE USER IN THE SESSION ********//
         req.session.currentUser = foundUser;
