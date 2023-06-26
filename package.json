@@ -14,22 +14,21 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "bcrypt": "^5.1.0",
-    "body-parser": "^1.18.3",
-    "connect-mongo": "^4.6.0",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "dotenv": "^6.0.0",
-    "express": "~4.16.1",
+    "body-parser": "^1.20.2",
+    "connect-mongo": "^5.0.0",
+    "cookie-parser": "~1.4.6",
+    "debug": "~4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "~4.18.2",
     "express-session": "^1.17.2",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "mongodb": "^4.2.0",
-    "mongoose": "^5.2.10",
-    "morgan": "~1.9.1",
+    "http-errors": "~2.0.0",
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.3.1",
+    "morgan": "~1.10.0",
     "nodemailer": "^6.9.3"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^2.0.22"
   },
   "nodemonConfig": {
     "ignore": [
