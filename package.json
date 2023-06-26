@@ -12,6 +12,7 @@
     "disableHostCheck": true
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
     "connect-mongo": "^4.6.0",
