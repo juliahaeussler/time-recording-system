@@ -12,7 +12,7 @@ module.exports = (app) => {
 
   const sessionStore = MongoStore.create({
     clientPromise: mongoClientPromise,
-    mongoUrl: "mongodb+srv://adminbhaeussler:sHbfEvYDQQbret24@cluster0.jdcoi.mongodb.net/bhaeussler?retryWrites=true&w=majority"
+    mongoUrl: process.env.MONGODB_URI
     // dbName: "myDb",
     // collection: "sessions"
   });
@@ -26,7 +26,6 @@ module.exports = (app) => {
       store: sessionStore,
       // store: MongoStore.create({
       //   mongoUrl:
-      //     "mongodb+srv://adminbhaeussler:sHbfEvYDQQbret24@cluster0.jdcoi.mongodb.net/bhaeussler?retryWrites=true&w=majority",
       //   // mongoUrl: process.env.MONGODB_URI,
 
       //ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day
