@@ -28,6 +28,8 @@ export const TimeTrack = () => {
   const [projects, setProjects] = useState([]);
   const [phases, setPhases] = useState([]);
 
+  console.log('test')
+
   const projectOptions = projects.map((p) => {
     return { value: p._id, label: p.name };
   });
