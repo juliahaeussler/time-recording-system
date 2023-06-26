@@ -56,8 +56,9 @@ jobs:
 #          MY_ENV_VAR: value-for-my-env-var
 #          MY_SECRET_ENV_VAR: ${{ secrets.MY_SECRET }} # here you can find information how to create secrets: https://docs.github.com/en/actions/security-guides/encrypted-secrets
         run: |
-          cd client && npm install && npm run build
           node ./bin/www
+          cd client && npm install && npm run build
+          
 
 # Please do not touch the following action
       - name: Store deployment content
