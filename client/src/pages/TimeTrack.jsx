@@ -28,7 +28,7 @@ export const TimeTrack = () => {
   const [projects, setProjects] = useState([]);
   const [phases, setPhases] = useState([]);
 
-  console.log('test')
+  console.log('test1')
 
   const projectOptions = projects.map((p) => {
     return { value: p._id, label: p.name };
