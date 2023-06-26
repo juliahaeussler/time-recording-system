@@ -35,25 +35,25 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 
 
-const contactEmail = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-  // logger: true,
-  auth: {
-      user: process.env.MAIL,
-      pass: process.env.MAIL_PASSWORD
-  },
-  secure: true
-});
+// const contactEmail = nodemailer.createTransport({
+//   host: process.env.MAIL_HOST,
+//   port: process.env.MAIL_PORT,
+//   // logger: true,
+//   auth: {
+//       user: process.env.MAIL,
+//       pass: process.env.MAIL_PASSWORD
+//   },
+//   secure: true
+// });
 
-//TEST EMAIL
-contactEmail.verify((error) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Ready to send");
-  }
-});
+// //TEST EMAIL
+// contactEmail.verify((error) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("Ready to send");
+//   }
+// });
 
 
 
