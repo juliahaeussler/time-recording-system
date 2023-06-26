@@ -8,6 +8,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
+const nodemailer = require("nodemailer");
 
 // Connects to the database
 const connectDB = require('./db/db');
@@ -30,15 +31,35 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 require('./configs/session.config')(app);
 
+const contactEmail = nodemailer.createTransport({
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
+  // logger: true,
+  auth: {
+      user: process.env.MAIL,
+      pass: process.env.MAIL_PASSWORD
+  },
+  secure: true
+});
+
+//TEST EMAIL
+contactEmail.verify((error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Ready to send");
+  }
+});
+
 
 
 // default value for title local
-app.locals.title = 'BLUE HOUR TIME RECORD';
+app.locals.title = 'Häußler Architekt';
 
 
 
 // ROUTES
-const apiPrefix = '/api/v1'
+const apiPrefix = '/api'
 
 const index = require('./routes/index');
 app.use(apiPrefix, index);
@@ -46,8 +67,26 @@ app.use(apiPrefix, index);
 const auth = require('./routes/auth');
 app.use(apiPrefix, auth);
 
+const checkAuth = require('./routes/check-auth');
+app.use(apiPrefix, checkAuth);
+
+const contact = require('./routes/contact');
+app.use(apiPrefix, contact);
+
+const login = require('./routes/login');
+app.use(apiPrefix, login);
+
+const phases = require('./routes/phases');
+app.use(apiPrefix, phases);
+
 const projects = require('./routes/projects');
 app.use(apiPrefix, projects);
+
+const time_entries = require('./routes/time_entries');
+app.use(apiPrefix, time_entries);
+
+const user = require('./routes/user');
+app.use(apiPrefix, user);
 
 const time = require('./routes/time');
 app.use(apiPrefix, time);

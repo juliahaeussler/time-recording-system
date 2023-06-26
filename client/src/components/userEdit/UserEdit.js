@@ -89,7 +89,7 @@ class UserEdit extends React.Component {
                     value={this.state.username}
                     onChange={this.handleChange}
                   />
-                  <label htmlFor="projectCode">Name:</label>
+                  {/* <label htmlFor="projectCode">Name:</label> */}
                   <input
                     type="text"
                     name="name"

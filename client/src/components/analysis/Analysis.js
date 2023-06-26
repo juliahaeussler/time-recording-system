@@ -19,7 +19,7 @@ class Analysis extends React.Component {
     analysis: false,
 
     projectName: "",
-    projectCode: "",
+    // projectCode: "",
     startDate: "",
     isArchived: false,
     projectId: "",
@@ -44,7 +44,7 @@ class Analysis extends React.Component {
             id: e._id,
             label: e.name,
             isArchived: e.isArchived,
-            projectCode: e.projectCode,
+            // projectCode: e.projectCode,
             startDate: e.startDate,
             name: e.name,
             comment: e.comment,
@@ -82,7 +82,7 @@ class Analysis extends React.Component {
     this.setState({
       projectName: selectedItem.name,
       projectId: selectedItem.id,
-      projectCode: selectedItem.projectCode,
+      // projectCode: selectedItem.projectCode,
       projectComment: selectedItem.comment,
       startDate: selectedItem.startDate,
     });
@@ -253,13 +253,13 @@ class Analysis extends React.Component {
                       className="project-input"
                     />
 
-                    <label htmlFor="projectCode">Projektnummer</label>
-                    <input
+                    {/* <label htmlFor="projectCode">Projektnummer</label> */}
+                    {/* <input
                       type="text"
                       name="projectCode"
                       value={this.state.projectCode}
                       onChange={this.handleChange}
-                    />
+                    /> */}
 
                     <div className="input-group">
                       <input
@@ -315,7 +315,7 @@ class Analysis extends React.Component {
                   <div>
                     <div>
                       <div className="line"><h5 className="line-title">Projekt: </h5><h5>{this.state.projectName}</h5></div>
-                      <div className="line"><h5 className="line-title">Projektnr.: </h5><h5>{this.state.projectCode}</h5></div>
+                      {/* <div className="line"><h5 className="line-title">Projektnr.: </h5><h5>{this.state.projectCode}</h5></div> */}
                       <div className="line"><h5 className="line-title">Beginn: </h5><h5>{this.showDate(this.state.startDate)}</h5></div>
                       <div className="line"><h5 className="line-title">Kommentar: </h5><h5>{this.state.projectComment}</h5></div>
                     </div>
