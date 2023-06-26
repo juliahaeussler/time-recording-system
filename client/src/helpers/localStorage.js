@@ -17,7 +17,7 @@ export const getUserFromLocalStorage = () => {
     // console.log('hello')
     return user;
   } else {
-    // console.log('touch')
+    console.log('touch')
     return null;
   }
 };
