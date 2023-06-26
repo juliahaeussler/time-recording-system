@@ -12,6 +12,7 @@ module.exports = (app) => {
 
   const sessionStore = MongoStore.create({
     clientPromise: mongoClientPromise,
+    mongoUrl: "mongodb+srv://adminbhaeussler:sHbfEvYDQQbret24@cluster0.jdcoi.mongodb.net/bhaeussler?retryWrites=true&w=majority"
     // dbName: "myDb",
     // collection: "sessions"
   });
