@@ -35,18 +35,18 @@ jobs:
       - name: Build Node assets
         env:
           CI: true
-          GMAIL: haeuszler.julia@gmail.com
-          MAIL: julia@haeuszler.de
-          MAIL_HOST: smtp.1und1.de
-          MAIL_PASSWORD: Berlin2021!
-          MAIL_PORT: 465
-          MAIL_SERVICE: gmail
-          MONGODB_LOCAL: mongodb://localhost/bhaeussler
-          MONGODB_URI: mongodb+srv://adminbhaeussler:sHbfEvYDQQbret24@cluster0.jdcoi.mongodb.net/bhaeussler?retryWrites=true&w=majority
-          PORT: 5555
-          RECAPTCHA: 6LdCnccmAAAAAIkZPV5nV-ANWy7AwfELaLux_lyR
-          RECAPTCHA_SECRET: 6LdCnccmAAAAAOtMeUML2bTAXohDgvddezbC8eLy
-          SESS_SECRET: trs123
+          GMAIL: ${{ secrets.GMAIL }}
+          MAIL: ${{ secrets.MAIL }} 
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }} 
+          MAIL_PORT: ${{ secrets.MAIL_PORT }} 
+          MAIL_SERVICE: ${{ secrets.MAIL_SERVICE }} 
+          MONGODB_LOCAL: ${{ secrets.MONGODB_LOCAL }} 
+          MONGODB_URI: ${{ secrets.MONGODB_URI }} 
+          PORT: ${{ secrets.PORT }} 
+          RECAPTCHA: ${{ secrets.RECATCHA }} 
+          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }} 
+          SESS_SECRET: ${{ secrets.SESS_SECRET }}
           SITE_URL: ${{ inputs.site-url }}
         run: npm ci
 
