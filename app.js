@@ -9,14 +9,15 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
 const nodemailer = require("nodemailer");
+
+
+const app = express();
+
 require('./configs/session.config')(app);
 
 // Connects to the database
 const connectDB = require('./db/db');
 connectDB();
-
-const session = require('express-session');
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
