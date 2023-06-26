@@ -22,7 +22,13 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useState } from "react";
-import { getRequest, putRequest, deleteRequest, formatDateYYYYMMDD, formatTime } from "../helpers/functions";
+import {
+  getRequest,
+  putRequest,
+  deleteRequest,
+  formatDateYYYYMMDD,
+  formatTime,
+} from "../helpers/functions";
 import { Form, Formik } from "formik";
 import { SelectInput, TextAreaInput, TextInput } from "../helpers/inputs";
 
@@ -38,6 +44,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
 
   useEffect(() => {
     fetchEntries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = async (values, actions) => {
@@ -60,11 +67,11 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
 
   const handleDelete = async (id) => {
     // eslint-disable-next-line no-restricted-globals
-    let answer = confirm('Eintrag löschen?')
+    let answer = confirm("Eintrag löschen?");
     if (answer) {
       const result = await deleteRequest(`/api/time_entries/${id}`);
       console.log(result);
-      if (result) fetchEntries()
+      if (result) fetchEntries();
     }
   };
 
@@ -98,7 +105,9 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
                           }
                         </Td>
                         <Td>{formatDateYYYYMMDD(e.date)}</Td>
-                        <Td>{`${formatTime(e.hours)}:${formatTime(e.mins)}`}</Td>
+                        <Td>{`${formatTime(e.hours)}:${formatTime(
+                          e.mins
+                        )}`}</Td>
                         <Td>
                           {phaseOptions.find((p) => p.value === e.phase).label}
                         </Td>
