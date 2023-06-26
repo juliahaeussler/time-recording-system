@@ -1,5 +1,6 @@
 {
   "name": "bhaeussler",
+  "name": "bhaeussler",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,6 +13,7 @@
     "disableHostCheck": true
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
     "connect-mongo": "^4.6.0",
@@ -24,6 +26,8 @@
     "jade": "~1.11.0",
     "mongodb": "^4.2.0",
     "mongoose": "^5.2.10",
+    "morgan": "~1.9.1",
+    "nodemailer": "^6.9.3"
     "morgan": "~1.9.1",
     "nodemailer": "^6.9.3"
   },
