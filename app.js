@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
 const nodemailer = require("nodemailer");
+require('./configs/session.config')(app);
 
 // Connects to the database
 const connectDB = require('./db/db');
@@ -29,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/client/build')));
 
 
-require('./configs/session.config')(app);
+
 
 const contactEmail = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
