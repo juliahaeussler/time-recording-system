@@ -19,7 +19,7 @@ module.exports = (app) => {
 
   app.use(
     session({
-      secret: process.env.SESS_SECRET,
+      secret: 'trs123',
       resave: false,
       saveUninitialized: true,
       cookie: { maxAge: 60 * 60 * 24 * 1000 }, // 1 day
