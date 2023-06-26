@@ -13,11 +13,13 @@ const nodemailer = require("nodemailer");
 
 const app = express();
 
-require('./configs/session.config')(app);
-
 // Connects to the database
 const connectDB = require('./db/db');
 connectDB();
+
+require('./configs/session.config')(app);
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
