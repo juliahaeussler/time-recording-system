@@ -2,7 +2,7 @@ export const getFromLocalStorage = (localStorageKey) => {
   let localStorageString = null;
   try {
     localStorageString = window.localStorage.getItem(localStorageKey) || null;
-    console.log('local', localStorageString)
+    // console.log('local', localStorageString)
     return localStorageString;
   } catch (e) {
     // This can actually happen, e.g. on mobile Safari if user has blocked cookies
@@ -17,6 +17,7 @@ export const getUserFromLocalStorage = () => {
     // console.log('hello')
     return user;
   } else {
+    console.log('touch')
     console.log('touch')
     return null;
   }
