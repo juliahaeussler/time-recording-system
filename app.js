@@ -105,8 +105,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.use((req, res, next) => {
-  // If no routes match, send them the React HTML.
+app.use(apiPrefix, (req, res, next) => {
   res.sendFile(__dirname + "/client/build/index.html");
 });
 
