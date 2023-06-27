@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "DEBUG=project-management-server:* nodemon ./bin/www",
     "dev-windows": "nodemon ./bin/www",
-    "build": "cd client && npm install && npm run build"
+    "build": "node ./bin/www && cd client && npm run build"
   },
   "devServer": {
     "disableHostCheck": true

@@ -32,23 +32,30 @@ jobs:
         with:
           node-version: v16.x
 
-      - name: Build Node assets
-        env:
-          CI: true
-          GMAIL: ${{ secrets.GMAIL }}
-          MAIL: ${{ secrets.MAIL }} 
-          MAIL_HOST: ${{ secrets.MAIL_HOST }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }} 
-          MAIL_PORT: ${{ secrets.MAIL_PORT }} 
-          MAIL_SERVICE: ${{ secrets.MAIL_SERVICE }} 
-          MONGODB_LOCAL: ${{ secrets.MONGODB_LOCAL }} 
-          MONGODB_URI: ${{ secrets.MONGODB_URI }} 
-          PORT: ${{ secrets.PORT }} 
-          RECAPTCHA: ${{ secrets.RECATCHA }} 
-          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }} 
-          SESS_SECRET: ${{ secrets.SESS_SECRET }}
-          SITE_URL: ${{ inputs.site-url }}
-        run: npm ci
+      - name: Install server dependencies
+        run: cd server && npm ci
+
+      - name: Install client dependencies
+        run: cd client && npm ci
+
+      - name: Build client
+        run: cd client && CI=false npm run build
+
+      - name: Prepare .env file
+        run: |
+          touch .env
+          echo GMAIL=${{ secrets.GMAIL }} >> .env
+          echo MAIL=${{ secrets.MAIL }} >> .env
+          echo MAIL_HOST=${{ secrets.MAIL_HOST }} >> .env
+          echo MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }} >> .env
+          echo MAIL_PORT=${{ secrets.MAIL_PORT }} >> .env
+          echo MAIL_SERVICE=${{ secrets.MAIL_SERVICE }} >> .env
+          echo MONGODB_LOCAL=${{ secrets.MONGODB_LOCAL }} >> .env
+          echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo RECAPTCHA=${{ secrets.RECAPTCHA }} >> .env
+          echo RECAPTCHA_SECRET=${{ secrets.RECAPTCHA_SECRET }} >> .env
+          echo SESS_SECRET=${{ secrets.SESS_SECRET }} >> .env
 
       - name: Run script
 # uncomment the following lines if you want to add environment variables for this step
@@ -69,9 +76,7 @@ jobs:
           RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }} 
           SITE_URL: ${{ inputs.site-url }}
         run: |
-          node ./bin/www
-          cd client && npm install && npm run build
-          
+          npm run build       
 
 # Please do not touch the following action
       - name: Store deployment content
