@@ -1,6 +1,6 @@
 export const getRequest = async (url) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${process.env.DEPLOYMENT_PREFIX}url`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ export const getRequest = async (url) => {
 
 export const postRequest = async (url, payload) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${process.env.DEPLOYMENT_PREFIX}url`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ export const postRequest = async (url, payload) => {
 
 export const putRequest = async (url, payload) => {
   try {
-      const response = await fetch(url, {
+      const response = await fetch(`${process.env.DEPLOYMENT_PREFIX}url`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export const putRequest = async (url, payload) => {
 
 export const deleteRequest = async (url) => {
   try {
-      const response = await fetch(url, {
+      const response = await fetch(`${process.env.DEPLOYMENT_PREFIX}url`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

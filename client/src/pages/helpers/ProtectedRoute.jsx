@@ -8,7 +8,7 @@ export const ProtectedRoute = () => {
 
   useMemo(() => {
     const checkAuth = async () => {
-      const response = await fetch("/api/check-auth");
+      const response = await fetch(`${process.env.DEPLOYMENT_PREFIX}/api/check-auth`);
       const result = await response.json();
       if (result.user) setAuthenticated(true);
       setLoading(false);

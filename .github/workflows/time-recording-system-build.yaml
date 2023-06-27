@@ -56,6 +56,7 @@ jobs:
           echo RECAPTCHA=${{ secrets.RECAPTCHA }} >> .env
           echo RECAPTCHA_SECRET=${{ secrets.RECAPTCHA_SECRET }} >> .env
           echo SESS_SECRET=${{ secrets.SESS_SECRET }} >> .env
+          echo DEPLOYMENT_PREFIX=${{ secrets.DEPLOYMENT_PREFIX }} >> .env
 
       - name: Run script
 # uncomment the following lines if you want to add environment variables for this step
@@ -75,6 +76,7 @@ jobs:
           RECAPTCHA: ${{ secrets.RECATCHA }} 
           RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }} 
           SITE_URL: ${{ inputs.site-url }}
+          DEPLOYMENT_PREFIX: ${{ secrets.DEPLOYMENT_PREFIX }}
         run: |
           cd client
           npm run build   
