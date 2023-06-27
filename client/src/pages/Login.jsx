@@ -12,7 +12,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const handleSave = async (values, actions) => {
     actions.setSubmitting(true);
-    const response = await postRequest("/api/login", values);
+    const response = await postRequest("https://home-5013529792.app-ionos.space/api/login", values);
     if (response.ok) {
       const user = await response.json();
       localStorage.setItem("user", JSON.stringify(user.user));
