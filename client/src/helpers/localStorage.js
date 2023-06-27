@@ -3,7 +3,7 @@ export const getFromLocalStorage = (localStorageKey) => {
   try {
     localStorageString = window.localStorage.getItem(localStorageKey) || null;
     // console.log('local', localStorageString)
-    return localStorageString;
+    return localStorageString ? localStorageString : null;
   } catch (e) {
     // This can actually happen, e.g. on mobile Safari if user has blocked cookies
   }

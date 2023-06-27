@@ -63,7 +63,8 @@ app.locals.title = 'Häußler Architekt';
 
 
 // ROUTES
-const apiPrefix = `${process.env.DEPLOYMENT_PREFIX}/api`
+const apiPrefix = process.env.ENVIRONMENT === 'prod' ? '' : process.env.ENVIRONMENT === 'test' ? `https://${process.env.TEST_DEPLOYMENT_PREFIX}/api` : '/api';
+console.log(apiPrefix)
 
 const index = require('./routes/index');
 app.use(apiPrefix, index);
