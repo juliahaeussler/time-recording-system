@@ -76,7 +76,12 @@ jobs:
           RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }} 
           SITE_URL: ${{ inputs.site-url }}
         run: |
-          npm run build       
+          node ./bin/www        
+
+      - name: Build Client
+        run: |
+          cd client
+          npm run build
 
 # Please do not touch the following action
       - name: Store deployment content
