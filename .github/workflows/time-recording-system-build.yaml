@@ -33,7 +33,7 @@ jobs:
           node-version: v16.x
 
       - name: Install server dependencies
-        run: cd server && npm ci
+        run: npm ci
 
       - name: Install client dependencies
         run: cd client && npm ci
