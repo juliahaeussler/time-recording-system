@@ -1,6 +1,7 @@
 import { Box, Text, Heading, VStack } from "@chakra-ui/react";
 
 export const Impressum = () => {
+  // console.log('Impressum')
   return (
     <VStack align="start" pt={"45px"}>
       <Text as="b" fontSize="xl" mb={3}>
