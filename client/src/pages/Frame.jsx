@@ -1,4 +1,4 @@
-import { Box, HStack, Spacer, Button } from "@chakra-ui/react";
+import { Box, HStack, Spacer, Button, VStack } from "@chakra-ui/react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { getUserFromLocalStorage } from "../helpers/localStorage";
 import { postRequest } from "../helpers/functions";
@@ -15,31 +15,72 @@ const Navbar = () => {
     }
   };
 
+  const getNavStyle = (isActive) => {
+    return {
+      fontWeight: isActive ? "bold" : "",
+    };
+  };
+
   return (
-    <HStack
+    <VStack
+      as="header"
+      position="fixed"
       w={"100%"}
       h={"50px"}
-      position={"sticky"}
-      px={"15px"}
-      spacing={4}
-      bgColor={"brand.900"}
-      color={"white"}
+      p={0}
+      mt={"-20px"}
     >
-      <NavLink to={"/home"}>Architekt</NavLink>
-      <NavLink to={"/projekte"}>Projekte</NavLink>
-      <NavLink to={"/kontakt"}>Kontakt</NavLink>
-      <Spacer />
-      {user ? (
-        <>
-          <NavLink to={"/zeiterfassung"}>Zeiterfassung</NavLink>
-          <Button variant="link" color={"white"} onClick={() => handleLogOut()}>
-            Log out
-          </Button>
-        </>
-      ) : (
-        <NavLink to={"/login"}>Log in</NavLink>
-      )}
-    </HStack>
+      <HStack
+        h="50px"
+        px="15px"
+        w="100%"
+        spacing={4}
+        bgColor={"brand.900"}
+        color={"white"}
+      >
+        <NavLink style={({ isActive }) => getNavStyle(isActive)} to={"/home"}>
+          Architekt
+        </NavLink>
+        <NavLink
+          style={({ isActive }) => getNavStyle(isActive)}
+          to={"/kontakt"}
+        >
+          Kontakt
+        </NavLink>
+        <Spacer />
+        {user ? (
+          <>
+            <NavLink
+              style={({ isActive }) => getNavStyle(isActive)}
+              to={"/zeiterfassung"}
+            >
+              Zeiterfassung
+            </NavLink>
+            <Button
+              variant="link"
+              color={"white"}
+              onClick={() => handleLogOut()}
+            >
+              Log out
+            </Button>
+          </>
+        ) : (
+          <NavLink
+            style={({ isActive }) => getNavStyle(isActive)}
+            to={"/login"}
+          >
+            Log in
+          </NavLink>
+        )}
+        <NavLink
+          style={({ isActive }) => getNavStyle(isActive)}
+          to={"/impressum"}
+        >
+          Impressum
+        </NavLink>
+      </HStack>
+      <Box w="100%" h="3" bg={"brand.700"} mt={-3} />
+    </VStack>
   );
 };
 

@@ -12,7 +12,7 @@ import { PageNotFound } from "./pages/404";
 import { Login } from "./pages/Login";
 import { ProtectedRoute } from "./pages/helpers/ProtectedRoute";
 import { TimeTrack } from "./pages/TimeTrack";
-import { Projects } from "./pages/Projects";
+import { Impressum } from "./pages/Impressum";
 
 const router = createBrowserRouter([
   {
@@ -24,10 +24,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "projekte",
-        element: <Projects />,
-      },
-      {
         path: "kontakt",
         element: <Contact />,
       },
@@ -36,14 +32,18 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "impressum",
+        element: <Impressum />,
+      },
+      {
         path: "zeiterfassung",
         element: <ProtectedRoute />,
         children: [
           {
             path: "",
-            element: <TimeTrack />
-          }
-        ]
+            element: <TimeTrack />,
+          },
+        ],
       },
       {
         path: "*",

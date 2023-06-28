@@ -1,7 +1,17 @@
-import { Box, Button, VStack, Center, Stack, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  VStack,
+  Center,
+  Stack,
+  useToast,
+  Text,
+  HStack,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { TextAreaInput, TextInput } from "../helpers/inputs";
 import { postRequest } from "../helpers/functions";
+import portrait from "../images/Portrait.jpg";
 
 export const Contact = () => {
   const toast = useToast();
@@ -21,8 +31,36 @@ export const Contact = () => {
   };
 
   return (
-    <Box>
-      <Formik
+    <Box pt={"60px"}>
+      <HStack ml={"-35px"} align="end" pb={"10px"}>
+        <img
+          // onLoad={() => handleLoadImage("Portrait")}
+          height={350}
+          width={350}
+          src={portrait}
+          alt="Portrait"
+        />
+        <VStack align="start" mb={"-7px"}>
+          <Text>
+            Bernd Häußler
+            <br />
+            Dipl.-Ing. Architekt
+            <br />
+            Heinrich-Heine-Weg 19a
+            <br />
+            30880 Laatzen
+          </Text>
+
+          <Text></Text>
+          <Text>
+            Telefon: +49 (0) 170 8209703
+            <br />
+            E-Mail: architekt@haeuszler.de
+          </Text>
+        </VStack>
+      </HStack>
+
+      {/* <Formik
         initialValues={{
           name: "",
           email: "",
@@ -70,7 +108,7 @@ export const Contact = () => {
                 // data-sitekey={process.env.RECAPTCHA}
                 ></div> */}
 
-                <Stack d="flex" align="end" w="100%">
+      {/* <Stack d="flex" align="end" w="100%">
                   <Button
                     size="sm"
                     color="white"
@@ -85,7 +123,7 @@ export const Contact = () => {
             </Center>
           </Form>
         )}
-      </Formik>
+      </Formik> */}
     </Box>
   );
 };
