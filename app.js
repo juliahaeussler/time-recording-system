@@ -10,7 +10,6 @@ const logger = require('morgan');
 const path = require('path');
 const nodemailer = require("nodemailer");
 
-
 const app = express();
 
 // Connects to the database
@@ -18,8 +17,6 @@ const connectDB = require('./db/db');
 connectDB();
 
 require('./configs/session.config')(app);
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,9 +28,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/client/build')));
-
-
-
 
 const contactEmail = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -55,12 +49,11 @@ contactEmail.verify((error) => {
   }
 });
 
-
-
 // default value for title local
 app.locals.title = 'Häußler Architekt';
 
-
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // ROUTES
 const apiPrefix = process.env.ENVIRONMENT === 'prod' ? '' : process.env.ENVIRONMENT === 'test' ? `https://${process.env.TEST_DEPLOYMENT_PREFIX}/api` : '/api';
@@ -90,32 +83,36 @@ app.use(apiPrefix, time_entries);
 const user = require('./routes/user');
 app.use(apiPrefix, user);
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
+// Add a catch-all route to serve the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
+
+
+// app.use((req, res, next) => {
+//   if (req.url.startsWith(apiPrefix)) {
+//     // Skip catch-all route if the request starts with the apiPrefix
+//     return next();
+//   }
+
+//   // Send the index.html for all other routes
+//   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 // });
 
+// // error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-
-app.use((req, res, next) => {
-  if (req.url.startsWith(apiPrefix)) {
-    // Skip catch-all route if the request starts with the apiPrefix
-    return next();
-  }
-
-  // Send the index.html for all other routes
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;

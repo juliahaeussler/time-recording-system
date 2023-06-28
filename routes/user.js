@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 
 // SIGN UP
 router.post("/user", async (req, res, next) => {
-    console.log('touch /user')
   const foundUser = await User.findOne({ username: req.body.username });
   if (foundUser) {
     res.json({ message: "Benutzername bereits vergeben." });
