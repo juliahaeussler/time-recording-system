@@ -26,17 +26,19 @@ export const Impressum = () => {
       <Text fontSize="sm">
         Telefon: +49 (0) 170 8209703
         <br />
+        Fax: +49 (0) 5102 8488080
+        <br />
         E-Mail: architekt@haeuszler.de
       </Text>
 
-      <Text as="b" fontSize="lg">
+      {/* <Text as="b" fontSize="lg">
         Umsatzsteuer-ID
       </Text>
       <Text fontSize="sm">
         Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
         <br />
         DE68407591383
-      </Text>
+      </Text> */}
 
       <Text as="b" fontSize="lg">
         Berufsbezeichnung und berufsrechtliche Regelungen
