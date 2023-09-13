@@ -60,7 +60,7 @@ export const Contact = () => {
         </VStack>
       </HStack>
 
-      {/* <Formik
+       <Formik
         initialValues={{
           name: "",
           email: "",
@@ -108,7 +108,7 @@ export const Contact = () => {
                 // data-sitekey={process.env.RECAPTCHA}
                 ></div> */}
 
-      {/* <Stack d="flex" align="end" w="100%">
+       <Stack d="flex" align="end" w="100%">
                   <Button
                     size="sm"
                     color="white"
@@ -123,7 +123,7 @@ export const Contact = () => {
             </Center>
           </Form>
         )}
-      </Formik> */}
+      </Formik> 
     </Box>
   );
 };

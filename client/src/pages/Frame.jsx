@@ -80,6 +80,9 @@ const Navbar = () => {
         </NavLink>
       </HStack>
       <Box w="100%" h="3" bg={"brand.700"} mt={-3} />
+      {/* <a href="#"
+      onclick="window.displayPreferenceModal();return false;"
+      id="termly-consent-preferences">Consent Preferences</a> */}
     </VStack>
   );
 };
