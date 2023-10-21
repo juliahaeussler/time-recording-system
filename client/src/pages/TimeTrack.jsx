@@ -28,8 +28,6 @@ export const TimeTrack = () => {
   const [projects, setProjects] = useState([]);
   const [phases, setPhases] = useState([]);
 
-  console.log('test')
-
   const projectOptions = projects.map((p) => {
     return { value: p._id, label: p.name };
   });
@@ -84,7 +82,7 @@ export const TimeTrack = () => {
   };
 
   return projectOptions.length > 0 && phaseOptions.length > 0 ? (
-    <Box>
+    <Box p={'50px 0 0 0'}>
       <Tabs isLazy isFitted>
         <TabList mb="1em">
           <Tab>Neuer Eintrag</Tab>

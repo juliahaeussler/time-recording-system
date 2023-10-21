@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const Project = require("../models/Project");
+const Time = require("../models/Time");
 
 //SHOW PROJECTS
 router.get("/projects", async (req, res, next) => {
@@ -51,6 +52,7 @@ router.put("/projects/:id", async (req, res, next) => {
 //DELETE PROJECT
 router.delete("/projects/:id", async (req, res, next) => {
   try {
+    await Time.deleteMany({ project: req.params.id });
     const response = await Project.findByIdAndRemove(req.params.id);
     res.json(response);
   } catch (err) {
