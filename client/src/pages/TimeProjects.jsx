@@ -21,10 +21,10 @@ import {
   VStack,
   IconButton,
 } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Form, Formik } from "formik";
 import { TextAreaInput, TextInput } from "../helpers/inputs";
-import { postRequest, putRequest } from "../helpers/functions";
+import { postRequest, putRequest, formatDateYYYYMMDD, deleteRequest } from "../helpers/functions";
 import { useState } from "react";
 
 export const TimeProjects = ({ projects, fetchProjects }) => {
@@ -41,6 +41,15 @@ export const TimeProjects = ({ projects, fetchProjects }) => {
       onClose();
       fetchProjects();
       setProjectToEdit({});
+    }
+  };
+
+  const handleDelete = async (id) => {
+    // eslint-disable-next-line no-restricted-globals
+    let answer = confirm("Projekt löschen? Achtung: alle Zeiteinträge zu diesem Projekt werden gelöscht!");
+    if (answer) {
+      const result = await deleteRequest(`/api/projects/${id}`);
+      if (result) fetchProjects();
     }
   };
 
@@ -75,7 +84,7 @@ export const TimeProjects = ({ projects, fetchProjects }) => {
                       <Tr key={idx}>
                         <Td pl={0}>{p.name}</Td>
                         <Td>{p.number}</Td>
-                        <Td>{p.date}</Td>
+                        <Td>{p.date ? formatDateYYYYMMDD(p?.date) : ''}</Td>
                         <Td>{p.note}</Td>
                         <Td pr={0} isNumeric>
                           <IconButton
@@ -89,6 +98,16 @@ export const TimeProjects = ({ projects, fetchProjects }) => {
                             aria-label="Edit project"
                             icon={<EditIcon />}
                           />
+                            <IconButton
+                              variant="ghost"
+                              colorScheme="blue"
+                              size="xs"
+                              aria-label="Löschen"
+                              icon={<DeleteIcon />}
+                              onClick={() => {
+                                handleDelete(p._id);
+                              }}
+                            />
                         </Td>
                       </Tr>
                     );
