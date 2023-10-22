@@ -6,8 +6,18 @@ const Time = require("../models/Time");
 //SHOW TIME ENTRIES
 router.get("/time_entries", async (req, res, next) => {
   try {
-    const response = await Time.find();
-    res.json(response);
+    const { projectId, emptyInvoice } = req.query;
+    const filter = {};
+
+    if (projectId) {
+      filter.project = projectId;
+    }
+
+    const timeEntries = await Time.find({
+      $and: [filter]
+    });
+
+    res.json(timeEntries);
   } catch (err) {
     console.log("GET time entries failed:", err);
   }

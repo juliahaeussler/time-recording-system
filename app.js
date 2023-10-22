@@ -68,6 +68,9 @@ app.use(apiPrefix, checkAuth);
 const contact = require('./routes/contact');
 app.use(apiPrefix, contact);
 
+const invoice = require('./routes/invoices');
+app.use(apiPrefix, invoice);
+
 const login = require('./routes/login');
 app.use(apiPrefix, login);
 

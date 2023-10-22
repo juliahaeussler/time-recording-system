@@ -23,6 +23,11 @@ const timeSchema = new Schema(
     comment: {
       type: String,
     },
+    invoice: {
+      type: Schema.Types.ObjectId,
+      ref: "Invoice",
+      default: null,
+    },
   },
   { collection: "time_entries" }
 );

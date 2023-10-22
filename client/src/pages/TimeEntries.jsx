@@ -20,7 +20,7 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, CheckIcon } from "@chakra-ui/icons";
 import { useCallback, useEffect, useState } from "react";
 import {
   getRequest,
@@ -39,7 +39,9 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
 
   const fetchEntries = useCallback(async () => {
     const result = await getRequest("/api/time_entries");
-    setEntries(result);
+    if (result && result.length > 0) {
+      setEntries(result.sort((a, b) => new Date(b.date) - new Date(a.date)));
+    }
   }, []);
 
   useEffect(() => {
@@ -54,9 +56,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
       project: values.project.value,
       phase: values.phase.value,
     };
-    console.log("payload", payload);
     const result = await putRequest(`/api/time_entries/${values._id}`, payload);
-    console.log("RESULT", result);
     if (result.ok) {
       actions.setSubmitting(false);
       onClose();
@@ -70,7 +70,6 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
     let answer = confirm("Eintrag löschen?");
     if (answer) {
       const result = await deleteRequest(`/api/time_entries/${id}`);
-      console.log(result);
       if (result) fetchEntries();
     }
   };
@@ -114,6 +113,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
                         <Td>{e.comment}</Td>
                         <Td pr={0} isNumeric>
                           <HStack spacing={3} justify={"flex-end"} my={-2}>
+                            {e.invoice ? <CheckIcon /> : null}
                             <IconButton
                               variant="ghost"
                               colorScheme="blue"
@@ -167,6 +167,7 @@ export const TimeEntries = ({ projectOptions, phaseOptions }) => {
               hours: entryToEdit.hours,
               mins: entryToEdit.mins,
               comment: entryToEdit.comment,
+              invoice: entryToEdit.invoice || null,
             }}
             onSubmit={(values, actions) => handleSave(values, actions)}
           >

@@ -28,9 +28,11 @@ export const TimeTrack = () => {
   const [projects, setProjects] = useState([]);
   const [phases, setPhases] = useState([]);
 
-  const projectOptions = projects.map((p) => {
-    return { value: p._id, label: p.name };
-  });
+  const projectOptions = projects
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .map((p) => {
+      return { value: p._id, label: p.name };
+    });
 
   const phaseOptions = phases.map((p) => {
     return { value: p._id, label: p.label };
@@ -82,7 +84,7 @@ export const TimeTrack = () => {
   };
 
   return projectOptions.length > 0 && phaseOptions.length > 0 ? (
-    <Box p={'50px 0 0 0'}>
+    <Box p={"50px 0 0 0"}>
       <Tabs isLazy isFitted>
         <TabList mb="1em">
           <Tab>Neuer Eintrag</Tab>
@@ -209,7 +211,11 @@ export const TimeTrack = () => {
             />
           </TabPanel>
           <TabPanel p={0}>
-            <TimeProjects projects={projects} fetchProjects={fetchProjects} />
+            <TimeProjects
+              projects={projects}
+              fetchProjects={fetchProjects}
+              phaseOptions={phaseOptions}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
